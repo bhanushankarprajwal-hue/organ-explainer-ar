@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071018">
+  <title>Hand AR · Organ Explainer AR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+    { "imports": { "three": "./js/vendor/three/three.module.min.js", "three/addons/": "./js/vendor/three/addons/" } }
+  </script>
+  <script src="js/data.js"></script>
+  <style>
+    :root { --bg: #071018; --ink: #e6f2f0; --muted: #93aeb0; --brand: #2fd3c3; --brand-ink: #03201d; --sick: #ff7a66; --healthy: #4fd18b; --warm: #ffc457;
+      --panel: rgba(7, 16, 24, .84); --line: rgba(64, 214, 199, .4); color-scheme: dark; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink);
+      font-family: "Noto Sans", "Noto Sans Kannada", "Noto Sans Tamil", system-ui, sans-serif; }
+    body.in-xr { background: transparent; }
+    #cam, #still { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .mirror { transform: scaleX(-1); }
+    #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+    /* everything the user sees on top of the camera lives in #ui (it is also the AR "DOM overlay") */
+    #ui { position: fixed; inset: 0; touch-action: none; user-select: none; -webkit-user-select: none; }
+    #labels { position: absolute; inset: 0; pointer-events: none; }
+    .hs { position: absolute; left: 0; top: 0; width: 32px; height: 32px; margin: -16px 0 0 -16px; border-radius: 50%; border: 2px solid #fff;
+      background: #23a866; color: #fff; font: 700 15px/28px system-ui; text-align: center; pointer-events: auto; cursor: pointer; padding: 0;
+      box-shadow: 0 0 0 4px rgba(255,255,255,.15), 0 2px 10px rgba(0,0,0,.5); }
+    .hs.sick { background: #e0533f; }
+    .hs.hot, .hs.on { outline: 3px solid var(--warm); }
+    #cursor { position: absolute; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 3px solid var(--brand);
+      box-shadow: 0 0 14px var(--brand); pointer-events: none; display: none; }
+    #cursor.pinch { background: var(--brand) !important; }
+    #thumb { position: absolute; left: 0; top: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--warm); pointer-events: none; display: none; }
+    .hud { position: absolute; left: 0; right: 0; z-index: 10; pointer-events: none;
+      padding-left: max(10px, env(safe-area-inset-left, 0px)); padding-right: max(10px, env(safe-area-inset-right, 0px)); }
+    .hud > * { pointer-events: auto; }
+    .top { top: 0; padding-top: calc(10px + env(safe-area-inset-top, 0px)); display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; background: var(--panel); border: 1px solid var(--line); color: var(--ink); text-decoration: none;
+      border-radius: 999px; padding: 8px 13px; font: inherit; font-weight: 600; font-size: .86rem; cursor: pointer; }
+    .chip.on { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+    .seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+    .seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 700; font-size: .84rem; padding: 6px 11px; border-radius: 999px; cursor: pointer; }
+    .seg button.on { background: var(--brand); color: var(--brand-ink); }
+    .seg button.on.sick { background: var(--sick); color: #2a0700; }
+    #handchip { pointer-events: none; }
+    #handchip.seen { border-color: var(--healthy); color: var(--healthy); }
+    #mode { position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); background: var(--panel); border: 1px solid var(--warm); color: var(--warm);
+      padding: 6px 14px; border-radius: 999px; font-weight: 700; pointer-events: none; display: none; }
+    .bottom { bottom: 0; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 12px 15px; max-width: 600px; margin: 0 auto; }
+    .panel h2 { margin: 0 0 2px; font-size: 1.12rem; }
+    .panel .cond { margin: 0 0 6px; color: var(--warm); font-weight: 600; font-size: .9rem; }
+    .panel p { margin: 0 0 8px; color: #c9dcda; font-size: .92rem; }
+    .panel .small { color: var(--muted); font-size: .78rem; margin: 0; }
+    .panel ul { margin: 0 0 6px; padding-left: 18px; color: #c9dcda; font-size: .88rem; }
+    .panel li { margin: 2px 0; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn { display: inline-block; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 8px 14px; font: inherit; font-weight: 700; font-size: .88rem; text-decoration: none; cursor: pointer; }
+    .btn.primary { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+    .btn.hot, .chip.hot, .seg button.hot { outline: 3px solid var(--warm); }
+    #part { border-left: 3px solid var(--warm); padding-left: 10px; }
+    #start { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgba(7,16,24,.96); text-align: center; padding: 20px; overflow: auto; }
+    #start .box { max-width: 460px; }
+    #start h1 { font-size: 1.5rem; margin: 0 0 6px; }
+    #start p { color: var(--muted); margin: 0 0 14px; }
+    #start .row { justify-content: center; }
+    #start ul { text-align: left; color: #c9dcda; margin: 0 auto 16px; max-width: 380px; padding-left: 20px; }
+    .spin { width: 40px; height: 40px; border-radius: 50%; border: 4px solid rgba(64,214,199,.25); border-top-color: var(--brand); animation: spin 1s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #dbg { position: absolute; right: 8px; bottom: 140px; width: 120px; border: 1px solid var(--line); display: none; }
+    [hidden] { display: none !important; }
+    @media (max-width: 520px) { .chip, .seg button { font-size: .76rem; padding: 6px 9px; } .panel p { font-size: .86rem; } }
+  </style>
+</head>
+<body>
+  <video id="cam" playsinline muted autoplay hidden></video>
+  <img id="still" alt="" hidden>
+  <canvas id="gl"></canvas>
+
+  <div id="ui">
+    <div id="labels"><div id="thumb"></div><div id="cursor"></div></div>
+    <div id="mode"></div>
+    <canvas id="dbg"></canvas>
+
+    <div class="hud top">
+      <button type="button" class="chip dwell" id="exit-btn">✕</button>
+      <div class="seg" role="group" aria-label="State">
+        <button type="button" class="dwell on" id="st-healthy"></button>
+        <button type="button" class="dwell" id="st-sick"></button>
+      </div>
+      <div class="seg" role="group" aria-label="View">
+        <button type="button" class="dwell on" id="v-out"></button>
+        <button type="button" class="dwell" id="v-in"></button>
+      </div>
+      <button type="button" class="chip dwell" id="place-btn" hidden></button>
+      <span class="chip" id="handchip"></span>
+    </div>
+
+    <div class="hud bottom">
+      <div class="panel" id="hint">
+        <h2 id="h-title"></h2>
+        <p id="h-text"></p>
+        <ul id="h-list"></ul>
+        <p class="small" id="h-note"></p>
+      </div>
+      <div class="panel" id="info" hidden>
+        <h2 id="i-title"></h2>
+        <p class="cond" id="i-sub"></p>
+        <p id="i-text"></p>
+        <div class="row"><button type="button" class="btn dwell" id="i-close"></button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="start">
+    <div class="box">
+      <div class="spin" id="s-spin"></div>
+      <h1 id="s-title"></h1>
+      <p id="s-text"></p>
+      <ul id="s-list" hidden></ul>
+      <div class="row">
+        <button type="button" class="btn primary" id="s-ar" hidden></button>
+        <button type="button" class="btn" id="s-cam" hidden></button>
+        <a class="btn" id="s-back" href="index.html"></a>
+      </div>
+      <p class="small" id="s-note" style="margin-top:14px;font-size:.8rem"></p>
+    </div>
+  </div>
+
+  <script type="module" src="js/handar.js"></script>
+</body>
+</html>

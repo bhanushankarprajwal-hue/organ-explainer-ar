@@ -95,6 +95,7 @@ function renderCondition(c) {
   $("c-about").textContent = t(c.about);
   $("c-warning").textContent = t(c.warning);
   $("story-btn").href = "#" + c.id + "-story";
+  $("hand-btn").href = "handar.html?c=" + c.id;
   $("c-treatment").innerHTML = c.treatment.map((s) => `<li><h3>${esc(t(s.title))}</h3><p>${esc(t(s.text))}</p></li>`).join("");
 
   const v = V(c);

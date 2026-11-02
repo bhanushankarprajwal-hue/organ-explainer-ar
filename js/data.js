@@ -10,6 +10,9 @@
 const UI_TEXT = {
   "bodyTitle": {"en": "Body AR", "kn": "ಬಾಡಿ AR", "ta": "உடல் AR"},
   "modeBody": {"en": "Body AR mirror", "kn": "ಬಾಡಿ AR ಕನ್ನಡಿ", "ta": "உடல் AR கண்ணாடி"},
+  "handAR": {"en": "Hand AR", "kn": "ಕೈ AR", "ta": "கை AR"},
+  "modeHand": {"en": "Hand AR on a table", "kn": "ಮೇಜಿನ ಮೇಲೆ ಕೈ AR", "ta": "மேசையில் கை AR"},
+  "modeHandSub": {"en": "Place it, then move, zoom and touch it with your hand in the air", "kn": "ಇಟ್ಟು, ಗಾಳಿಯಲ್ಲಿ ಕೈಯಿಂದ ಸರಿಸಿ, ದೊಡ್ಡದು ಮಾಡಿ, ಮುಟ್ಟಿ", "ta": "வைத்து, காற்றில் கையால் நகர்த்தி, பெரிதாக்கி, தொடுங்கள்"},
   "modeBodySub": {"en": "See organs on a real person", "kn": "ನಿಜವಾದ ವ್ಯಕ್ತಿಯ ಮೇಲೆ ಅಂಗಗಳನ್ನು ನೋಡಿ", "ta": "உண்மையான நபரின் மேல் உறுப்புகளைப் பாருங்கள்"},
   "bodyHint": {"en": "Stand 1–2 metres from the camera. Keep your head and waist in view.", "kn": "ಕ್ಯಾಮೆರಾದಿಂದ 1–2 ಮೀಟರ್ ದೂರ ನಿಲ್ಲಿ. ತಲೆ ಮತ್ತು ಸೊಂಟ ಕಾಣುವಂತೆ ಇರಲಿ.", "ta": "கேமராவிலிருந்து 1–2 மீட்டர் தூரத்தில் நில்லுங்கள். தலையும் இடுப்பும் தெரியட்டும்."},
   "bodyFound": {"en": "Tap an organ, or point at it with your finger.", "kn": "ಅಂಗವನ್ನು ಒತ್ತಿ, ಅಥವಾ ಬೆರಳಿನಿಂದ ಅದರತ್ತ ತೋರಿಸಿ.", "ta": "உறுப்பைத் தொடுங்கள், அல்லது விரலால் அதைச் சுட்டிக்காட்டுங்கள்."},

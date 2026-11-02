@@ -91,3 +91,13 @@ The original downloads are on the `source-models` branch (fetched by the GitHub 
 - [x] Step 2 — Real 3D models for all 5 organs
 - [x] Step 4 — On GitHub Pages and tested on an Android phone (AR)
 - [ ] Step 5 — Report, slides, demo video
+
+### Hand AR on a table (`handar.html?c=<organ>`)
+- Places one organ on a real table with WebXR (hit-test), like "View in AR".
+- Asks Chrome for the AR camera picture (WebXR *camera-access*) and runs MediaPipe Hands on it, so you can control the organ with your hand in the air:
+  - point and hold on a number → open that part
+  - pinch on the organ and move → move it on the table
+  - pinch in empty air: slide sideways → turn, up/down → zoom
+- Touch also works: drag to turn, two fingers to zoom/move, tap numbers.
+- Needs Chrome on an Android phone with ARCore. On a laptop it falls back to the webcam (two-hand pinch zoom also works there).
+- Debug: `&debug=1` shows what the hand tracker sees; `&flip=0` if the hand cursor moves upside down.

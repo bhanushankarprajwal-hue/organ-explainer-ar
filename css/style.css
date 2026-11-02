@@ -295,3 +295,8 @@ model-viewer:not([ar-status="session-started"]) .ar-info { display: none !import
   .page { max-width: 1400px; }
   model-viewer { height: 600px; }
 }
+
+/* Hand AR button next to the story button */
+.title-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.primary.hand-btn { background: transparent; color: var(--brand); border: 1.5px solid var(--brand); }
+@media (max-width: 640px) { .title-actions { width: 100%; } .title-actions .primary.big { flex: 1 1 100%; text-align: center; } }

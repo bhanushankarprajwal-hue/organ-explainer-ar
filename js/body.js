@@ -135,6 +135,7 @@ function toScreen(p) {
 // ---------- tracking ----------
 let pose = null, hands = null, handsOn = true;
 async function initTracking() {
+  if (typeof self.dbg !== "function") self.dbg = (...x) => console.debug(...x);   // the tracker's log helper
   const files = await FilesetResolver.forVisionTasks(new URL("vendor/mediapipe/wasm", import.meta.url).href);
   const mk = async (Cls, file, extra) => {
     const base = { baseOptions: { modelAssetPath: new URL("vendor/mediapipe/" + file, import.meta.url).href, delegate: "GPU" }, runningMode: "VIDEO", ...extra };
