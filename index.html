@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071018">
   <title>Organ Explainer AR</title>
   <meta name="description" content="AR-based 3D patient education: healthy vs diseased organs, explained simply.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,12 +13,12 @@
   <!-- Models are compressed (Draco). The decoder is hosted with the app. -->
   <script>self.ModelViewerElement = { dracoDecoderLocation: new URL("js/draco/", location.href).href };</script>
   <!-- Google's 3D + AR viewer -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
+  <script type="module" src="js/vendor/model-viewer.min.js"></script>
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="#home">
-      <span class="brand-mark" aria-hidden="true">+</span>
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3Zm0 2.2 6.6 3.3L12 11.8 5.4 8.5 12 5.2Zm-7 5 6 3v6.3l-6-3v-6.3Zm8 9.3v-6.3l6-3v6.3l-6 3Z" fill="currentColor"/></svg></span>
       <span data-t="appName">Organ Explainer AR</span>
     </a>
     <div class="lang" role="group" aria-label="Language">
@@ -32,9 +33,27 @@
   <!-- HOME SCREEN -->
   <main id="home" class="page">
     <section class="hero">
-      <h1 data-t="tagline"></h1>
-      <p class="sub" data-t="pickOne"></p>
+      <div class="hero-text">
+        <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> AR · XR in Health Care</p>
+        <h1 data-t="heroTitle"></h1>
+        <p class="sub" data-t="heroSub"></p>
+      </div>
+      <div class="modes">
+        <a class="mode" href="#organs">
+          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17h18M6 17l2-6h8l2 6M12 11V4m-3 3 3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><b data-t="modeTable"></b><small data-t="modeTableSub"></small></span>
+        </a>
+        <a class="mode" href="scan.html">
+          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 9h8v6H8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <span><b data-t="modeScan"></b><small data-t="modeScanSub"></small></span>
+        </a>
+        <a class="mode" href="#heart-story">
+          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg></span>
+          <span><b data-t="modeStory"></b><small data-t="modeStorySub"></small></span>
+        </a>
+      </div>
     </section>
+    <h2 class="section-title" id="organs" data-t="pickOne"></h2>
     <div id="cards" class="cards"></div>
   </main>
 
@@ -42,8 +61,11 @@
   <main id="condition" class="page" hidden>
     <a class="back" href="#home">← <span data-t="back"></span></a>
     <section class="title-block">
-      <p class="organ" id="c-organ"></p>
-      <h1 id="c-name"></h1>
+      <div>
+        <p class="organ" id="c-organ"></p>
+        <h1 id="c-name"></h1>
+      </div>
+      <a class="primary big" id="story-btn" href="#">▶ <span data-t="startStory"></span></a>
     </section>
 
     <div class="view-bar">
@@ -124,6 +146,31 @@
       <p id="c-warning"></p>
     </section>
   </main>
+
+  <!-- GUIDED AR STORY -->
+  <section id="story" class="story" hidden aria-label="Guided AR story">
+    <div class="story-top">
+      <a class="chip" id="story-close" href="#home">✕ <span data-t="closeStory"></span></a>
+      <span class="story-organ" id="story-organ"></span>
+      <button class="chip" id="voice-btn" type="button" aria-pressed="true">🔊 <span data-t="voiceOn"></span></button>
+    </div>
+    <model-viewer id="mv-story" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
+      shadow-intensity="1" exposure="1.1" interaction-prompt="none" camera-orbit="0deg 80deg auto" loading="eager">
+      <button slot="ar-button" class="ar-btn story-ar">⧉ <span data-t="viewAR"></span></button>
+      <!-- the story card stays visible inside AR -->
+      <div class="story-card" id="story-card">
+        <div class="story-progress"><span id="story-bar"></span></div>
+        <p class="story-step"><span id="story-count"></span> · <span id="story-state"></span></p>
+        <h3 id="story-title"></h3>
+        <p id="story-text"></p>
+        <div class="story-nav">
+          <button type="button" class="ghost" id="story-prev">← <span data-t="prev"></span></button>
+          <button type="button" class="primary" id="story-next"><span data-t="next"></span> →</button>
+        </div>
+      </div>
+    </model-viewer>
+    <p class="story-hint" data-t="storyHint"></p>
+  </section>
 
   <!-- INFO SHEET (opens when a dot is tapped) -->
   <aside id="info" class="info" hidden aria-live="polite">

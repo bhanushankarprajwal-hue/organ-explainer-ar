@@ -37,18 +37,21 @@ function fillStaticText() {
 // ---------- Home ----------
 function renderHome() {
   $("cards").innerHTML = CONDITIONS.map((c) => `
-    <a class="c-card" href="#${c.id}">
-      <div class="thumb">
-        <img src="images/thumb-${c.id}.png" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'icon',textContent:'${c.icon}'}))">
-        <span class="badge real">${t(UI_TEXT.realModel)}</span>
-      </div>
+    <article class="c-card">
+      <a class="thumb" href="#${c.id}" aria-label="${esc(t(c.organ))}">
+        <img src="images/thumb-${c.id}.png" alt="" loading="lazy">
+        <span class="badge">3D · AR</span>
+      </a>
       <div class="c-body">
         <p class="organ">${esc(t(c.organ))}</p>
-        <h2>${esc(t(c.name))}</h2>
+        <h2><a href="#${c.id}">${esc(t(c.name))}</a></h2>
         <p>${esc(t(c.short))}</p>
-        <span class="go">${Object.values(c.views).reduce((n, v) => n + v.healthyHotspots.length + v.diseasedHotspots.length, 0)} ${esc(t(UI_TEXT.parts))} →</span>
+        <div class="c-actions">
+          <a class="primary" href="#${c.id}-story">▶ ${esc(t(UI_TEXT.startStory))}</a>
+          <a class="ghost" href="#${c.id}">${esc(t(UI_TEXT.explore))} (${Object.values(c.views).reduce((n, v) => n + v.healthyHotspots.length + v.diseasedHotspots.length, 0)})</a>
+        </div>
       </div>
-    </a>`).join("");
+    </article>`).join("");
 }
 
 // ---------- Condition ----------
@@ -91,6 +94,7 @@ function renderCondition(c) {
   $("c-organ-about").textContent = t(c.organAbout);
   $("c-about").textContent = t(c.about);
   $("c-warning").textContent = t(c.warning);
+  $("story-btn").href = "#" + c.id + "-story";
   $("c-treatment").innerHTML = c.treatment.map((s) => `<li><h3>${esc(t(s.title))}</h3><p>${esc(t(s.text))}</p></li>`).join("");
 
   const v = V(c);
@@ -244,16 +248,145 @@ function showToast(msg) {
   toastTimer = setTimeout(() => { el.hidden = true; }, 4000);
 }
 
-// ---------- Simple page switching (#/ and #/heart etc.) ----------
+// =============================================================
+// GUIDED AR STORY: healthy -> disease -> inside -> treatment -> warning
+// The story card lives inside the 3D viewer, so it stays visible in AR.
+// =============================================================
+const STORY = {
+  heart:  { healthy: "lad",    diseased: ["plaque", "narrow", "risk"], inside: [["healthy", "lv"], ["diseased", "risk"]], treat: 1 },
+  brain:  { healthy: "artery", diseased: ["clot", "area", "speech"],   inside: [["healthy", "cc"], ["diseased", "area"]], treat: 0 },
+  lungs:  { healthy: "rlung",  diseased: ["tar", "sacs", "airways"],   inside: [["diseased", "sacs"]], treat: 0 },
+  liver:  { healthy: "right",  diseased: ["fat", "swollen", "edge"],   inside: [["diseased", "fat"]], treat: 0 },
+  kidney: { healthy: "outer",  diseased: ["swell", "stuck"],           inside: [["diseased", "stone"], ["diseased", "stuck"]], treat: 1 },
+};
+function hsFind(c, view, state, id) {
+  const v = c.views[view];
+  return (state === "healthy" ? v.healthyHotspots : v.diseasedHotspots).find((h) => h.id === id) || null;
+}
+function buildStory(c) {
+  const S = STORY[c.id], steps = [];
+  const L = UI_TEXT;
+  steps.push({ view: "outside", state: "healthy", label: L.healthy, title: c.organ, text: c.organAbout });
+  const hh = hsFind(c, "outside", "healthy", S.healthy);
+  if (hh) steps.push({ view: "outside", state: "healthy", label: L.healthy, hs: hh, title: hh.title, text: hh.text });
+  steps.push({ view: "outside", state: "diseased", label: L.withCondition, title: c.name, text: c.about });
+  S.diseased.forEach((id) => { const h = hsFind(c, "outside", "diseased", id); if (h) steps.push({ view: "outside", state: "diseased", label: L.withCondition, hs: h, title: h.title, text: h.text }); });
+  S.inside.forEach(([state, id]) => { const h = hsFind(c, "inside", state, id); if (h) steps.push({ view: "inside", state, label: state === "healthy" ? L.insideView : L.insideView, hs: h, title: h.title, text: h.text, inside: true }); });
+  const tr = c.treatment[S.treat];
+  steps.push({ view: "outside", state: "healthy", label: L.treatment, title: tr.title, text: tr.text, treat: true });
+  steps.push({ view: "outside", state: "diseased", label: L.warning, title: L.warning, text: c.warning, warn: true });
+  return steps;
+}
+let story = null, storyI = 0, voiceOn = true, voiceWarned = false;
+try { voiceOn = localStorage.getItem("voice") !== "off"; } catch (e) {}
+
+function orbitFromNormal(normal) {
+  const [x, y, z] = normal.split(" ").map(parseFloat);
+  const theta = Math.atan2(x, z) * 180 / Math.PI;
+  const phi = Math.acos(Math.max(-1, Math.min(1, y))) * 180 / Math.PI;
+  return `${theta.toFixed(0)}deg ${Math.max(35, Math.min(140, phi)).toFixed(0)}deg auto`;
+}
+function speak(text) {
+  if (!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  if (!voiceOn) return;
+  const voices = speechSynthesis.getVoices();
+  const code = lang;
+  let v = voices.find((x) => x.lang.toLowerCase().startsWith(code + "-in")) || voices.find((x) => x.lang.toLowerCase().startsWith(code));
+  if (!v && lang !== "en") { if (!voiceWarned) { showToast(t(UI_TEXT.noVoice)); voiceWarned = true; } return; }
+  const u = new SpeechSynthesisUtterance(text);
+  if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-IN";
+  u.rate = 0.95;
+  speechSynthesis.speak(u);
+}
+function renderVoiceBtn() {
+  const b = $("voice-btn");
+  b.setAttribute("aria-pressed", voiceOn);
+  b.innerHTML = (voiceOn ? "🔊 " : "🔇 ") + "<span>" + esc(t(voiceOn ? UI_TEXT.voiceOn : UI_TEXT.voiceOff)) + "</span>";
+}
+$("voice-btn").addEventListener("click", () => {
+  voiceOn = !voiceOn;
+  try { localStorage.setItem("voice", voiceOn ? "on" : "off"); } catch (e) {}
+  renderVoiceBtn();
+  if (voiceOn && story) speak(t(story.steps[storyI].title) + ". " + t(story.steps[storyI].text)); else speak("");
+});
+
+function showStoryStep(i, sayIt) {
+  const c = story.c, st = story.steps[i], mv = $("mv-story");
+  storyI = i;
+  const v = c.views[st.view];
+  const src = st.state === "healthy" ? v.healthyModel : v.diseasedModel;
+  const orbit = st.hs && st.hs.normal ? orbitFromNormal(st.hs.normal) : v.orbit;
+  if (mv.getAttribute("src") !== src) { mv.dataset.pendingOrbit = orbit; mv.setAttribute("src", src); }
+  else { mv.cameraOrbit = orbit; mv.cameraTarget = "auto auto auto"; }
+  // one glowing dot for the part this step talks about
+  mv.querySelectorAll(".hotspot").forEach((h) => h.remove());
+  if (st.hs) {
+    const d = document.createElement("button");
+    d.className = "hotspot story-dot " + st.state;
+    d.slot = "hotspot-story";
+    d.dataset.position = st.hs.position;
+    if (st.hs.normal) d.dataset.normal = st.hs.normal;
+    d.dataset.visibilityAttribute = "visible";
+    d.textContent = "●";
+    d.setAttribute("aria-label", t(st.hs.title));
+    mv.appendChild(d);
+  }
+  const n = story.steps.length;
+  $("story-count").textContent = `${t(UI_TEXT.storyStep)} ${i + 1} ${t(UI_TEXT.of)} ${n}`;
+  $("story-state").textContent = t(st.label);
+  $("story-card").className = "story-card " + (st.warn ? "warn" : st.treat ? "treat" : st.state);
+  $("story-title").textContent = t(st.title);
+  $("story-text").textContent = t(st.text);
+  $("story-bar").style.width = ((i + 1) / n * 100) + "%";
+  $("story-prev").disabled = i === 0;
+  $("story-next").innerHTML = i === n - 1 ? esc(t(UI_TEXT.finish)) + " ✓" : esc(t(UI_TEXT.next)) + " →";
+  if (sayIt) speak(t(st.title) + ". " + t(st.text));
+}
+$("mv-story").addEventListener("load", (e) => {
+  const m = e.target;
+  if (m.dataset.pendingOrbit) { m.cameraOrbit = m.dataset.pendingOrbit; m.cameraTarget = "auto auto auto"; m.jumpCameraToGoal(); delete m.dataset.pendingOrbit; }
+});
+$("story-prev").addEventListener("click", (e) => { e.stopPropagation(); if (story && storyI > 0) showStoryStep(storyI - 1, true); });
+$("story-next").addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (!story) return;
+  if (storyI < story.steps.length - 1) showStoryStep(storyI + 1, true);
+  else { if ($("mv-story").activateAR && $("mv-story").getAttribute("ar-status") === "session-started") { /* stay in AR */ } location.hash = story.c.id; }
+});
+function openStory(c) {
+  story = { c, steps: buildStory(c) };
+  $("story-organ").textContent = t(c.organ) + " · " + t(c.name);
+  $("story-close").href = "#" + c.id;
+  renderVoiceBtn();
+  showStoryStep(0, true);
+}
+function closeStory() {
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  story = null;
+}
+
+// ---------- Simple page switching (#home, #heart, #heart-story) ----------
 function render() {
   fillStaticText();
   const id = location.hash.replace(/^#\/?/, "");
-  current = CONDITIONS.find((c) => c.id === id) || null;
-  $("home").hidden = !!current;
+  const storyId = id.endsWith("-story") ? id.slice(0, -6) : null;
+  const sc = storyId ? CONDITIONS.find((c) => c.id === storyId) : null;
+  current = sc ? null : (CONDITIONS.find((c) => c.id === id) || null);
+  $("story").hidden = !sc;
+  document.body.classList.toggle("story-open", !!sc);
+  $("home").hidden = !!current || !!sc;
   $("condition").hidden = !current;
+  if (sc) { if (!story || story.c !== sc) openStory(sc); else showStoryStep(storyI, false); document.title = t(UI_TEXT.startStory) + " · " + t(sc.organ); return; }
+  closeStory();
   if (current) renderCondition(current); else { renderHome(); document.title = t(UI_TEXT.appName); }
   if (openState && current) openInfo(openState.h, openState.kind, openState.i); // refresh text after language change
 }
-window.addEventListener("hashchange", () => { closeInfo(); viewMode = "outside"; render(); window.scrollTo(0, 0); });
+window.addEventListener("hashchange", () => {
+  closeInfo(); viewMode = "outside"; render();
+  if (location.hash === "#organs") { const el = $("organs"); if (el) el.scrollIntoView({ behavior: "smooth" }); }
+  else window.scrollTo(0, 0);
+});
+if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = () => {};
 
 setLanguage(lang, false);

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AR cards · Organ Explainer AR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="js/data.js"></script>
+  <style>
+    :root { --bg: #071018; --ink: #e8f4f2; --muted: #9fbab6; --accent: #22c3b4; --line: rgba(34,195,180,.3); }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Noto Sans", "Noto Sans Kannada", "Noto Sans Tamil", system-ui, sans-serif; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 18px 16px 40px; }
+    .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+    a.chip, button.chip { background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+    a.chip.primary { background: var(--accent); color: #04211e; border-color: var(--accent); }
+    h1 { font-size: clamp(1.4rem, 4vw, 2rem); margin: 6px 0; }
+    p { color: var(--muted); max-width: 65ch; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); margin-top: 16px; }
+    .grid img { width: 100%; border-radius: 12px; display: block; border: 1px solid var(--line); }
+    .grid a { color: var(--muted); font-size: .85rem; text-decoration: none; }
+    @media print {
+      body { background: #fff; } .bar, p, h1 { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 10mm; } .grid img { border: 0; border-radius: 0; break-inside: avoid; }
+      .grid a span { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="bar">
+      <a class="chip" href="index.html" id="t-back">←</a>
+      <a class="chip primary" href="scan.html" id="t-scan"></a>
+      <button class="chip" type="button" onclick="window.print()" id="t-print"></button>
+    </div>
+    <h1 id="t-title"></h1>
+    <p id="t-hint"></p>
+    <div class="grid" id="grid"></div>
+  </div>
+  <script>
+    let lang = "en"; try { lang = localStorage.getItem("lang") || "en"; } catch (e) {}
+    document.documentElement.lang = lang;
+    const t = (o) => (o && o[lang] && o[lang].trim()) ? o[lang] : (o ? o.en : "");
+    const $ = (id) => document.getElementById(id);
+    $("t-back").textContent = "← " + t(UI_TEXT.back);
+    $("t-scan").textContent = "⌖ " + t(UI_TEXT.scanTitle);
+    $("t-print").textContent = t(UI_TEXT.printCards);
+    $("t-title").textContent = t(UI_TEXT.cardsTitle);
+    $("t-hint").textContent = t(UI_TEXT.cardsHint);
+    $("grid").innerHTML = CONDITIONS.map((c) =>
+      `<a href="images/cards/card-${c.id}.jpg" target="_blank" rel="noopener"><img src="images/cards/card-${c.id}.jpg" alt="${t(c.organ)} card"><span>${t(c.organ)} · ${t(c.name)}</span></a>`).join("");
+  </script>
+</body>
+</html>

@@ -22,6 +22,11 @@ Each organ has two views, switched with a button:
 | Liver | Fatty liver | Realistic liver with gallbladder, yellow and swollen | See-through liver with vessels |
 | Kidney | Kidney stone | Realistic kidney, swollen, stone in the ureter | Cut-open kidney, stones inside |
 
+## XR features
+- **Place on a table (markerless AR):** WebXR on Android Chrome; organs keep beating/breathing in AR.
+- **Guided AR story:** step-by-step lesson for each organ (healthy → disease → inside view → treatment → warning signs). The story card stays visible inside AR, with Next/Back and voice narration (Web Speech API; Kannada/Tamil voice only if the phone has it).
+- **AR cards (marker-based AR):** 5 printable cards (`cards.html`). `scan.html` uses MindAR image tracking + A-Frame to show healthy vs diseased organs on top of the card. Works with a phone or a laptop webcam (good for projector demos). Card targets are in `ar/targets.mind`.
+
 ## Features
 - Home screen to pick a condition
 - Living organs: the heart beats, the lungs breathe, the liver moves with breathing, blood flows through arteries and urine flows down the ureter. In the diseased organ the flow stops at the blockage (plaque, clot or stone). Works in AR too, with a Pause button.
@@ -37,13 +42,17 @@ Each organ has two views, switched with a button:
 ## Tech
 - Plain HTML, CSS, JavaScript
 - Google `<model-viewer>` 4.4.0 for 3D and AR (WebXR / Scene Viewer)
+- MindAR 1.2.5 + A-Frame 1.5.0 (+ aframe-extras) for card tracking
+- All libraries are hosted in `js/vendor/` and `js/draco/`, so the app does not depend on other websites
 - 3D models in `.glb` format
 - Hosted on GitHub Pages
 
 ## Files
 | File | What it does |
 |---|---|
-| `index.html` | The page layout |
+| `index.html` | Home, organ pages, guided AR story |
+| `scan.html` | AR card scanner (camera) |
+| `cards.html` | Printable AR cards |
 | `css/style.css` | Colours and design |
 | `js/data.js` | All text, dot positions and model file names |
 | `js/app.js` | How the app works (screens, dots, AR, language) |
