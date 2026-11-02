@@ -29,7 +29,7 @@ document.querySelectorAll(".lang button").forEach((b) => b.addEventListener("cli
 function fillStaticText() {
   document.querySelectorAll("[data-t]").forEach((el) => { el.textContent = t(UI_TEXT[el.dataset.t]); });
   $("credits").innerHTML = CREDITS.map((c) =>
-    `${esc(c.what)}: <a href="${esc(c.url)}" target="_blank" rel="noopener">“${esc(c.name)}”</a> by ${esc(c.author)} (CC BY 4.0, disease parts added)`).join(" · ");
+    `${esc(c.what)}: <a href="${esc(c.url)}" target="_blank" rel="noopener">“${esc(c.name)}”</a> by ${esc(c.author)} (${esc(c.license)})`).join(" · ") + ". Disease parts and colours added for this project.";
 }
 
 // ---------- Home ----------
