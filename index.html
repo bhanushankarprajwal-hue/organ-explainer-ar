@@ -53,6 +53,12 @@
           <model-viewer id="mv-healthy" camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
             shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
             <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
+            <!-- description box shown only inside AR view -->
+            <div class="ar-info healthy" id="ar-info-healthy" hidden>
+              <h3 class="ar-info-title"></h3>
+              <p class="ar-info-text"></p>
+              <button class="ar-info-close" type="button" data-t="closeInfo"></button>
+            </div>
           </model-viewer>
           <button class="reset" data-reset="mv-healthy" data-t="reset"></button>
         </figure>
@@ -65,6 +71,12 @@
           <model-viewer id="mv-diseased" camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
             shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
             <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
+            <!-- description box shown only inside AR view -->
+            <div class="ar-info diseased" id="ar-info-diseased" hidden>
+              <h3 class="ar-info-title"></h3>
+              <p class="ar-info-text"></p>
+              <button class="ar-info-close" type="button" data-t="closeInfo"></button>
+            </div>
           </model-viewer>
           <button class="reset" data-reset="mv-diseased" data-t="reset"></button>
         </figure>

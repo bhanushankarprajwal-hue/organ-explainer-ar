@@ -129,6 +129,15 @@ function openInfo(h, kind, i, fromList) {
     mv.cameraOrbit = `${theta.toFixed(0)}deg ${Math.max(20, Math.min(160, phi)).toFixed(0)}deg auto`;
     mv.cameraTarget = "auto auto auto";
   }
+  // In AR, show the description inside the camera view
+  if (arActive[kind]) {
+    const ab = $("ar-info-" + kind);
+    ab.querySelector(".ar-info-title").textContent = (i + 1) + ". " + t(h.title);
+    ab.querySelector(".ar-info-text").textContent = t(h.text);
+    ab.hidden = false;
+    openState = { h, kind, i };
+    return;
+  }
   const box = $("info");
   box.className = "info " + kind;
   $("info-tag").textContent = kind === "healthy" ? t(UI_TEXT.healthy) : t(UI_TEXT.withCondition);
@@ -155,6 +164,22 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeInfo(
   m.jumpCameraToGoal();
   delete m.dataset.pendingOrbit;
 }));
+
+// ---------- AR mode: track it and use the in-AR description box ----------
+const arActive = { healthy: false, diseased: false };
+["healthy", "diseased"].forEach((kind) => {
+  const mv = $("mv-" + kind), ab = $("ar-info-" + kind);
+  mv.addEventListener("ar-status", (e) => {
+    arActive[kind] = e.detail.status === "session-started";
+    if (!arActive[kind]) { ab.hidden = true; closeInfo(); }
+    else $("info").hidden = true;
+  });
+  ab.querySelector(".ar-info-close").addEventListener("click", (e) => {
+    e.stopPropagation();
+    ab.hidden = true;
+    document.querySelectorAll(".hotspot.active").forEach((x) => x.classList.remove("active"));
+  });
+});
 
 // ---------- Reset view buttons ----------
 document.querySelectorAll("[data-reset]").forEach((b) => b.addEventListener("click", () => {
