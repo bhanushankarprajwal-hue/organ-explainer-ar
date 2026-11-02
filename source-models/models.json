@@ -1,0 +1,82 @@
+{
+ "heart-internal": {
+  "uid": "21d346f72230432e8ed5fe448b03cca5",
+  "kind": "glb",
+  "bytes": 28104084,
+  "name": "Human Heart Internal Structure 3D Model",
+  "author": "Haiqa Arif",
+  "license": "CC Attribution",
+  "url": "https://sketchfab.com/3d-models/human-heart-internal-structure-3d-model-21d346f72230432e8ed5fe448b03cca5",
+  "faces": 499992
+ },
+ "brain-midsagittal": {
+  "uid": "f435004b87bb4792877404f8ccd4c6aa",
+  "kind": "glb",
+  "bytes": 5133372,
+  "name": "Human Brain Model - Midsagittal Section",
+  "author": "3-D Photogrammetry Anatomical Models",
+  "license": "CC Attribution-NonCommercial-ShareAlike",
+  "url": "https://sketchfab.com/3d-models/human-brain-model-midsagittal-section-f435004b87bb4792877404f8ccd4c6aa",
+  "faces": 93561
+ },
+ "kidney-section": {
+  "uid": "686992c2a7fb456eaa8997b0366f4062",
+  "kind": "glb",
+  "bytes": 7014712,
+  "name": "Kidney",
+  "author": "cgmac",
+  "license": "CC Attribution",
+  "url": "https://sketchfab.com/3d-models/kidney-686992c2a7fb456eaa8997b0366f4062",
+  "faces": 84443
+ },
+ "kidney-section-2": {
+  "uid": "b59cc02d4e964af7a2c1fcb0001919d8",
+  "kind": "glb",
+  "bytes": 7323476,
+  "name": "Kidney Cross-section",
+  "author": "Medulla",
+  "license": "CC Attribution",
+  "url": "https://sketchfab.com/3d-models/kidney-cross-section-b59cc02d4e964af7a2c1fcb0001919d8",
+  "faces": 213156
+ },
+ "liver-segments": {
+  "uid": "4fa7acc0bbd449fb965fe41a6b5e6ee8",
+  "kind": "glb",
+  "bytes": 4894608,
+  "name": "Liver Segments",
+  "author": "Dr. David Frias",
+  "license": "CC Attribution",
+  "url": "https://sketchfab.com/3d-models/liver-segments-4fa7acc0bbd449fb965fe41a6b5e6ee8",
+  "faces": 106578
+ },
+ "liver-gallbladder": {
+  "uid": "6c4e9bd0d49f4828b804259330c0c6c4",
+  "kind": "glb",
+  "bytes": 6898312,
+  "name": "Human liver and gallbladder",
+  "author": "ElliotSS",
+  "license": "CC Attribution",
+  "url": "https://sketchfab.com/3d-models/human-liver-and-gallbladder-6c4e9bd0d49f4828b804259330c0c6c4",
+  "faces": 79192
+ },
+ "lungs": {
+  "uid": "ce09f4099a68467880f46e61eb9a3531",
+  "kind": "glb",
+  "bytes": 7630236,
+  "name": "Realistic Human Lungs",
+  "author": "neshallads",
+  "license": "CC Attribution",
+  "url": "https://sketchfab.com/3d-models/realistic-human-lungs-ce09f4099a68467880f46e61eb9a3531",
+  "faces": 63974
+ },
+ "lungs-respiratory": {
+  "uid": "a7ac43a140644662a9b896b8a8a10f57",
+  "kind": "glb",
+  "bytes": 17400536,
+  "name": "Respiratory System",
+  "author": "Vikrama Raghuraman",
+  "license": "CC Attribution",
+  "url": "https://sketchfab.com/3d-models/respiratory-system-a7ac43a140644662a9b896b8a8a10f57",
+  "faces": 214784
+ }
+}
