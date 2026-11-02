@@ -90,6 +90,16 @@ button { font: inherit; cursor: pointer; }
 .about.condition { border-left: 5px solid var(--sick); }
 .about h2 { color: var(--brand); }
 .hint { color: var(--muted); font-size: .9rem; margin: 0 0 10px; }
+.view-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 4px 0 12px; }
+.view-switch { display: inline-flex; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.view-switch button {
+  border: 0; background: transparent; color: var(--muted); font-weight: 600;
+  padding: 8px 16px; border-radius: 999px; font-size: .95rem;
+}
+.view-switch button.active { background: var(--brand); color: #fff; }
+.view-switch button:focus-visible { outline: 3px solid #ffd54a; outline-offset: 2px; }
+.view-switch .vi { font-size: .85em; }
+.view-hint { margin: 0; color: var(--ink); font-size: .92rem; }
 
 .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .viewer-card {

@@ -6,6 +6,8 @@
 let lang = "en";
 try { lang = localStorage.getItem("lang") || "en"; } catch (e) {}
 let current = null;
+let viewMode = "outside";   // "outside" = realistic model, "inside" = cut-open model
+const V = (c) => c.views[viewMode];
 
 // Pick text in the chosen language. Falls back to English.
 function t(obj) {
@@ -38,13 +40,13 @@ function renderHome() {
     <a class="c-card" href="#${c.id}">
       <div class="thumb">
         <img src="images/thumb-${c.id}.png" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'icon',textContent:'${c.icon}'}))">
-        <span class="badge ${c.placeholder ? "ph" : "real"}">${t(c.placeholder ? UI_TEXT.placeholderTag : UI_TEXT.realModel)}</span>
+        <span class="badge real">${t(UI_TEXT.realModel)}</span>
       </div>
       <div class="c-body">
         <p class="organ">${esc(t(c.organ))}</p>
         <h2>${esc(t(c.name))}</h2>
         <p>${esc(t(c.short))}</p>
-        <span class="go">${c.healthyHotspots.length + c.diseasedHotspots.length} ${esc(t(UI_TEXT.parts))} →</span>
+        <span class="go">${Object.values(c.views).reduce((n, v) => n + v.healthyHotspots.length + v.diseasedHotspots.length, 0)} ${esc(t(UI_TEXT.parts))} →</span>
       </div>
     </a>`).join("");
 }
@@ -75,7 +77,7 @@ document.addEventListener("click", (e) => {
   const b = e.target.closest(".parts button");
   if (!b || !current) return;
   const kind = b.dataset.kind, i = +b.dataset.i;
-  const h = (kind === "healthy" ? current.healthyHotspots : current.diseasedHotspots)[i];
+  const h = (kind === "healthy" ? V(current).healthyHotspots : V(current).diseasedHotspots)[i];
   openInfo(h, kind, i, true);
 });
 
@@ -91,24 +93,30 @@ function renderCondition(c) {
   $("c-warning").textContent = t(c.warning);
   $("c-treatment").innerHTML = c.treatment.map((s) => `<li><h3>${esc(t(s.title))}</h3><p>${esc(t(s.text))}</p></li>`).join("");
 
+  const v = V(c);
   const mh = $("mv-healthy"), md = $("mv-diseased"), mc = $("mv-compare");
-  if (mh.dataset.cond !== c.id) {
+  const key = c.id + ":" + viewMode;
+  if (mh.dataset.cond !== key) {
     [mh, md].forEach((m) => {
-      m.setAttribute("camera-orbit", c.orbit);
+      m.setAttribute("camera-orbit", v.orbit);
       m.setAttribute("camera-target", "auto auto auto");
-      m.cameraOrbit = c.orbit; m.cameraTarget = "auto auto auto"; m.fieldOfView = "auto";
-      m.dataset.cond = c.id;
-      m.dataset.pendingOrbit = c.orbit;
+      m.cameraOrbit = v.orbit; m.cameraTarget = "auto auto auto"; m.fieldOfView = "auto";
+      m.dataset.cond = key;
+      m.dataset.pendingOrbit = v.orbit;
     });
   }
-  loadModel(mh, c.healthyModel);
-  loadModel(md, c.diseasedModel);
-  loadModel(mc, c.compareModel);
+  loadModel(mh, v.healthyModel);
+  loadModel(md, v.diseasedModel);
+  loadModel(mc, v.compareModel);
   mh.alt = t(UI_TEXT.healthy) + " " + t(c.organ);
   md.alt = t(c.name);
-  makeHotspots(mh, c.healthyHotspots, "healthy");
-  makeHotspots(md, c.diseasedHotspots, "diseased");
-  $("placeholder-note").hidden = !c.placeholder;
+  makeHotspots(mh, v.healthyHotspots, "healthy");
+  makeHotspots(md, v.diseasedHotspots, "diseased");
+  document.querySelectorAll(".view-switch button").forEach((b) => {
+    b.classList.toggle("active", b.dataset.view === viewMode);
+    b.setAttribute("aria-pressed", b.dataset.view === viewMode);
+  });
+  $("view-hint").textContent = t(viewMode === "outside" ? UI_TEXT.outsideHint : UI_TEXT.insideHint);
   document.title = t(c.name) + " · " + t(UI_TEXT.appName);
 }
 
@@ -181,10 +189,18 @@ const arActive = { healthy: false, diseased: false };
   });
 });
 
+// ---------- Outside / Inside switch ----------
+document.querySelectorAll(".view-switch button").forEach((b) => b.addEventListener("click", () => {
+  if (viewMode === b.dataset.view || !current) return;
+  viewMode = b.dataset.view;
+  closeInfo();
+  renderCondition(current);
+}));
+
 // ---------- Reset view buttons ----------
 document.querySelectorAll("[data-reset]").forEach((b) => b.addEventListener("click", () => {
   const mv = $(b.dataset.reset);
-  mv.cameraOrbit = current ? current.orbit : "0deg 80deg auto";
+  mv.cameraOrbit = current ? V(current).orbit : "0deg 80deg auto";
   mv.cameraTarget = "auto auto auto";
   mv.fieldOfView = "auto";
 }));
@@ -217,6 +233,6 @@ function render() {
   if (current) renderCondition(current); else { renderHome(); document.title = t(UI_TEXT.appName); }
   if (openState && current) openInfo(openState.h, openState.kind, openState.i); // refresh text after language change
 }
-window.addEventListener("hashchange", () => { closeInfo(); render(); window.scrollTo(0, 0); });
+window.addEventListener("hashchange", () => { closeInfo(); viewMode = "outside"; render(); window.scrollTo(0, 0); });
 
 setLanguage(lang, false);

@@ -44,6 +44,14 @@
       <h1 id="c-name"></h1>
     </section>
 
+    <div class="view-bar">
+      <div class="view-switch" role="group" aria-label="View">
+        <button type="button" data-view="outside" class="active" aria-pressed="true"><span data-t="outsideView"></span></button>
+        <button type="button" data-view="inside" aria-pressed="false"><span data-t="insideView"></span></button>
+      </div>
+      <p class="view-hint" id="view-hint"></p>
+    </div>
+
     <p class="hint" data-t="tapHint"></p>
 
     <section class="compare">
@@ -84,7 +92,6 @@
       </div>
     </section>
 
-    <p class="placeholder-note" id="placeholder-note" data-t="placeholder"></p>
 
     <div class="both-ar">
       <button id="both-ar-btn" class="primary" hidden>⧉ <span data-t="viewBothAR"></span></button>

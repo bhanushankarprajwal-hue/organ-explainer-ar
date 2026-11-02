@@ -10,13 +10,17 @@ On an Android phone, the models can be placed on a real table using the camera (
 > ⚠ For education only. This app does not diagnose any disease.
 
 ## Organs and conditions
-| Organ | Condition | 3D model |
-|---|---|---|
-| Heart | Blocked coronary artery | Cut-open model (chambers, valves, walls) + coronary artery, plaque and damaged area added |
-| Brain | Stroke | Brain cut in half + artery, clot and damaged area added |
-| Lungs | Smoker's lungs | Lungs with windpipe; smoker version recoloured with tar spots |
-| Liver | Fatty liver | See-through liver with vessels; fatty version yellow, swollen, with fat spots |
-| Kidney | Kidney stone | Cut-open kidney; stones added in the cup, pelvis and ureter |
+Each organ has two views, switched with a button:
+- **Outside view**: a realistic model, the way a doctor would see the organ.
+- **Inside view**: a cut-open teaching model, to show the parts inside.
+
+| Organ | Condition | Outside view | Inside view |
+|---|---|---|---|
+| Heart | Blocked coronary artery | Realistic heart + plaque, narrow artery, damaged area | Cut-open heart (chambers, valves, walls) |
+| Brain | Stroke | Realistic brain, clot in the middle cerebral artery | Brain cut in half, clot in the anterior cerebral artery |
+| Lungs | Smoker's lungs | Realistic lungs, darkened with tar spots | Textbook lungs with windpipe |
+| Liver | Fatty liver | Realistic liver with gallbladder, yellow and swollen | See-through liver with vessels |
+| Kidney | Kidney stone | Realistic kidney, swollen, stone in the ureter | Cut-open kidney, stones inside |
 
 ## Features
 - Home screen to pick a condition
@@ -42,17 +46,25 @@ On an Android phone, the models can be placed on a real table using the camera (
 | `css/style.css` | Colours and design |
 | `js/data.js` | All text, dot positions and model file names |
 | `js/app.js` | How the app works (screens, dots, AR, language) |
-| `models/*.glb` | 3D models |
+| `models/*.glb` | 3D models (`*-inside.glb` = cut-open view) |
 | `images/` | Preview pictures for the home screen |
 
 ## Model credits (Sketchfab)
-- Heart: "Human Heart Internal Structure 3D Model" by Haiqa Arif — CC BY 4.0
-- Brain: "Human Brain Model - Midsagittal Section" by 3-D Photogrammetry Anatomical Models — CC BY-NC-SA 4.0 (non-commercial)
-- Lungs: "Respiratory System" by Vikrama Raghuraman — CC BY 4.0
-- Liver: "Liver Segments" by Dr. David Frias — CC BY 4.0
-- Kidney: "Kidney" by cgmac — CC BY 4.0
-- Disease parts and colours were added for this project. Models were resized and simplified for phones.
-- The original downloads are kept on the `source-models` branch (fetched by the GitHub Action in `.github/workflows`).
+| Model | Title | Author | Licence |
+|---|---|---|---|
+| Heart (outside) | Realistic Human Heart | neshallads | CC BY 4.0 |
+| Heart (inside) | Human Heart Internal Structure 3D Model | Haiqa Arif | CC BY 4.0 |
+| Brain (outside) | Human brain, Cerebrum & Brainstem | FrankJohansson | CC BY 4.0 |
+| Brain (inside) | Human Brain Model - Midsagittal Section | 3-D Photogrammetry Anatomical Models | CC BY-NC-SA 4.0 |
+| Lungs (outside) | Realistic Human Lungs | neshallads | CC BY 4.0 |
+| Lungs (inside) | Respiratory System | Vikrama Raghuraman | CC BY 4.0 |
+| Liver (outside) | Human liver and gallbladder | ElliotSS | CC BY 4.0 |
+| Liver (inside) | Liver Segments | Dr. David Frias | CC BY 4.0 |
+| Kidney (outside) | Kidney Cross-section | Medulla | CC BY 4.0 |
+| Kidney (inside) | Kidney | cgmac | CC BY 4.0 |
+
+Disease parts and colours were added for this project. Models were resized and simplified for phones.
+The original downloads are on the `source-models` branch (fetched by the GitHub Action in `.github/workflows`).
 
 ## Languages
 - English: done.
