@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organ Explainer AR</title>
+  <meta name="description" content="AR-based 3D patient education: healthy vs diseased organs, explained simply.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Google's 3D + AR viewer -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">
+      <span class="brand-mark" aria-hidden="true">+</span>
+      <span data-t="appName">Organ Explainer AR</span>
+    </a>
+    <div class="lang" role="group" aria-label="Language">
+      <button data-lang="en" class="active">English</button>
+      <button data-lang="kn">ಕನ್ನಡ</button>
+      <button data-lang="ta">தமிழ்</button>
+    </div>
+  </header>
+
+  <p class="disclaimer" role="note"><strong>!</strong> <span data-t="disclaimer"></span></p>
+
+  <!-- HOME SCREEN -->
+  <main id="home" class="page">
+    <section class="hero">
+      <h1 data-t="tagline"></h1>
+      <p class="sub" data-t="pickOne"></p>
+    </section>
+    <div id="cards" class="cards"></div>
+  </main>
+
+  <!-- CONDITION SCREEN -->
+  <main id="condition" class="page" hidden>
+    <a class="back" href="#home">← <span data-t="back"></span></a>
+    <section class="title-block">
+      <p class="organ" id="c-organ"></p>
+      <h1 id="c-name"></h1>
+    </section>
+
+    <p class="hint" data-t="tapHint"></p>
+
+    <section class="compare">
+      <div class="side healthy">
+        <figure class="viewer-card healthy">
+          <figcaption><span class="dot"></span><span data-t="healthy"></span></figcaption>
+          <model-viewer id="mv-healthy" camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
+            shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
+            <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
+          </model-viewer>
+          <button class="reset" data-reset="mv-healthy" data-t="reset"></button>
+        </figure>
+        <ol class="parts" id="parts-healthy"></ol>
+      </div>
+
+      <div class="side diseased">
+        <figure class="viewer-card diseased">
+          <figcaption><span class="dot"></span><span data-t="withCondition"></span></figcaption>
+          <model-viewer id="mv-diseased" camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
+            shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
+            <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
+          </model-viewer>
+          <button class="reset" data-reset="mv-diseased" data-t="reset"></button>
+        </figure>
+        <ol class="parts" id="parts-diseased"></ol>
+      </div>
+    </section>
+
+    <p class="placeholder-note" id="placeholder-note" data-t="placeholder"></p>
+
+    <div class="both-ar">
+      <button id="both-ar-btn" class="primary" hidden>⧉ <span data-t="viewBothAR"></span></button>
+      <p id="no-ar" class="muted" data-t="noAR" hidden></p>
+      <!-- hidden viewer used only to open both models together in AR -->
+      <model-viewer id="mv-compare" ar ar-modes="webxr scene-viewer quick-look" class="offscreen"></model-viewer>
+    </div>
+
+    <section class="info-grid">
+      <div class="about card">
+        <h2 data-t="aboutOrgan"></h2>
+        <p id="c-organ-about"></p>
+      </div>
+      <div class="about card condition">
+        <h2 data-t="whatIsIt"></h2>
+        <p id="c-about"></p>
+      </div>
+    </section>
+
+    <section class="treatment">
+      <h2 data-t="treatment"></h2>
+      <ol id="c-treatment" class="steps"></ol>
+    </section>
+
+    <section class="warning card">
+      <h2>⚠ <span data-t="warning"></span></h2>
+      <p id="c-warning"></p>
+    </section>
+  </main>
+
+  <!-- INFO SHEET (opens when a dot is tapped) -->
+  <aside id="info" class="info" hidden aria-live="polite">
+    <div class="info-inner">
+      <span id="info-tag" class="tag"></span>
+      <h3 id="info-title"></h3>
+      <p id="info-text"></p>
+      <button id="info-close" class="ghost" data-t="closeInfo"></button>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <footer class="foot">
+    <p>XR in Health Care · Dayananda Sagar University · <span data-t="disclaimer"></span></p>
+    <p class="credits"><span data-t="credits"></span>: <span id="credits"></span></p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
