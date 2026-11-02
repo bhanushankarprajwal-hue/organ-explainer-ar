@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Models are compressed (Draco). The decoder is hosted with the app. -->
+  <script>self.ModelViewerElement = { dracoDecoderLocation: new URL("js/draco/", location.href).href };</script>
   <!-- Google's 3D + AR viewer -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
 </head>
@@ -98,7 +100,7 @@
       <button id="both-ar-btn" class="primary" hidden>⧉ <span data-t="viewBothAR"></span></button>
       <p id="no-ar" class="muted" data-t="noAR" hidden></p>
       <!-- hidden viewer used only to open both models together in AR -->
-      <model-viewer id="mv-compare" autoplay ar ar-modes="webxr scene-viewer quick-look" class="offscreen"></model-viewer>
+      <model-viewer id="mv-compare" loading="eager" autoplay ar ar-modes="webxr scene-viewer quick-look" class="offscreen"></model-viewer>
     </div>
 
     <section class="info-grid">

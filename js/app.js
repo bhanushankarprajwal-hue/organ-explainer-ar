@@ -107,7 +107,9 @@ function renderCondition(c) {
   }
   loadModel(mh, v.healthyModel);
   loadModel(md, v.diseasedModel);
-  loadModel(mc, v.compareModel);
+  // the "both on your table" file loads only after the two main models are ready
+  mc.dataset.want = v.compareModel;
+  maybeLoadCompare();
   mh.alt = t(UI_TEXT.healthy) + " " + t(c.organ);
   md.alt = t(c.name);
   makeHotspots(mh, v.healthyHotspots, "healthy");
@@ -216,6 +218,13 @@ document.querySelectorAll("[data-reset]").forEach((b) => b.addEventListener("cli
   mv.cameraTarget = "auto auto auto";
   mv.fieldOfView = "auto";
 }));
+
+function maybeLoadCompare() {
+  const mh = $("mv-healthy"), md = $("mv-diseased"), mc = $("mv-compare");
+  const ready = (m) => m.loaded && m.getAttribute("src") && m.src.endsWith(m.getAttribute("src"));
+  if (mc.dataset.want && ready(mh) && ready(md)) loadModel(mc, mc.dataset.want);
+}
+["mv-healthy", "mv-diseased"].forEach((id) => $(id).addEventListener("load", maybeLoadCompare));
 
 // ---------- "View both in AR" ----------
 const compareMV = $("mv-compare");
