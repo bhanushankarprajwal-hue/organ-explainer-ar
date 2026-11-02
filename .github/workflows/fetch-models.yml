@@ -1,0 +1,27 @@
+name: Fetch source models
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/fetch-models.yml", "tools/fetch_models.py"]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download models from Sketchfab
+        env:
+          SKETCHFAB_TOKEN: ${{ secrets.SKETCHFAB_TOKEN }}
+        run: python3 tools/fetch_models.py
+      - name: Save them on the source-models branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan source-models
+          git rm -rq --cached .
+          find source-models -size +95M -print -delete
+          git add source-models
+          git commit -qm "Source models from Sketchfab"
+          git push -f origin source-models
