@@ -25,6 +25,7 @@ Each organ has two views, switched with a button:
 ## XR features
 - **Place on a table (markerless AR):** WebXR on Android Chrome; organs keep beating/breathing in AR.
 - **Guided AR story:** step-by-step lesson for each organ (healthy → disease → inside view → treatment → warning signs). The story card stays visible inside AR, with Next/Back and voice narration (Web Speech API; Kannada/Tamil voice only if the phone has it).
+- **Body AR mirror (`body.html`):** MediaPipe Pose finds a real person in the camera and places the brain, lungs, heart, liver and kidneys on their body (three.js). Healthy / With the condition switch. Tap an organ, or point at it with a finger (MediaPipe Hands, hold to choose); it flies out with its numbered parts. Pinch and move to turn it, pinch with two hands to zoom. Works with the phone back camera (point at a friend) or a laptop webcam (mirror). Positions are approximate.
 - **AR cards (marker-based AR):** 5 printable cards (`cards.html`). `scan.html` uses MindAR image tracking + A-Frame to show healthy vs diseased organs on top of the card. Works with a phone or a laptop webcam (good for projector demos). Card targets are in `ar/targets.mind`.
 
 ## Features
@@ -43,6 +44,7 @@ Each organ has two views, switched with a button:
 - Plain HTML, CSS, JavaScript
 - Google `<model-viewer>` 4.4.0 for 3D and AR (WebXR / Scene Viewer)
 - MindAR 1.2.5 + A-Frame 1.5.0 (+ aframe-extras) for card tracking
+- MediaPipe Tasks Vision 0.10.18 (Pose Landmarker lite, Hand Landmarker) + three.js r172 for Body AR
 - All libraries are hosted in `js/vendor/` and `js/draco/`, so the app does not depend on other websites
 - 3D models in `.glb` format
 - Hosted on GitHub Pages
@@ -52,6 +54,7 @@ Each organ has two views, switched with a button:
 |---|---|
 | `index.html` | Home, organ pages, guided AR story |
 | `scan.html` | AR card scanner (camera) |
+| `body.html`, `js/body.js` | Body AR mirror (pose + hand tracking) |
 | `cards.html` | Printable AR cards |
 | `css/style.css` | Colours and design |
 | `js/data.js` | All text, dot positions and model file names |

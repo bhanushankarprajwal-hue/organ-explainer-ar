@@ -8,6 +8,21 @@
 // =============================================================
 
 const UI_TEXT = {
+  "bodyTitle": {"en": "Body AR", "kn": "ಬಾಡಿ AR", "ta": "உடல் AR"},
+  "modeBody": {"en": "Body AR mirror", "kn": "ಬಾಡಿ AR ಕನ್ನಡಿ", "ta": "உடல் AR கண்ணாடி"},
+  "modeBodySub": {"en": "See organs on a real person", "kn": "ನಿಜವಾದ ವ್ಯಕ್ತಿಯ ಮೇಲೆ ಅಂಗಗಳನ್ನು ನೋಡಿ", "ta": "உண்மையான நபரின் மேல் உறுப்புகளைப் பாருங்கள்"},
+  "bodyHint": {"en": "Stand 1–2 metres from the camera. Keep your head and waist in view.", "kn": "ಕ್ಯಾಮೆರಾದಿಂದ 1–2 ಮೀಟರ್ ದೂರ ನಿಲ್ಲಿ. ತಲೆ ಮತ್ತು ಸೊಂಟ ಕಾಣುವಂತೆ ಇರಲಿ.", "ta": "கேமராவிலிருந்து 1–2 மீட்டர் தூரத்தில் நில்லுங்கள். தலையும் இடுப்பும் தெரியட்டும்."},
+  "bodyFound": {"en": "Tap an organ, or point at it with your finger.", "kn": "ಅಂಗವನ್ನು ಒತ್ತಿ, ಅಥವಾ ಬೆರಳಿನಿಂದ ಅದರತ್ತ ತೋರಿಸಿ.", "ta": "உறுப்பைத் தொடுங்கள், அல்லது விரலால் அதைச் சுட்டிக்காட்டுங்கள்."},
+  "bodyPinch": {"en": "Pinch and move your hand to turn it. Pinch with two hands to zoom.", "kn": "ತಿರುಗಿಸಲು ಚಿಟಿಕೆ ಹಿಡಿದು ಕೈ ಸರಿಸಿ. ದೊಡ್ಡದು ಮಾಡಲು ಎರಡೂ ಕೈಯಿಂದ ಚಿಟಿಕೆ ಹಿಡಿಯಿರಿ.", "ta": "சுழற்றக் கிள்ளிப் பிடித்துக் கையை நகர்த்துங்கள். பெரிதாக்க இரு கைகளாலும் கிள்ளுங்கள்."},
+  "flipCam": {"en": "Switch camera", "kn": "ಕ್ಯಾಮೆರಾ ಬದಲಿಸಿ", "ta": "கேமராவை மாற்று"},
+  "handsOn": {"en": "Hand control on", "kn": "ಕೈ ನಿಯಂತ್ರಣ ಆನ್", "ta": "கை கட்டுப்பாடு ஆன்"},
+  "handsOff": {"en": "Hand control off", "kn": "ಕೈ ನಿಯಂತ್ರಣ ಆಫ್", "ta": "கை கட்டுப்பாடு ஆஃப்"},
+  "startCamera": {"en": "Start camera", "kn": "ಕ್ಯಾಮೆರಾ ಶುರು ಮಾಡಿ", "ta": "கேமராவைத் தொடங்கு"},
+  "camError": {"en": "Could not open the camera. Allow camera access in the browser and try again.", "kn": "ಕ್ಯಾಮೆರಾ ತೆರೆಯಲಾಗಲಿಲ್ಲ. ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಕ್ಯಾಮೆರಾ ಅನುಮತಿ ಕೊಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.", "ta": "கேமராவைத் திறக்க முடியவில்லை. உலாவியில் கேமரா அனுமதி தந்து மீண்டும் முயலுங்கள்."},
+  "loadingBody": {"en": "Loading body tracking and 3D organs…", "kn": "ದೇಹ ಟ್ರ್ಯಾಕಿಂಗ್ ಮತ್ತು 3D ಅಂಗಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ…", "ta": "உடல் கண்காணிப்பும் 3D உறுப்புகளும் ஏற்றப்படுகின்றன…"},
+  "bodyNote": {"en": "Organ positions are approximate, for learning only.", "kn": "ಅಂಗಗಳ ಸ್ಥಾನಗಳು ಅಂದಾಜು ಮಾತ್ರ, ಕಲಿಕೆಗಾಗಿ.", "ta": "உறுப்புகளின் இடங்கள் தோராயமானவை, கற்றலுக்காக மட்டும்."},
+  "partsOf": {"en": "Parts", "kn": "ಭಾಗಗಳು", "ta": "பகுதிகள்"},
+  "kidneys": {"en": "Kidneys (at the back)", "kn": "ಮೂತ್ರಪಿಂಡಗಳು (ಹಿಂಭಾಗದಲ್ಲಿ)", "ta": "சிறுநீரகங்கள் (பின்புறம்)"},
   "scanTitle": {"en": "Scan an AR card", "kn": "AR ಕಾರ್ಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ", "ta": "AR அட்டையை ஸ்கேன் செய்"},
   "scanPoint": {"en": "Point your camera at a card", "kn": "ಕ್ಯಾಮೆರಾವನ್ನು ಕಾರ್ಡ್‌ನತ್ತ ತೋರಿಸಿ", "ta": "கேமராவை அட்டையை நோக்கிக் காட்டுங்கள்"},
   "scanHint": {"en": "Hold the card flat and keep it inside the frame. The organ will appear on top of it.", "kn": "ಕಾರ್ಡ್ ಅನ್ನು ಸಮತಟ್ಟಾಗಿ ಹಿಡಿದು ಚೌಕಟ್ಟಿನೊಳಗೆ ಇಡಿ. ಅಂಗ ಅದರ ಮೇಲೆ ಕಾಣಿಸುತ್ತದೆ.", "ta": "அட்டையைச் சமமாகப் பிடித்துச் சட்டத்துக்குள் வையுங்கள். உறுப்பு அதன் மேல் தோன்றும்."},

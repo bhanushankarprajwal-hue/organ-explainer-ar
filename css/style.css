@@ -110,6 +110,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   background: linear-gradient(90deg, var(--card-2), var(--card)); border: 1px solid var(--line);
   border-radius: 16px; padding: 14px 16px; transition: border-color .15s, transform .15s;
 }
+.mode-new { border-color: var(--line-strong); background: linear-gradient(90deg, rgba(47,211,195,.16), var(--card)); }
 .mode:hover { border-color: var(--line-strong); transform: translateX(3px); }
 .mode b { display: block; font-size: 1.02rem; }
 .mode small { color: var(--muted); font-size: .85rem; }
