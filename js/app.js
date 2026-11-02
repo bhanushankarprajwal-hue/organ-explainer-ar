@@ -117,6 +117,7 @@ function renderCondition(c) {
     b.setAttribute("aria-pressed", b.dataset.view === viewMode);
   });
   $("view-hint").textContent = t(viewMode === "outside" ? UI_TEXT.outsideHint : UI_TEXT.insideHint);
+  applyMotion();
   document.title = t(c.name) + " · " + t(UI_TEXT.appName);
 }
 
@@ -196,6 +197,17 @@ document.querySelectorAll(".view-switch button").forEach((b) => b.addEventListen
   closeInfo();
   renderCondition(current);
 }));
+
+// ---------- Pause / play the organ movement ----------
+let moving = true;
+function applyMotion() {
+  ["mv-healthy", "mv-diseased", "mv-compare"].forEach((id) => { const m = $(id); if (typeof m.play !== "function") return; moving ? m.play() : m.pause(); });
+  const b = $("motion-btn");
+  b.setAttribute("aria-pressed", moving);
+  b.innerHTML = (moving ? "⏸ " : "▶ ") + "<span>" + esc(t(moving ? UI_TEXT.pauseMotion : UI_TEXT.playMotion)) + "</span>";
+}
+$("motion-btn").addEventListener("click", () => { moving = !moving; applyMotion(); });
+["mv-healthy", "mv-diseased", "mv-compare"].forEach((id) => $(id).addEventListener("load", () => { if (!moving) $(id).pause(); }));
 
 // ---------- Reset view buttons ----------
 document.querySelectorAll("[data-reset]").forEach((b) => b.addEventListener("click", () => {

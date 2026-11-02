@@ -49,6 +49,7 @@
         <button type="button" data-view="outside" class="active" aria-pressed="true"><span data-t="outsideView"></span></button>
         <button type="button" data-view="inside" aria-pressed="false"><span data-t="insideView"></span></button>
       </div>
+      <button type="button" id="motion-btn" class="motion-btn" aria-pressed="true">⏸ <span data-t="pauseMotion"></span></button>
       <p class="view-hint" id="view-hint"></p>
     </div>
 
@@ -58,7 +59,7 @@
       <div class="side healthy">
         <figure class="viewer-card healthy">
           <figcaption><span class="dot"></span><span data-t="healthy"></span></figcaption>
-          <model-viewer id="mv-healthy" camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
+          <model-viewer id="mv-healthy" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
             shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
             <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
             <!-- description box shown only inside AR view -->
@@ -76,7 +77,7 @@
       <div class="side diseased">
         <figure class="viewer-card diseased">
           <figcaption><span class="dot"></span><span data-t="withCondition"></span></figcaption>
-          <model-viewer id="mv-diseased" camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
+          <model-viewer id="mv-diseased" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
             shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
             <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
             <!-- description box shown only inside AR view -->
@@ -97,7 +98,7 @@
       <button id="both-ar-btn" class="primary" hidden>⧉ <span data-t="viewBothAR"></span></button>
       <p id="no-ar" class="muted" data-t="noAR" hidden></p>
       <!-- hidden viewer used only to open both models together in AR -->
-      <model-viewer id="mv-compare" ar ar-modes="webxr scene-viewer quick-look" class="offscreen"></model-viewer>
+      <model-viewer id="mv-compare" autoplay ar ar-modes="webxr scene-viewer quick-look" class="offscreen"></model-viewer>
     </div>
 
     <section class="info-grid">

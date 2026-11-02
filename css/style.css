@@ -99,6 +99,8 @@ button { font: inherit; cursor: pointer; }
 .view-switch button.active { background: var(--brand); color: #fff; }
 .view-switch button:focus-visible { outline: 3px solid #ffd54a; outline-offset: 2px; }
 .view-switch .vi { font-size: .85em; }
+.motion-btn { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: .9rem; }
+.motion-btn:focus-visible { outline: 3px solid #ffd54a; outline-offset: 2px; }
 .view-hint { margin: 0; color: var(--ink); font-size: .92rem; }
 
 .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }

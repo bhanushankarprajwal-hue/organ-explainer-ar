@@ -24,6 +24,7 @@ Each organ has two views, switched with a button:
 
 ## Features
 - Home screen to pick a condition
+- Living organs: the heart beats, the lungs breathe, the liver moves with breathing, blood flows through arteries and urine flows down the ureter. In the diseased organ the flow stops at the blockage (plaque, clot or stone). Works in AR too, with a Pause button.
 - Healthy and diseased 3D models side by side (drag to turn, pinch/scroll to zoom)
 - "View in AR" for each model, and "View both on your table" (Android, Chrome)
 - Numbered tap-to-learn dots with simple explanations (6–10 parts on healthy organs, 3 on diseased)

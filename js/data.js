@@ -8,6 +8,8 @@
 // =============================================================
 
 const UI_TEXT = {
+  "pauseMotion": { "en": "Pause movement", "kn": "ಚಲನೆ ನಿಲ್ಲಿಸಿ", "ta": "அசைவை நிறுத்து" },
+  "playMotion": { "en": "Play movement", "kn": "ಚಲನೆ ಶುರು ಮಾಡಿ", "ta": "அசைவைத் தொடங்கு" },
   "appName": {
     "en": "Organ Explainer AR",
     "kn": "ಅಂಗ ವಿವರಕ AR",
