@@ -31,27 +31,67 @@ document.querySelectorAll(".lang button").forEach((b) => b.addEventListener("cli
 function fillStaticText() {
   document.querySelectorAll("[data-t]").forEach((el) => { el.textContent = t(UI_TEXT[el.dataset.t]); });
   $("credits").innerHTML = CREDITS.map((c) =>
-    `${esc(c.what)}: <a href="${esc(c.url)}" target="_blank" rel="noopener">“${esc(c.name)}”</a> by ${esc(c.author)} (${esc(c.license)})`).join(" · ") + ". Disease parts and colours added for this project.";
+    `<li>${esc(c.what)}: <a href="${esc(c.url)}" target="_blank" rel="noopener">“${esc(c.name)}”</a> by ${esc(c.author)} (${esc(c.license)})</li>`).join("") + "<li>Disease parts and colours added for this project.</li>";
 }
 
-// ---------- Home ----------
-function renderHome() {
-  $("cards").innerHTML = CONDITIONS.map((c) => `
+// ---------- Home, organ list, AR modes, side menu ----------
+const ICONS = {
+  table: '<path d="M3 17h18M6 17l2-6h8l2 6M12 11V4m-3 3 3-3 3 3"/>',
+  hand: '<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5V4a1.5 1.5 0 0 1 3 0v6m0-4.5a1.5 1.5 0 0 1 3 0V12m0-3.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.5a6 6 0 0 1-5-2.7L4 14.5a1.6 1.6 0 0 1 2.6-1.8L8 14"/>',
+  story: '<path d="M8 5v14l11-7L8 5Z"/>',
+  body: '<circle cx="12" cy="4.5" r="2.2"/><path d="M7 9.5h10M12 9.5v5m0 0-3 6m3-6 3 6M9 9.5 7.5 14M15 9.5l1.5 4.5"/>',
+  scan: '<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 9h8v6H8z"/>',
+  both: '<path d="M3 17h18M5 17l1.5-5h4L12 17M12 17l1.5-5h4L19 17"/>',
+};
+const ico = (k) => `<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[k]}</svg></span>`;
+const MODES = [
+  { id: "table", icon: "table", title: "modeTable", sub: "modeTableSub", long: "modeTableLong", needs: "needTable", pick: (c) => "#" + c.id + "/ar" },
+  { id: "hand", icon: "hand", title: "modeHand", sub: "modeHandSub", long: "modeHandLong", needs: "needHand", pick: (c) => "handar.html?c=" + c.id },
+  { id: "story", icon: "story", title: "modeStory", sub: "modeStorySub", long: "modeStoryLong", needs: "needAny", pick: (c) => "#" + c.id + "-story" },
+  { id: "body", icon: "body", title: "modeBody", sub: "modeBodySub", long: "modeBodyLong", needs: "needCam", links: [["openBody", "body.html", true]] },
+  { id: "scan", icon: "scan", title: "modeScan", sub: "modeScanSub", long: "modeScanLong", needs: "needCam", links: [["openScan", "scan.html", true], ["printCards", "cards.html"]] },
+];
+const U = (k) => t(UI_TEXT[k]);
+const partCount = (c) => c.views.outside.healthyHotspots.length + c.views.outside.diseasedHotspots.length;
+const oChip = (c, href, active) => `<a class="o-chip${active ? " active" : ""}" href="${href}"><img src="images/thumb-${c.id}.png" alt="">${esc(t(c.organ))}</a>`;
+
+function cardHTML(c) {
+  return `
     <article class="c-card">
-      <a class="thumb" href="#${c.id}" aria-label="${esc(t(c.organ))}">
-        <img src="images/thumb-${c.id}.png" alt="" loading="lazy">
-        <span class="badge">3D · AR</span>
-      </a>
-      <div class="c-body">
-        <p class="organ">${esc(t(c.organ))}</p>
-        <h2><a href="#${c.id}">${esc(t(c.name))}</a></h2>
-        <p>${esc(t(c.short))}</p>
-        <div class="c-actions">
-          <a class="primary" href="#${c.id}-story">▶ ${esc(t(UI_TEXT.startStory))}</a>
-          <a class="ghost" href="#${c.id}">${esc(t(UI_TEXT.explore))} (${Object.values(c.views).reduce((n, v) => n + v.healthyHotspots.length + v.diseasedHotspots.length, 0)})</a>
+      <a class="c-story" href="#${c.id}-story" title="${esc(U("startStory"))}" aria-label="${esc(U("startStory"))}">▶</a>
+      <a href="#${c.id}" style="color:inherit;text-decoration:none;display:flex;flex-direction:column;flex:1">
+        <div class="thumb"><img src="images/thumb-${c.id}.png" alt="" loading="lazy"></div>
+        <div class="c-body">
+          <p class="organ">${esc(t(c.organ))}</p>
+          <h3>${esc(t(c.name))}</h3>
+          <p class="c-short">${esc(t(c.short))}</p>
+          <div class="c-meta"><span>${partCount(c)} ${esc(U("partsWord"))}</span><span class="go">${esc(U("open"))} →</span></div>
         </div>
+      </a>
+    </article>`;
+}
+function renderHome() {
+  const html = CONDITIONS.map(cardHTML).join("");
+  $("home-cards").innerHTML = html;
+  $("cards").innerHTML = html;
+  $("home-ways").innerHTML = MODES.map((m) =>
+    `<a class="way" href="${m.links ? m.links[0][1] : "#ar/" + m.id}">${ico(m.icon)}<b>${esc(U(m.title))}</b><small>${esc(U(m.sub))}</small></a>`).join("");
+  $("ar-modes").innerHTML = MODES.map((m) => `
+    <article class="mode-card" id="mode-${m.id}">
+      ${ico(m.icon)}
+      <div>
+        <h2>${esc(U(m.title))}</h2>
+        <p>${esc(U(m.long))}</p>
+        <p class="needs"><b>${esc(U("worksOn"))}:</b> ${esc(U(m.needs))}</p>
+        <div class="pick">${m.pick
+          ? `<span class="pick-label">${esc(U("pickOrganShort"))}</span>` + CONDITIONS.map((c) => oChip(c, m.pick(c))).join("")
+          : m.links.map(([k, href, main]) => `<a class="btn${main ? " primary" : ""}" href="${href}">${esc(U(k))}</a>`).join("")}</div>
       </div>
     </article>`).join("");
+}
+function renderSide(activeId) {
+  $("side-organs").innerHTML = CONDITIONS.map((c) =>
+    `<li><a href="#${c.id}" class="${c.id === activeId ? "active" : ""}"><img src="images/thumb-${c.id}.png" alt=""><span>${esc(t(c.organ))}<small>${esc(t(c.name))}</small></span></a></li>`).join("");
 }
 
 // ---------- Condition ----------
@@ -93,7 +133,10 @@ function renderCondition(c) {
   $("c-name").textContent = t(c.name);
   $("c-organ-about").textContent = t(c.organAbout);
   $("c-about").textContent = t(c.about);
-  $("c-warning").textContent = t(c.warning);
+  $("c-short").textContent = t(c.short);
+  document.querySelectorAll(".c-warning").forEach((el) => { el.textContent = t(c.warning); });
+  $("organ-switch").innerHTML = CONDITIONS.map((x) => oChip(x, "#" + x.id + (tab !== "3d" ? "/" + tab : ""), x.id === c.id)).join("");
+  renderARActions(c);
   $("story-btn").href = "#" + c.id + "-story";
   $("hand-btn").href = "handar.html?c=" + c.id;
   $("c-treatment").innerHTML = c.treatment.map((s) => `<li><h3>${esc(t(s.title))}</h3><p>${esc(t(s.text))}</p></li>`).join("");
@@ -231,14 +274,49 @@ function maybeLoadCompare() {
 }
 ["mv-healthy", "mv-diseased"].forEach((id) => $(id).addEventListener("load", maybeLoadCompare));
 
-// ---------- "View both in AR" ----------
+// ---------- Tabs on the organ page: 3D / Learn / Treatment / AR ----------
+let tab = "3d";
+function setTab(name, keepHash) {
+  tab = name;
+  document.querySelectorAll(".tabs button").forEach((b) => { const on = b.dataset.tab === name; b.classList.toggle("active", on); b.setAttribute("aria-selected", on); });
+  document.querySelectorAll(".tab-panel").forEach((p) => { p.hidden = p.dataset.panel !== name; });
+  if (!keepHash && current) history.replaceState(null, "", "#" + current.id + (name === "3d" ? "" : "/" + name));
+  if (current) $("organ-switch").querySelectorAll("a").forEach((a, i) => { a.href = "#" + CONDITIONS[i].id + (name === "3d" ? "" : "/" + name); });
+}
+document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("click", () => { closeInfo(); setTab(b.dataset.tab); }));
+
+// ---------- AR tab: all the ways to see this organ in AR ----------
 const compareMV = $("mv-compare");
-compareMV.addEventListener("load", () => {
-  const ok = compareMV.canActivateAR;
-  $("both-ar-btn").hidden = !ok;
-  $("no-ar").hidden = ok;
-});
-$("both-ar-btn").addEventListener("click", () => compareMV.activateAR());
+let canAR = false;
+function renderARActions(c) {
+  const act = (id, icon, title, sub, href) => href
+    ? `<a class="ar-act" id="${id}" href="${href}">${ico(icon)}<span><b>${esc(title)}</b><small>${esc(sub)}</small></span></a>`
+    : `<button type="button" class="ar-act" id="${id}">${ico(icon)}<span><b>${esc(title)}</b><small>${esc(sub)}</small></span></button>`;
+  $("ar-actions").innerHTML =
+    act("act-healthy", "table", U("viewHealthyAR"), U("needTable")) +
+    act("act-sick", "table", U("viewSickAR"), U("needTable")) +
+    act("act-both", "both", U("viewBothAR"), U("needTable")) +
+    act("act-hand", "hand", U("modeHand"), U("modeHandSub"), "handar.html?c=" + c.id) +
+    act("act-story", "story", U("modeStory"), U("modeStorySub"), "#" + c.id + "-story") +
+    act("act-body", "body", U("modeBody"), U("modeBodySub"), "body.html");
+  $("act-healthy").addEventListener("click", () => startAR("mv-healthy"));
+  $("act-sick").addEventListener("click", () => startAR("mv-diseased"));
+  $("act-both").addEventListener("click", () => compareMV.activateAR());
+  showARButtons();
+}
+function showARButtons() {
+  ["act-healthy", "act-sick", "act-both"].forEach((id) => { const el = $(id); if (el) el.hidden = !canAR; });
+  if ($("act-both")) $("act-both").hidden = !canAR || !compareMV.loaded;
+  $("no-ar").hidden = canAR;
+}
+function startAR(id) {
+  // the viewer must be on screen to open AR, so jump to the 3D tab first
+  setTab("3d");
+  const mv = $(id);
+  if (mv.canActivateAR) mv.activateAR();
+}
+["mv-healthy", "mv-diseased"].forEach((id) => $(id).addEventListener("load", () => { canAR = !!$(id).canActivateAR; showARButtons(); }));
+compareMV.addEventListener("load", showARButtons);
 
 // ---------- Toast ----------
 let toastTimer;
@@ -367,26 +445,41 @@ function closeStory() {
   story = null;
 }
 
-// ---------- Simple page switching (#home, #heart, #heart-story) ----------
+// ---------- Page switching: #home #organs #ar #about #heart #heart/learn #heart-story ----------
+const PAGES = ["home", "organs", "ar", "about"];
+function route() {
+  const raw = location.hash.replace(/^#\/?/, "") || "home";
+  const [id, sub] = raw.split("/");
+  return { id, sub };
+}
 function render() {
   fillStaticText();
-  const id = location.hash.replace(/^#\/?/, "");
+  const { id, sub } = route();
   const storyId = id.endsWith("-story") ? id.slice(0, -6) : null;
   const sc = storyId ? CONDITIONS.find((c) => c.id === storyId) : null;
   current = sc ? null : (CONDITIONS.find((c) => c.id === id) || null);
+  const page = sc ? "story" : current ? "condition" : (PAGES.includes(id) ? id : "home");
   $("story").hidden = !sc;
   document.body.classList.toggle("story-open", !!sc);
-  $("home").hidden = !!current || !!sc;
-  $("condition").hidden = !current;
+  ["home", "organs", "ar", "about", "condition"].forEach((p) => { $(p).hidden = p !== page; });
+  const navKey = page === "condition" ? "organs" : page;
+  document.querySelectorAll("[data-nav]").forEach((a) => a.classList.toggle("active", a.dataset.nav === navKey));
+  renderSide(current ? current.id : sc ? sc.id : null);
   if (sc) { if (!story || story.c !== sc) openStory(sc); else showStoryStep(storyI, false); document.title = t(UI_TEXT.startStory) + " · " + t(sc.organ); return; }
   closeStory();
-  if (current) renderCondition(current); else { renderHome(); document.title = t(UI_TEXT.appName); }
+  renderHome();
+  if (current) {
+    tab = ["learn", "treat", "ar"].includes(sub) ? sub : "3d";
+    renderCondition(current);
+    setTab(tab, true);
+  } else document.title = (page === "home" ? "" : U("nav" + page[0].toUpperCase() + page.slice(1)) + " · ") + t(UI_TEXT.appName);
   if (openState && current) openInfo(openState.h, openState.kind, openState.i); // refresh text after language change
 }
 window.addEventListener("hashchange", () => {
   closeInfo(); viewMode = "outside"; render();
-  if (location.hash === "#organs") { const el = $("organs"); if (el) el.scrollIntoView({ behavior: "smooth" }); }
-  else window.scrollTo(0, 0);
+  const { id, sub } = route();
+  const target = id === "ar" && sub ? $("mode-" + sub) : null;
+  if (target) target.scrollIntoView({ behavior: "smooth", block: "start" }); else window.scrollTo(0, 0);
 });
 if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = () => {};
 

@@ -8,7 +8,7 @@
   <meta name="description" content="AR-based 3D patient education: healthy vs diseased organs, explained simply.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <!-- Models are compressed (Draco). The decoder is hosted with the app. -->
   <script>self.ModelViewerElement = { dracoDecoderLocation: new URL("js/draco/", location.href).href };</script>
@@ -16,149 +16,256 @@
   <script type="module" src="js/vendor/model-viewer.min.js"></script>
 </head>
 <body>
-  <header class="topbar">
+<div class="shell">
+
+  <!-- ============ SIDE MENU (laptop) / BOTTOM BAR (phone) ============ -->
+  <aside class="sidebar" aria-label="Main menu">
     <a class="brand" href="#home">
       <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3Zm0 2.2 6.6 3.3L12 11.8 5.4 8.5 12 5.2Zm-7 5 6 3v6.3l-6-3v-6.3Zm8 9.3v-6.3l6-3v6.3l-6 3Z" fill="currentColor"/></svg></span>
-      <span data-t="appName">Organ Explainer AR</span>
+      <span class="brand-name" data-t="appName">Organ Explainer AR</span>
+    </a>
+    <nav class="nav">
+      <a href="#home" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-8Z"/></svg><span data-t="navHome"></span></a>
+      <a href="#organs" data-nav="organs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span data-t="navOrgans"></span></a>
+      <a href="#ar" data-nav="ar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Zm0 0v9m0 0 8-4.5M12 12 4 7.5"/></svg><span data-t="navAR"></span></a>
+      <a href="#about" data-nav="about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5m0-8.2v.2"/></svg><span data-t="navAbout"></span></a>
+    </nav>
+    <div class="side-organs">
+      <p class="side-label" data-t="allOrgans"></p>
+      <ul id="side-organs"></ul>
+    </div>
+    <div class="side-foot">
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang="en" class="active">English</button>
+        <button data-lang="kn">ಕನ್ನಡ</button>
+        <button data-lang="ta">தமிழ்</button>
+      </div>
+      <p class="side-note"><span class="warn-dot">!</span> <span data-t="disclaimer"></span></p>
+    </div>
+  </aside>
+
+  <!-- phone top bar -->
+  <header class="mtop">
+    <a class="brand" href="#home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3Zm0 2.2 6.6 3.3L12 11.8 5.4 8.5 12 5.2Zm-7 5 6 3v6.3l-6-3v-6.3Zm8 9.3v-6.3l6-3v6.3l-6 3Z" fill="currentColor"/></svg></span>
+      <span class="brand-name" data-t="appName">Organ Explainer AR</span>
     </a>
     <div class="lang" role="group" aria-label="Language">
-      <button data-lang="en" class="active">English</button>
-      <button data-lang="kn">ಕನ್ನಡ</button>
-      <button data-lang="ta">தமிழ்</button>
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="kn">ಕ</button>
+      <button data-lang="ta">த</button>
     </div>
   </header>
 
-  <p class="disclaimer" role="note"><strong>!</strong> <span data-t="disclaimer"></span></p>
+  <!-- ============ MAIN AREA ============ -->
+  <div class="main">
+    <p class="notice" role="note"><span class="warn-dot">!</span> <span data-t="disclaimer"></span></p>
 
-  <!-- HOME SCREEN -->
-  <main id="home" class="page">
-    <section class="hero">
-      <div class="hero-text">
-        <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> AR · XR in Health Care</p>
-        <h1 data-t="heroTitle"></h1>
-        <p class="sub" data-t="heroSub"></p>
+    <!-- HOME -->
+    <main id="home" class="page">
+      <section class="hero">
+        <div class="hero-text">
+          <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> AR · XR in Health Care</p>
+          <h1 data-t="heroTitle"></h1>
+          <p class="sub" data-t="heroSub"></p>
+          <div class="row">
+            <a class="btn primary" href="#organs" data-t="heroCta1"></a>
+            <a class="btn" href="#ar" data-t="heroCta2"></a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="ring r1"></div><div class="ring r2"></div>
+          <img src="images/thumb-heart.png" alt="">
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="block-head">
+          <h2 data-t="pickOne"></h2>
+          <a class="link" href="#organs"><span data-t="allOrgans"></span> →</a>
+        </div>
+        <div id="home-cards" class="cards"></div>
+      </section>
+
+      <section class="block">
+        <div class="block-head">
+          <h2 data-t="waysTitle"></h2>
+          <a class="link" href="#ar"><span data-t="navAR"></span> →</a>
+        </div>
+        <div id="home-ways" class="ways"></div>
+      </section>
+    </main>
+
+    <!-- ORGANS -->
+    <main id="organs" class="page" hidden>
+      <header class="page-head">
+        <h1 data-t="pickOne"></h1>
+        <p class="sub" data-t="organsSub"></p>
+      </header>
+      <div id="cards" class="cards"></div>
+    </main>
+
+    <!-- AR MODES -->
+    <main id="ar" class="page" hidden>
+      <header class="page-head">
+        <h1 data-t="navAR"></h1>
+        <p class="sub" data-t="arSub"></p>
+      </header>
+      <div id="ar-modes" class="mode-list"></div>
+    </main>
+
+    <!-- ABOUT -->
+    <main id="about" class="page" hidden>
+      <header class="page-head">
+        <h1 data-t="aboutTitle"></h1>
+        <p class="sub" data-t="projectLine"></p>
+      </header>
+      <div class="about-grid">
+        <section class="panel span2"><p class="lead" data-t="aboutText"></p></section>
+        <section class="panel">
+          <h2 data-t="howTitle"></h2>
+          <ol class="howto"><li data-t="how1"></li><li data-t="how2"></li><li data-t="how3"></li><li data-t="how4"></li></ol>
+        </section>
+        <section class="panel">
+          <h2 data-t="langTitle"></h2>
+          <p data-t="langText"></p>
+          <h2 class="mt" data-t="safetyTitle"></h2>
+          <p class="warn-text" data-t="disclaimer"></p>
+        </section>
+        <section class="panel span2">
+          <h2 data-t="credits"></h2>
+          <ul id="credits" class="credits"></ul>
+        </section>
       </div>
-      <div class="modes">
-        <a class="mode" href="#organs">
-          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17h18M6 17l2-6h8l2 6M12 11V4m-3 3 3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span><b data-t="modeTable"></b><small data-t="modeTableSub"></small></span>
-        </a>
-        <a class="mode" href="scan.html">
-          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 9h8v6H8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-          <span><b data-t="modeScan"></b><small data-t="modeScanSub"></small></span>
-        </a>
-        <a class="mode mode-new" href="body.html">
-          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 9.5h10M12 9.5v5m0 0-3 6m3-6 3 6M9 9.5 7.5 14M15 9.5l1.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10.5 11.5a1.5 1.5 0 0 1 3 0" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
-          <span><b data-t="modeBody"></b><small data-t="modeBodySub"></small></span>
-        </a>
-        <a class="mode mode-new" href="handar.html?c=heart">
-          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5V4a1.5 1.5 0 0 1 3 0v6m0-4.5a1.5 1.5 0 0 1 3 0V12m0-3.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.5a6 6 0 0 1-5-2.7L4 14.5a1.6 1.6 0 0 1 2.6-1.8L8 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span><b data-t="modeHand"></b><small data-t="modeHandSub"></small></span>
-        </a>
-        <a class="mode" href="#heart-story">
-          <span class="mode-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5Z" fill="currentColor"/></svg></span>
-          <span><b data-t="modeStory"></b><small data-t="modeStorySub"></small></span>
-        </a>
-      </div>
-    </section>
-    <h2 class="section-title" id="organs" data-t="pickOne"></h2>
-    <div id="cards" class="cards"></div>
-  </main>
+    </main>
 
-  <!-- CONDITION SCREEN -->
-  <main id="condition" class="page" hidden>
-    <a class="back" href="#home">← <span data-t="back"></span></a>
-    <section class="title-block">
-      <div>
-        <p class="organ" id="c-organ"></p>
-        <h1 id="c-name"></h1>
-      </div>
-      <div class="title-actions">
-        <a class="primary big" id="story-btn" href="#">▶ <span data-t="startStory"></span></a>
-        <a class="primary big hand-btn" id="hand-btn" href="handar.html">✋ <span data-t="handAR"></span></a>
-      </div>
-    </section>
+    <!-- ORGAN PAGE -->
+    <main id="condition" class="page" hidden>
+      <nav class="organ-switch" id="organ-switch" aria-label="Organs"></nav>
 
-    <div class="view-bar">
-      <div class="view-switch" role="group" aria-label="View">
-        <button type="button" data-view="outside" class="active" aria-pressed="true"><span data-t="outsideView"></span></button>
-        <button type="button" data-view="inside" aria-pressed="false"><span data-t="insideView"></span></button>
-      </div>
-      <button type="button" id="motion-btn" class="motion-btn" aria-pressed="true">⏸ <span data-t="pauseMotion"></span></button>
-      <p class="view-hint" id="view-hint"></p>
-    </div>
+      <header class="organ-head">
+        <div class="organ-title">
+          <p class="organ" id="c-organ"></p>
+          <h1 id="c-name"></h1>
+          <p class="sub" id="c-short"></p>
+        </div>
+        <div class="organ-actions">
+          <a class="btn primary" id="story-btn" href="#">▶ <span data-t="startStory"></span></a>
+          <a class="btn" id="hand-btn" href="handar.html">✋ <span data-t="handAR"></span></a>
+        </div>
+      </header>
 
-    <p class="hint" data-t="tapHint"></p>
-
-    <section class="compare">
-      <div class="side healthy">
-        <figure class="viewer-card healthy">
-          <figcaption><span class="dot"></span><span data-t="healthy"></span></figcaption>
-          <model-viewer id="mv-healthy" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
-            shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
-            <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
-            <!-- description box shown only inside AR view -->
-            <div class="ar-info healthy" id="ar-info-healthy" hidden>
-              <h3 class="ar-info-title"></h3>
-              <p class="ar-info-text"></p>
-              <button class="ar-info-close" type="button" data-t="closeInfo"></button>
-            </div>
-          </model-viewer>
-          <button class="reset" data-reset="mv-healthy" data-t="reset"></button>
-        </figure>
-        <ol class="parts" id="parts-healthy"></ol>
+      <div class="tabs" role="tablist">
+        <button role="tab" data-tab="3d" class="active" aria-selected="true"><span data-t="tab3d"></span></button>
+        <button role="tab" data-tab="learn" aria-selected="false"><span data-t="tabLearn"></span></button>
+        <button role="tab" data-tab="treat" aria-selected="false"><span data-t="tabTreat"></span></button>
+        <button role="tab" data-tab="ar" aria-selected="false"><span data-t="tabAR"></span></button>
       </div>
 
-      <div class="side diseased">
-        <figure class="viewer-card diseased">
-          <figcaption><span class="dot"></span><span data-t="withCondition"></span></figcaption>
-          <model-viewer id="mv-diseased" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
-            shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
-            <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
-            <!-- description box shown only inside AR view -->
-            <div class="ar-info diseased" id="ar-info-diseased" hidden>
-              <h3 class="ar-info-title"></h3>
-              <p class="ar-info-text"></p>
-              <button class="ar-info-close" type="button" data-t="closeInfo"></button>
-            </div>
-          </model-viewer>
-          <button class="reset" data-reset="mv-diseased" data-t="reset"></button>
-        </figure>
-        <ol class="parts" id="parts-diseased"></ol>
-      </div>
-    </section>
+      <!-- tab: 3D compare -->
+      <section class="tab-panel" data-panel="3d">
+        <div class="view-bar">
+          <div class="view-switch" role="group" aria-label="View">
+            <button type="button" data-view="outside" class="active" aria-pressed="true"><span data-t="outsideView"></span></button>
+            <button type="button" data-view="inside" aria-pressed="false"><span data-t="insideView"></span></button>
+          </div>
+          <button type="button" id="motion-btn" class="btn small" aria-pressed="true">⏸ <span data-t="pauseMotion"></span></button>
+          <p class="view-hint" id="view-hint"></p>
+        </div>
 
+        <div class="compare">
+          <div class="side healthy">
+            <figure class="viewer-card healthy">
+              <figcaption><span class="dot"></span><span data-t="healthy"></span></figcaption>
+              <model-viewer id="mv-healthy" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
+                shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
+                <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
+                <div class="ar-info healthy" id="ar-info-healthy" hidden>
+                  <h3 class="ar-info-title"></h3>
+                  <p class="ar-info-text"></p>
+                  <button class="ar-info-close" type="button" data-t="closeInfo"></button>
+                </div>
+              </model-viewer>
+              <button class="reset" data-reset="mv-healthy" data-t="reset"></button>
+            </figure>
+            <ol class="parts" id="parts-healthy"></ol>
+          </div>
+          <div class="side diseased">
+            <figure class="viewer-card diseased">
+              <figcaption><span class="dot"></span><span data-t="withCondition"></span></figcaption>
+              <model-viewer id="mv-diseased" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
+                shadow-intensity="1" exposure="1.05" interaction-prompt="none" camera-orbit="0deg 80deg auto">
+                <button slot="ar-button" class="ar-btn">⧉ <span data-t="viewAR"></span></button>
+                <div class="ar-info diseased" id="ar-info-diseased" hidden>
+                  <h3 class="ar-info-title"></h3>
+                  <p class="ar-info-text"></p>
+                  <button class="ar-info-close" type="button" data-t="closeInfo"></button>
+                </div>
+              </model-viewer>
+              <button class="reset" data-reset="mv-diseased" data-t="reset"></button>
+            </figure>
+            <ol class="parts" id="parts-diseased"></ol>
+          </div>
+        </div>
+        <p class="hint" data-t="tapHint"></p>
+      </section>
 
-    <div class="both-ar">
-      <button id="both-ar-btn" class="primary" hidden>⧉ <span data-t="viewBothAR"></span></button>
-      <p id="no-ar" class="muted" data-t="noAR" hidden></p>
+      <!-- tab: Learn -->
+      <section class="tab-panel" data-panel="learn" hidden>
+        <div class="learn-grid">
+          <article class="panel">
+            <p class="kicker healthy-k"><span class="dot"></span><span data-t="healthy"></span></p>
+            <h2 data-t="aboutOrgan"></h2>
+            <p id="c-organ-about"></p>
+          </article>
+          <article class="panel sick">
+            <p class="kicker sick-k"><span class="dot"></span><span data-t="withCondition"></span></p>
+            <h2 data-t="whatIsIt"></h2>
+            <p id="c-about"></p>
+          </article>
+        </div>
+        <aside class="panel warning">
+          <h2>⚠ <span data-t="warning"></span></h2>
+          <p class="c-warning"></p>
+        </aside>
+      </section>
+
+      <!-- tab: Treatment -->
+      <section class="tab-panel" data-panel="treat" hidden>
+        <h2 class="panel-title" data-t="treatment"></h2>
+        <ol id="c-treatment" class="steps"></ol>
+        <aside class="panel warning">
+          <h2>⚠ <span data-t="warning"></span></h2>
+          <p class="c-warning"></p>
+        </aside>
+      </section>
+
+      <!-- tab: AR -->
+      <section class="tab-panel" data-panel="ar" hidden>
+        <p class="sub" data-t="arHereSub"></p>
+        <div class="ar-actions" id="ar-actions"></div>
+        <p id="no-ar" class="muted" data-t="noAR" hidden></p>
+      </section>
+
       <!-- hidden viewer used only to open both models together in AR -->
       <model-viewer id="mv-compare" loading="eager" autoplay ar ar-modes="webxr scene-viewer quick-look" class="offscreen"></model-viewer>
-    </div>
+    </main>
 
-    <section class="info-grid">
-      <div class="about card">
-        <h2 data-t="aboutOrgan"></h2>
-        <p id="c-organ-about"></p>
-      </div>
-      <div class="about card condition">
-        <h2 data-t="whatIsIt"></h2>
-        <p id="c-about"></p>
-      </div>
-    </section>
+    <footer class="foot">
+      <p data-t="projectLine"></p>
+    </footer>
+  </div>
 
-    <section class="treatment">
-      <h2 data-t="treatment"></h2>
-      <ol id="c-treatment" class="steps"></ol>
-    </section>
+  <!-- phone bottom bar (same links as the side menu) -->
+  <nav class="tabbar" aria-label="Main menu">
+    <a href="#home" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-8Z"/></svg><span data-t="navHome"></span></a>
+    <a href="#organs" data-nav="organs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span data-t="navOrgans"></span></a>
+    <a href="#ar" data-nav="ar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Zm0 0v9m0 0 8-4.5M12 12 4 7.5"/></svg><span data-t="navAR"></span></a>
+    <a href="#about" data-nav="about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5m0-8.2v.2"/></svg><span data-t="navAbout"></span></a>
+  </nav>
+</div>
 
-    <section class="warning card">
-      <h2>⚠ <span data-t="warning"></span></h2>
-      <p id="c-warning"></p>
-    </section>
-  </main>
-
-  <!-- GUIDED AR STORY -->
+  <!-- GUIDED AR STORY (full screen) -->
   <section id="story" class="story" hidden aria-label="Guided AR story">
     <div class="story-top">
       <a class="chip" id="story-close" href="#home">✕ <span data-t="closeStory"></span></a>
@@ -168,15 +275,14 @@
     <model-viewer id="mv-story" autoplay camera-controls touch-action="pan-y" ar ar-modes="webxr scene-viewer quick-look"
       shadow-intensity="1" exposure="1.1" interaction-prompt="none" camera-orbit="0deg 80deg auto" loading="eager">
       <button slot="ar-button" class="ar-btn story-ar">⧉ <span data-t="viewAR"></span></button>
-      <!-- the story card stays visible inside AR -->
       <div class="story-card" id="story-card">
         <div class="story-progress"><span id="story-bar"></span></div>
         <p class="story-step"><span id="story-count"></span> · <span id="story-state"></span></p>
         <h3 id="story-title"></h3>
         <p id="story-text"></p>
         <div class="story-nav">
-          <button type="button" class="ghost" id="story-prev">← <span data-t="prev"></span></button>
-          <button type="button" class="primary" id="story-next"><span data-t="next"></span> →</button>
+          <button type="button" class="btn" id="story-prev">← <span data-t="prev"></span></button>
+          <button type="button" class="btn primary" id="story-next"><span data-t="next"></span> →</button>
         </div>
       </div>
     </model-viewer>
@@ -189,16 +295,11 @@
       <span id="info-tag" class="tag"></span>
       <h3 id="info-title"></h3>
       <p id="info-text"></p>
-      <button id="info-close" class="ghost" data-t="closeInfo"></button>
+      <button id="info-close" class="btn small" data-t="closeInfo"></button>
     </div>
   </aside>
 
   <div id="toast" class="toast" hidden></div>
-
-  <footer class="foot">
-    <p>XR in Health Care · Dayananda Sagar University · <span data-t="disclaimer"></span></p>
-    <p class="credits"><span data-t="credits"></span>: <span id="credits"></span></p>
-  </footer>
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
