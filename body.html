@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#071018">
+  <meta name="theme-color" content="#060d14">
   <title>Body AR · Organ Explainer AR</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
   <script type="importmap">
@@ -11,71 +11,95 @@
   </script>
   <script src="js/data.js"></script>
   <style>
-    :root { --bg: #071018; --ink: #e6f2f0; --muted: #93aeb0; --brand: #2fd3c3; --brand-ink: #03201d; --sick: #ff7a66; --healthy: #4fd18b; --warm: #ffc457;
-      --panel: rgba(7, 16, 24, .84); --line: rgba(64, 214, 199, .4); color-scheme: dark; }
+    :root { --bg: #060d14; --ink: #e8f3f1; --muted: #8aa4a7; --brand: #2fd3c3; --brand-ink: #03201d; --sick: #ff7a66; --healthy: #4fd18b; --warm: #ffc457;
+      --panel: rgba(6, 13, 20, .86); --line: rgba(64, 214, 199, .38); color-scheme: dark; }
     html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink);
       font-family: "Noto Sans", "Noto Sans Kannada", "Noto Sans Tamil", system-ui, sans-serif; }
-    #stage { position: fixed; inset: 0; overflow: hidden; touch-action: none; }
-    #cam, #still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    #gl { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #stage { position: fixed; inset: 0; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+    #cam, #still { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; }   /* drawn by WebGL instead */
+    #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     #labels { position: absolute; inset: 0; pointer-events: none; }
-    .mirror { transform: scaleX(-1); }
-    .hs { position: absolute; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff;
+    .hs { position: absolute; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 2px solid #fff; padding: 0;
       background: #23a866; color: #fff; font: 700 14px/26px system-ui; text-align: center; pointer-events: auto; cursor: pointer;
       box-shadow: 0 0 0 4px rgba(255,255,255,.15), 0 2px 10px rgba(0,0,0,.5); }
     .hs.sick { background: #e0533f; }
-    .hs.hot { outline: 3px solid var(--warm); transform: translate(-50%, -50%) scale(1.25); }
-    .tag { position: absolute; transform: translate(-50%, -120%); padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 700;
-      background: var(--panel); border: 1px solid var(--line); white-space: nowrap; pointer-events: auto; cursor: pointer; }
+    .hs.hot, .hs.on { outline: 3px solid var(--warm); }
+    .tag { position: absolute; left: 0; top: 0; padding: 3px 10px; border-radius: 999px; font-size: .76rem; font-weight: 700; white-space: nowrap;
+      background: var(--panel); border: 1px solid var(--line); color: var(--ink); pointer-events: auto; cursor: pointer; }
     .tag.hot { border-color: var(--warm); color: var(--warm); }
-    #cursor { position: absolute; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; border: 3px solid var(--brand);
+    .lead { position: absolute; left: 0; top: 0; height: 0; border-top: 1px dashed rgba(64, 214, 199, .7); pointer-events: none; }
+    .lead::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); top: -4px; }
+
+    #cursor { position: absolute; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 3px solid var(--brand);
       box-shadow: 0 0 14px var(--brand); pointer-events: none; display: none; }
-    #cursor.pinch { background: var(--brand); }
-    #cursor .ring { position: absolute; inset: -9px; border-radius: 50%; border: 3px solid var(--warm); clip-path: inset(0 0 0 0); opacity: 0; }
+    #mode { position: absolute; left: 50%; top: calc(110px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); background: var(--panel); border: 1px solid var(--warm); color: var(--warm);
+      padding: 5px 14px; border-radius: 999px; font-weight: 700; font-size: .85rem; pointer-events: none; display: none; white-space: nowrap; }
     .hud { position: fixed; left: 0; right: 0; z-index: 10; pointer-events: none;
-      padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); }
+      padding-left: max(10px, env(safe-area-inset-left, 0px)); padding-right: max(10px, env(safe-area-inset-right, 0px)); }
     .hud > * { pointer-events: auto; }
-    .top { top: 0; padding-top: calc(10px + env(safe-area-inset-top, 0px)); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .top { top: 0; padding-top: calc(10px + env(safe-area-inset-top, 0px)); display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .spacer { flex: 1; pointer-events: none; }
     .chip { display: inline-flex; align-items: center; gap: 6px; background: var(--panel); border: 1px solid var(--line); color: var(--ink); text-decoration: none;
-      border-radius: 999px; padding: 8px 13px; font: inherit; font-weight: 600; font-size: .88rem; cursor: pointer; backdrop-filter: blur(6px); }
+      border-radius: 999px; padding: 8px 13px; font: inherit; font-weight: 600; font-size: .85rem; cursor: pointer; backdrop-filter: blur(6px); }
     .chip.on { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+    .chip.hot, .btn.hot, .seg button.hot, .pick button.hot { outline: 3px solid var(--warm); }
+    #status { pointer-events: none; }
+    #status.ok { border-color: var(--healthy); color: var(--healthy); }
     .seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
-    .seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 700; font-size: .85rem; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+    .seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 700; font-size: .84rem; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
     .seg button.on { background: var(--brand); color: var(--brand-ink); }
     .seg button.on.sick { background: var(--sick); color: #2a0700; }
-    .bottom { bottom: 0; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
-    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 13px 16px; max-width: 600px; margin: 0 auto; backdrop-filter: blur(8px); }
-    .panel h2 { margin: 0 0 2px; font-size: 1.2rem; }
-    .panel .cond { margin: 0 0 6px; color: var(--warm); font-weight: 600; font-size: .92rem; }
-    .panel p { margin: 0 0 8px; color: #c9dcda; font-size: .93rem; }
-    .panel .small { color: var(--muted); font-size: .8rem; margin: 0; }
-    .row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .btn { display: inline-block; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 8px 14px; font: inherit; font-weight: 700; font-size: .88rem; text-decoration: none; cursor: pointer; }
-    .btn.primary { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+    .bottom { bottom: 0; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 8px; justify-items: center; }
+    .panel { width: 100%; max-width: 620px; box-sizing: border-box; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 12px 15px; backdrop-filter: blur(8px); }
+    .panel h2 { margin: 0 0 2px; font-size: 1.12rem; }
+    .panel .cond { margin: 0 0 6px; color: var(--warm); font-weight: 600; font-size: .88rem; }
+    .panel p { margin: 0 0 8px; color: #c9dcda; font-size: .9rem; }
+    .panel .small { color: var(--muted); font-size: .78rem; margin: 0; }
+    .parts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+    .parts button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(64,214,199,.25); background: transparent; color: var(--ink);
+      border-radius: 999px; padding: 4px 10px 4px 4px; font: inherit; font-size: .8rem; cursor: pointer; }
+    .parts .n { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--healthy); color: #04170f; font-weight: 700; font-size: .7rem; }
+    .parts.sick .n { background: var(--sick); color: #2a0700; }
+    .parts button.on { border-color: var(--warm); background: rgba(255,196,87,.12); }
     #part { border-left: 3px solid var(--warm); padding-left: 10px; }
-    #overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgba(7,16,24,.94); text-align: center; padding: 20px; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 8px 14px;
+      font: inherit; font-weight: 700; font-size: .86rem; text-decoration: none; cursor: pointer; }
+    .btn.primary { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+    .pick { display: flex; gap: 6px; overflow-x: auto; max-width: 100%; padding: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; scrollbar-width: none; }
+    .pick::-webkit-scrollbar { display: none; }
+    .pick button { flex: none; display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: var(--ink); font: inherit; font-weight: 600; font-size: .84rem;
+      padding: 4px 12px 4px 4px; border-radius: 999px; cursor: pointer; }
+    .pick button img { width: 28px; height: 28px; object-fit: contain; border-radius: 50%; background: rgba(255,255,255,.06); }
+    .pick button.all { padding: 6px 14px; }
+    .pick button.on { background: var(--brand); color: var(--brand-ink); }
+    #overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgba(6,13,20,.95); text-align: center; padding: 20px; }
     #overlay .spin { width: 46px; height: 46px; border-radius: 50%; border: 4px solid rgba(64,214,199,.25); border-top-color: var(--brand); animation: spin 1s linear infinite; margin: 0 auto 14px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     #overlay p { color: var(--muted); max-width: 40ch; margin: 0 auto 14px; }
     [hidden] { display: none !important; }
-    @media (max-width: 520px) { .chip, .seg button { font-size: .8rem; padding: 7px 10px; } }
+    @media (max-width: 520px) { .chip, .seg button { font-size: .76rem; padding: 6px 9px; } .panel p { font-size: .84rem; } .pick button { font-size: .78rem; } }
   </style>
 </head>
 <body>
   <div id="stage">
     <video id="cam" playsinline muted autoplay></video>
-    <img id="still" alt="" hidden>
+    <img id="still" alt="">
     <canvas id="gl"></canvas>
     <div id="labels"><div id="cursor"></div></div>
+    <div id="mode"></div>
   </div>
 
   <div class="hud top">
-    <a class="chip" href="index.html" id="t-back">←</a>
+    <a class="chip dwell" href="index.html#ar" id="t-back">←</a>
     <div class="seg" role="group" aria-label="State">
-      <button type="button" id="st-healthy" class="on"></button>
-      <button type="button" id="st-sick"></button>
+      <button type="button" class="dwell on" id="st-healthy"></button>
+      <button type="button" class="dwell" id="st-sick"></button>
     </div>
+    <span class="spacer"></span>
+    <span class="chip" id="status"></span>
     <button type="button" class="chip on" id="hands-btn" aria-pressed="true"></button>
+    <button type="button" class="chip" id="xray-btn" aria-pressed="true"></button>
     <button type="button" class="chip" id="flip-btn"></button>
   </div>
 
@@ -89,13 +113,15 @@
       <h2 id="i-organ"></h2>
       <p class="cond" id="i-cond"></p>
       <p id="i-text"></p>
+      <div class="parts" id="i-parts"></div>
       <p id="part" hidden></p>
       <div class="row">
-        <button type="button" class="btn" id="i-close"></button>
-        <a class="btn primary" id="i-story" href="#"></a>
+        <button type="button" class="btn primary dwell" id="i-closer"></button>
         <a class="btn" id="i-open" href="#"></a>
+        <button type="button" class="btn dwell" id="i-close"></button>
       </div>
     </div>
+    <div class="pick" id="pick" role="group" aria-label="Organs"></div>
   </div>
 
   <div id="overlay">
