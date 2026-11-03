@@ -28,11 +28,12 @@ const TX = {
   intro: { en: "Put the organ on a real table. Then control it with your hand in the air, or with touch.",
     kn: "ಅಂಗವನ್ನು ನಿಜವಾದ ಮೇಜಿನ ಮೇಲೆ ಇಡಿ. ನಂತರ ಗಾಳಿಯಲ್ಲಿ ಕೈ ಆಡಿಸಿ ಅಥವಾ ಸ್ಪರ್ಶಿಸಿ ಅದನ್ನು ನಿಯಂತ್ರಿಸಿ.",
     ta: "உறுப்பை உண்மையான மேசையில் வையுங்கள். பிறகு காற்றில் கையை அசைத்து அல்லது தொட்டு அதைக் கட்டுப்படுத்துங்கள்." },
-  g1: { en: "Point and hold on a number → learn that part", kn: "ಸಂಖ್ಯೆಯ ಮೇಲೆ ಬೆರಳು ತೋರಿಸಿ ಹಿಡಿಯಿರಿ → ಆ ಭಾಗದ ಬಗ್ಗೆ ತಿಳಿಯಿರಿ", ta: "எண்ணின் மேல் விரலைக் காட்டி நிறுத்துங்கள் → அந்தப் பகுதியைப் பற்றி அறியுங்கள்" },
-  g2: { en: "Pinch on the organ and move your hand → move it", kn: "ಅಂಗದ ಮೇಲೆ ಚಿಟಿಕೆ ಹಿಡಿದು ಕೈ ಸರಿಸಿ → ಅದನ್ನು ಸರಿಸಿ", ta: "உறுப்பின் மேல் கிள்ளிப் பிடித்து கையை நகர்த்துங்கள் → அதை நகர்த்தும்" },
-  g3: { en: "Pinch in empty air: slide sideways → turn, up/down → zoom", kn: "ಖಾಲಿ ಜಾಗದಲ್ಲಿ ಚಿಟಿಕೆ: ಪಕ್ಕಕ್ಕೆ ಸರಿಸಿ → ತಿರುಗಿಸಿ, ಮೇಲೆ/ಕೆಳಗೆ → ದೊಡ್ಡ/ಚಿಕ್ಕ", ta: "வெற்று இடத்தில் கிள்ளுங்கள்: பக்கவாட்டில் → சுழற்று, மேல்/கீழ் → பெரிதாக்கு" },
-  g4: { en: "Two hands pinching, pull apart → zoom", kn: "ಎರಡೂ ಕೈಗಳಿಂದ ಚಿಟಿಕೆ ಹಿಡಿದು ದೂರ ಎಳೆಯಿರಿ → ದೊಡ್ಡದು", ta: "இரு கைகளாலும் கிள்ளி விரியுங்கள் → பெரிதாக்கு" },
-  pinchHow: { en: "Pinch = touch your thumb and first finger together.", kn: "ಚಿಟಿಕೆ = ಹೆಬ್ಬೆರಳು ಮತ್ತು ತೋರುಬೆರಳನ್ನು ಒಟ್ಟಿಗೆ ಮುಟ್ಟಿಸಿ.", ta: "கிள்ளுதல் = கட்டைவிரலையும் ஆள்காட்டி விரலையும் சேர்த்துத் தொடுங்கள்." },
+  g1: { en: "☝️ Point with only your index finger at a number and hold → learn that part", kn: "☝️ ತೋರುಬೆರಳು ಮಾತ್ರ ಸಂಖ್ಯೆಯ ಕಡೆಗೆ ತೋರಿಸಿ ಹಿಡಿಯಿರಿ → ಆ ಭಾಗದ ಬಗ್ಗೆ ತಿಳಿಯಿರಿ", ta: "☝️ ஆள்காட்டி விரலால் மட்டும் எண்ணைக் காட்டி நிறுத்துங்கள் → அந்தப் பகுதியைப் பற்றி அறியுங்கள்" },
+  g2: { en: "🤏 Pinch on the organ and move your hand → move it", kn: "🤏 ಅಂಗದ ಮೇಲೆ ಚಿಟಿಕೆ ಹಿಡಿದು ಕೈ ಸರಿಸಿ → ಅದನ್ನು ಸರಿಸಿ", ta: "🤏 உறுப்பின் மேல் கிள்ளிப் பிடித்து கையை நகர்த்துங்கள் → அதை நகர்த்தும்" },
+  g3: { en: "🖐 Open hand, move it left or right → turn", kn: "🖐 ಕೈ ತೆರೆದು ಎಡಕ್ಕೆ ಅಥವಾ ಬಲಕ್ಕೆ ಸರಿಸಿ → ತಿರುಗಿಸಿ", ta: "🖐 கையைத் திறந்து இடம் அல்லது வலம் நகர்த்துங்கள் → சுழற்று" },
+  g4: { en: "✌️ Two fingers (V sign), move up or down → zoom in or out", kn: "✌️ ಎರಡು ಬೆರಳು (V ಗುರುತು), ಮೇಲೆ ಅಥವಾ ಕೆಳಗೆ ಸರಿಸಿ → ದೊಡ್ಡದು ಅಥವಾ ಚಿಕ್ಕದು", ta: "✌️ இரண்டு விரல்கள் (V குறி), மேலே அல்லது கீழே நகர்த்துங்கள் → பெரிதாக்கு அல்லது சிறிதாக்கு" },
+  pinchHow: { en: "Keep your whole hand inside the camera view.", kn: "ನಿಮ್ಮ ಕೈ ಪೂರ್ತಿ ಕ್ಯಾಮೆರಾದಲ್ಲಿ ಕಾಣುವಂತೆ ಇಡಿ.", ta: "உங்கள் முழு கையும் கேமராவில் தெரியும்படி வையுங்கள்." },
+  pointing: { en: "☝️ Pointing", kn: "☝️ ತೋರಿಸುತ್ತಿದೆ", ta: "☝️ சுட்டுகிறது" },
   touchTip: { en: "Touch works too: drag to turn, two fingers to zoom or move, tap a number.", kn: "ಸ್ಪರ್ಶವೂ ಕೆಲಸ ಮಾಡುತ್ತದೆ: ಎಳೆದರೆ ತಿರುಗುತ್ತದೆ, ಎರಡು ಬೆರಳಿನಿಂದ ದೊಡ್ಡದು ಅಥವಾ ಸರಿಸುವುದು, ಸಂಖ್ಯೆ ಒತ್ತಿ.", ta: "தொடுதலும் வேலை செய்யும்: இழுத்தால் சுழலும், இரு விரல்களால் பெரிதாக்க/நகர்த்த, எண்ணைத் தட்டுங்கள்." },
   startAR: { en: "Start AR on a table", kn: "ಮೇಜಿನ ಮೇಲೆ AR ಶುರು ಮಾಡಿ", ta: "மேசையில் AR தொடங்கு" },
   startCam: { en: "Use this device's camera", kn: "ಈ ಸಾಧನದ ಕ್ಯಾಮೆರಾ ಬಳಸಿ", ta: "இந்தச் சாதனத்தின் கேமராவைப் பயன்படுத்து" },
@@ -55,9 +56,9 @@ const TX = {
   none: { en: "✋ Show your hand", kn: "✋ ಕೈ ತೋರಿಸಿ", ta: "✋ கையைக் காட்டுங்கள்" },
   off: { en: "✋ Hands off", kn: "✋ ಕೈ ಆಫ್", ta: "✋ கை ஆஃப்" },
   moveHere: { en: "⤓ Move", kn: "⤓ ಸರಿಸಿ", ta: "⤓ நகர்த்து" },
-  moving: { en: "Moving", kn: "ಸರಿಸುತ್ತಿದೆ", ta: "நகர்கிறது" },
-  turning: { en: "Turning", kn: "ತಿರುಗುತ್ತಿದೆ", ta: "சுழல்கிறது" },
-  zooming: { en: "Zoom", kn: "ದೊಡ್ಡ/ಚಿಕ್ಕ", ta: "பெரிதாக்கல்" },
+  moving: { en: "🤏 Moving", kn: "ಸರಿಸುತ್ತಿದೆ", ta: "நகர்கிறது" },
+  turning: { en: "🖐 Turning", kn: "ತಿರುಗುತ್ತಿದೆ", ta: "சுழல்கிறது" },
+  zooming: { en: "✌️ Zoom", kn: "ದೊಡ್ಡ/ಚಿಕ್ಕ", ta: "பெரிதாக்கல்" },
   arFail: { en: "Could not start AR.", kn: "AR ಶುರು ಮಾಡಲಾಗಲಿಲ್ಲ.", ta: "AR தொடங்க முடியவில்லை." },
   privacy: { en: "The camera is used only on this device. Nothing is recorded or sent.", kn: "ಕ್ಯಾಮೆರಾ ಈ ಸಾಧನದಲ್ಲೇ ಬಳಕೆಯಾಗುತ್ತದೆ. ಏನನ್ನೂ ರೆಕಾರ್ಡ್ ಮಾಡುವುದಿಲ್ಲ, ಕಳುಹಿಸುವುದಿಲ್ಲ.", ta: "கேமரா இந்தச் சாதனத்தில் மட்டுமே பயன்படும். எதுவும் பதிவு செய்யப்படுவதோ அனுப்பப்படுவதோ இல்லை." },
 };
@@ -81,7 +82,7 @@ function fillList(ul, two) {
   ul.innerHTML = gestureList(two);
   [TX.g1, TX.g2, TX.g3, TX.g4].forEach((g, i) => { if (ul.children[i]) ul.children[i].textContent = t(g); });
 }
-fillList($("s-list"), false);
+fillList($("s-list"), true);
 
 // ---------- three.js ----------
 const canvas = $("gl");
@@ -227,7 +228,7 @@ function nearestLabel(x, y, r) {
   return best;
 }
 function dwellTarget(x, y) {
-  const lab = nearestLabel(x, y, 30);
+  const lab = nearestLabel(x, y, 44);
   if (lab) return lab;
   for (const el of document.querySelectorAll(".hud .dwell")) {
     if (el.offsetParent === null) continue;
@@ -295,7 +296,7 @@ async function initHands() {
   if (typeof self.dbg !== "function") self.dbg = (...a) => console.debug(...a);   // the tracker's log helper
   const files = await FilesetResolver.forVisionTasks(new URL("vendor/mediapipe/wasm", import.meta.url).href);
   const opts = (delegate) => ({ baseOptions: { modelAssetPath: new URL("vendor/mediapipe/hand_landmarker.task", import.meta.url).href, delegate },
-    runningMode: "VIDEO", numHands: 2, minHandDetectionConfidence: 0.5, minHandPresenceConfidence: 0.5, minTrackingConfidence: 0.5 });
+    runningMode: "VIDEO", numHands: 1, minHandDetectionConfidence: 0.4, minHandPresenceConfidence: 0.4, minTrackingConfidence: 0.4 });
   try { hands = await HandLandmarker.createFromOptions(files, opts("GPU")); }
   catch (e) { hands = await HandLandmarker.createFromOptions(files, opts("CPU")); }
 }
@@ -320,7 +321,7 @@ function grabCamera(xrCamera) {
   if (!camTex) return null;
   if (!cp) setupCopy();
   const keepTarget = renderer.getRenderTarget();       // three.js has the AR screen bound; put it back afterwards
-  const k = 320 / Math.max(xrCamera.width, xrCamera.height);
+  const k = 384 / Math.max(xrCamera.width, xrCamera.height);
   const w = Math.round(xrCamera.width * k), h = Math.round(xrCamera.height * k);
   if (w !== cp.w || h !== cp.h) {
     cp.w = w; cp.h = h;
@@ -362,69 +363,83 @@ function toScreen(p) {
 const cursor = $("cursor"), thumbDot = $("thumb"), modeEl = $("mode"), handchip = $("handchip");
 const sm = {};
 function smooth(key, p, a) { const s = sm[key]; if (!s || Math.hypot(s.x - p.x, s.y - p.y) > 160) return (sm[key] = { ...p }); s.x += (p.x - s.x) * a; s.y += (p.y - s.y) * a; return s; }
-let pinchOn = [false, false], act = null, dwell = { el: null, t0: 0 }, lastSeen = 0;
+let pinchOn = false, act = null, dwell = { el: null, t0: 0 }, lastSeen = 0, lastRes = null;
+let pose = "none", rawPose = "none", rawCount = 0;
 function setMode(txt) { modeEl.style.display = txt ? "block" : "none"; if (txt) modeEl.textContent = txt; }
 function renderHandChip(seen) {
   handchip.textContent = !handsOn ? t(TX.off) : t(seen ? TX.seen : TX.none);
   handchip.classList.toggle("seen", handsOn && seen);
 }
+// which hand shape is it?  pinch / point (index only) / vee (index + middle) / open (all fingers) / other
+const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+function handShape(P) {
+  const wr = P[0];
+  const ext = [[8, 6], [12, 10], [16, 14], [20, 18]].map(([tip, pip]) => dist(wr, P[tip]) > dist(wr, P[pip]) * 1.15);
+  const size = dist(wr, P[9]) || 1;
+  const pd = dist(P[4], P[8]) / size;
+  pinchOn = pinchOn ? pd < 0.45 : pd < 0.28;
+  if (pinchOn && !ext[1]) return "pinch";       // (a V sign or open hand is never a pinch)
+  pinchOn = pinchOn && !ext[1];
+  const [i, m, r, l] = ext;
+  if (i && !m && !r && !l) return "point";
+  if (i && m && !r && !l) return "vee";
+  if (i && m && r && l) return "open";
+  return "other";
+}
 function handStep(res, now) {
   const hs = (res && res.landmarks) || [];
+  const fresh = res !== lastRes; lastRes = res;
   if (hs.length) lastSeen = now;
-  const seen = now - lastSeen < 400;
+  const seen = now - lastSeen < 600;           // keep going through short tracking drops
   renderHandChip(seen);
   if (seen && !autoFolded && (!xrSession || placed)) { autoFolded = true; foldHint(true); }
   if (!hs.length) {
-    if (!seen) { cursor.style.display = thumbDot.style.display = "none"; act = null; setMode(""); dwell.el = null; clearHot(); }
+    if (!seen) { cursor.style.display = thumbDot.style.display = "none"; act = null; pose = "none"; setMode(""); dwell.el = null; clearHot(); }
     return;
   }
-  const info = hs.map((lm, i) => {
-    const tip = toScreen(lm[8]), th = toScreen(lm[4]), wr = toScreen(lm[0]), mid = toScreen(lm[9]);
-    const size = Math.hypot(wr.x - mid.x, wr.y - mid.y) || 1;
-    const d = Math.hypot(tip.x - th.x, tip.y - th.y) / size;
-    pinchOn[i] = pinchOn[i] ? d < 0.5 : d < 0.3;
-    const pt = smooth("pt" + i, { x: (tip.x + th.x) / 2, y: (tip.y + th.y) / 2 }, 0.5);
-    return { tip: smooth("tip" + i, tip, 0.55), th, pinch: pinchOn[i], pt };
-  });
-  const h0 = info[0];
-  const cx = h0.pinch ? h0.pt.x : h0.tip.x, cy = h0.pinch ? h0.pt.y : h0.tip.y;
-  cursor.style.display = "block"; cursor.style.transform = `translate(${cx}px, ${cy}px)`;
-  thumbDot.style.display = h0.pinch ? "none" : "block"; thumbDot.style.transform = `translate(${h0.th.x}px, ${h0.th.y}px)`;
-  cursor.classList.toggle("pinch", h0.pinch);
-
-  // two hands pinching: zoom
-  if (info.length > 1 && info[0].pinch && info[1].pinch) {
-    const d = Math.hypot(info[0].pt.x - info[1].pt.x, info[0].pt.y - info[1].pt.y);
-    if (!act || act.kind !== "zoom2") act = { kind: "zoom2", d, s: userScale };
-    userScale = clampS(act.s * d / act.d); setMode(t(TX.zooming)); return;
+  const P = hs[0].map(toScreen);
+  if (fresh) {                                  // a shape must show twice in a row before we switch to it
+    const s = handShape(P);
+    if (s === rawPose) rawCount++; else { rawPose = s; rawCount = 1; }
+    if (rawCount >= 2 || s === "pinch") pose = s;
   }
-  if (act && act.kind === "zoom2") act = null;
+  const tip = smooth("tip", P[8], 0.45);
+  const palm = smooth("palm", { x: (P[0].x + P[9].x) / 2, y: (P[0].y + P[9].y) / 2 }, 0.45);
+  const pin = smooth("pin", { x: (P[4].x + P[8].x) / 2, y: (P[4].y + P[8].y) / 2 }, 0.5);
+  const c = pose === "point" || pose === "other" ? tip : pose === "pinch" ? pin : palm;
+  cursor.style.display = "block"; cursor.style.transform = `translate(${c.x}px, ${c.y}px)`;
+  thumbDot.style.display = pose === "point" ? "none" : "block"; thumbDot.style.transform = `translate(${P[4].x}px, ${P[4].y}px)`;
+  cursor.classList.toggle("pinch", pose === "pinch");
+  if (act && act.kind !== pose) act = null;
 
-  if (h0.pinch) {
-    cursor.style.background = "";
+  if (pose !== "point") { dwell.el = null; cursor.style.background = ""; clearHot(); }
+
+  if (pose === "pinch") {                       // 🤏 move (or place it, before it is on the table)
     if (!act) {
-      if (xrSession && !placed) { placeNow(); act = { kind: "none" }; return; }
-      if (hitsOrgan(h0.pt.x, h0.pt.y)) act = { kind: "move", pos: root.position.clone(), hit: planePoint(h0.pt.x, h0.pt.y, root.position) };
-      else act = { kind: "tz", x: h0.pt.x, y: h0.pt.y, rot: spin.rotation.y, s: userScale, axis: null };
+      if (xrSession && !placed) { placeNow(); act = { kind: "pinch", none: true }; return; }
+      act = hitsOrgan(pin.x, pin.y) ? { kind: "pinch", pos: root.position.clone(), hit: planePoint(pin.x, pin.y, root.position) } : { kind: "pinch", none: true };
     }
-    if (act.kind === "move" && act.hit) {
-      const h = planePoint(h0.pt.x, h0.pt.y, act.pos);
-      if (h) root.position.copy(act.pos).add(h.sub(act.hit));
-      setMode(t(TX.moving));
-    } else if (act.kind === "tz") {
-      const dx = h0.pt.x - act.x, dy = h0.pt.y - act.y;
-      if (!act.axis && Math.abs(dx) + Math.abs(dy) > 24) act.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-      if (act.axis === "x") { spin.rotation.y = act.rot + dx * 0.012; setMode(t(TX.turning)); }
-      else if (act.axis === "y") { userScale = clampS(act.s * Math.exp(-dy * 0.005)); setMode(t(TX.zooming)); }
-    }
-    dwell.el = null; return;
+    if (!act.none && act.hit) { const h = planePoint(pin.x, pin.y, act.pos); if (h) root.position.copy(act.pos).add(h.sub(act.hit)); setMode(t(TX.moving)); }
+    else setMode("");
+    return;
   }
-  act = null; setMode("");
+  if (pose === "open") {                        // 🖐 turn
+    if (!act) act = { kind: "open", x: palm.x, rot: spin.rotation.y };
+    spin.rotation.y = act.rot + (palm.x - act.x) * 0.013;
+    setMode(t(TX.turning)); return;
+  }
+  if (pose === "vee") {                         // ✌️ zoom: up = bigger
+    if (!act) act = { kind: "vee", y: palm.y, s: userScale };
+    userScale = clampS(act.s * Math.exp(-(palm.y - act.y) * 0.006));
+    setMode(t(TX.zooming) + " " + Math.round(userScale * 100) + "%"); return;
+  }
+  if (pose !== "point") { setMode(""); return; }
 
-  // pointing: hold on a number or a button to press it
-  let el = dwellTarget(h0.tip.x, h0.tip.y);
+  // ☝️ point with the index finger only: hold on a number or a button to press it
+  setMode(t(TX.pointing));
+  const el = dwellTarget(tip.x, tip.y);
   if (el !== dwell.el) dwell = { el, t0: now };
-  const prog = el ? Math.min(1, (now - dwell.t0) / 900) : 0;
+  const prog = el ? Math.min(1, (now - dwell.t0) / 700) : 0;
   cursor.style.background = prog > 0 ? `conic-gradient(rgba(255,196,87,.9) ${prog * 360}deg, rgba(0,0,0,.25) 0)` : "";
   clearHot(); if (el) el.classList.add("hot");
   if (el && prog >= 1) { dwell.t0 = now + 1e9; el.click(); }
@@ -446,7 +461,7 @@ function setHint() {
   $("h-title").textContent = t(COND.organ) + " · " + (state === "healthy" ? t(U.healthy) : t(COND.name));
   if (!handsWork) { $("h-text").textContent = t(TX.noHands); list.innerHTML = ""; $("h-note").textContent = t(TX.touchTip); return; }
   $("h-text").textContent = (xrSession ? t(TX.placed) : t(TX.inlineHint)) + " " + t(TX.pinchHow);
-  fillList(list, !xrSession);
+  fillList(list, true);
   $("h-note").textContent = t(TX.touchTip);
 }
 
@@ -509,7 +524,7 @@ $("s-ar").addEventListener("click", startAR);
 $("s-cam").addEventListener("click", startCam);
 
 // ---------- every frame ----------
-let lastTs = 0, frameNo = 0, handRes = null;
+let lastTs = 0, frameNo = 0, handRes = null, detMs = 20, fastHands = false;
 const tmpM = new THREE.Matrix4(), hitPos = new THREE.Vector3();
 renderer.setAnimationLoop((time, frame) => {
   const dt = Math.min(clock.getDelta(), 0.1);
@@ -536,17 +551,19 @@ renderer.setAnimationLoop((time, frame) => {
           root.rotation.set(0, Math.atan2(camPos.x - hitPos.x, camPos.z - hitPos.z), 0);
         } else { reticle.visible = false; }
       }
-      if (handsOn && handsWork && v.camera && frameNo % 2 === 0) {
+      if (handsOn && handsWork && v.camera && (fastHands || frameNo % 2 === 0)) {
         try { image = grabCamera(v.camera); } catch (e) { console.warn(e); image = null; }
       }
     }
-  } else if (src && hands && handsOn && frameNo % 2 === 0) {
+  } else if (src && hands && handsOn && (fastHands || frameNo % 2 === 0)) {
     const ok = src === video ? video.readyState >= 2 && video.videoWidth : still.complete && still.naturalWidth;
     if (ok) image = src;
   }
   if (image && hands) {
     const ts = Math.max(now, lastTs + 1); lastTs = ts;
+    const t0 = performance.now();
     try { handRes = hands.detectForVideo(image, ts); } catch (e) { handRes = null; }
+    detMs = detMs * 0.9 + (performance.now() - t0) * 0.1; fastHands = detMs < 14;   // run every frame if the phone is fast enough
   }
   if (handsOn && handsWork && (xrSession ? placed || true : src)) handStep(handRes, now);
   else { cursor.style.display = thumbDot.style.display = "none"; renderHandChip(false); }
@@ -571,4 +588,4 @@ renderer.setAnimationLoop((time, frame) => {
   renderHandChip(false); setHint();
   if (STILL) startCam();
 })();
-window.__hand = { root, spin, show, get cur() { return cur; }, get res() { return handRes; } };
+window.__hand = { root, spin, show, get cur() { return cur; }, get res() { return handRes; }, get pose() { return pose; }, get scale() { return userScale; } };
