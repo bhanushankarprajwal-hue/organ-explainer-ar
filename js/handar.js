@@ -54,6 +54,7 @@ const TX = {
     ta: "இந்த போனில் கை கட்டுப்பாடு தொடங்கவில்லை (உலாவி கேமரா படத்தைத் தரவில்லை). தொடுதல் வேலை செய்யும்." },
   seen: { en: "✋ Hand found", kn: "✋ ಕೈ ಸಿಕ್ಕಿದೆ", ta: "✋ கை தெரிகிறது" },
   none: { en: "✋ Show your hand", kn: "✋ ಕೈ ತೋರಿಸಿ", ta: "✋ கையைக் காட்டுங்கள்" },
+  loadingHands: { en: "✋ Loading hand tracking…", kn: "✋ ಕೈ ಟ್ರ್ಯಾಕಿಂಗ್ ಲೋಡ್ ಆಗುತ್ತಿದೆ…", ta: "✋ கை கண்காணிப்பு ஏற்றப்படுகிறது…" },
   off: { en: "✋ Hands off", kn: "✋ ಕೈ ಆಫ್", ta: "✋ கை ஆஃப்" },
   moveHere: { en: "⤓ Move", kn: "⤓ ಸರಿಸಿ", ta: "⤓ நகர்த்து" },
   moving: { en: "🤏 Moving", kn: "ಸರಿಸುತ್ತಿದೆ", ta: "நகர்கிறது" },
@@ -291,7 +292,7 @@ function pointerEnd(e) {
 ui.addEventListener("pointerup", pointerEnd); ui.addEventListener("pointercancel", pointerEnd);
 
 // ---------- hand tracking ----------
-let hands = null, handsOn = true, handsWork = true;
+let hands = null, handsOn = true, handsWork = true, handsFailed = false;
 async function initHands() {
   if (typeof self.dbg !== "function") self.dbg = (...a) => console.debug(...a);   // the tracker's log helper
   const files = await FilesetResolver.forVisionTasks(new URL("vendor/mediapipe/wasm", import.meta.url).href);
@@ -367,7 +368,7 @@ let pinchOn = false, act = null, dwell = { el: null, t0: 0 }, lastSeen = 0, last
 let pose = "none", rawPose = "none", rawCount = 0;
 function setMode(txt) { modeEl.style.display = txt ? "block" : "none"; if (txt) modeEl.textContent = txt; }
 function renderHandChip(seen) {
-  handchip.textContent = !handsOn ? t(TX.off) : t(seen ? TX.seen : TX.none);
+  handchip.textContent = !handsOn ? t(TX.off) : !hands && !handsFailed ? t(TX.loadingHands) : t(seen ? TX.seen : TX.none);
   handchip.classList.toggle("seen", handsOn && seen);
 }
 // which hand shape is it?  pinch / point (index only) / vee (index + middle) / open (all fingers) / other
@@ -488,7 +489,7 @@ async function startAR() {
     const feats = session.enabledFeatures;
     camAccess = feats ? feats.includes("camera-access") : true;
     try { glBinding = new XRWebGLBinding(session, gl); } catch (e) { glBinding = null; }
-    handsWork = !!(hands && camAccess && glBinding);
+    handsWork = !!(camAccess && glBinding) && !handsFailed;
     root.visible = false; root.position.set(0, 0, 0); userScale = 1; tilt = 0; spin.rotation.set(0, 0, 0);
     setHint();
     session.addEventListener("end", () => {
@@ -514,7 +515,7 @@ async function startCam() {
     }
     video.classList.toggle("mirror", mirrored && src === video); still.classList.toggle("mirror", mirrored && src === still);
     root.visible = true; root.position.set(0, -0.12, -0.6); root.rotation.set(0, 0, 0);
-    handsWork = !!hands;
+    handsWork = !handsFailed;
     $("start").hidden = true; setHint();
   } catch (e) {
     console.error(e); $("s-text").textContent = t(U.camError);
@@ -551,7 +552,7 @@ renderer.setAnimationLoop((time, frame) => {
           root.rotation.set(0, Math.atan2(camPos.x - hitPos.x, camPos.z - hitPos.z), 0);
         } else { reticle.visible = false; }
       }
-      if (handsOn && handsWork && v.camera && (fastHands || frameNo % 2 === 0)) {
+      if (hands && handsOn && handsWork && v.camera && (fastHands || frameNo % 2 === 0)) {
         try { image = grabCamera(v.camera); } catch (e) { console.warn(e); image = null; }
       }
     }
@@ -574,13 +575,14 @@ renderer.setAnimationLoop((time, frame) => {
 
 // ---------- boot ----------
 (async () => {
-  const handsP = initHands().catch((e) => { console.warn("hands failed", e); hands = null; });
+  // hand tracking (about 17 MB) loads in the background; the organ and the Start button do not wait for it
+  initHands().then(() => { renderHandChip(false); })
+    .catch((e) => { console.warn("hands failed", e); hands = null; handsFailed = true; handsWork = false; setHint(); });
   try { await show("healthy", "outside"); }
   catch (e) { $("s-text").textContent = "Error: " + e.message; $("s-spin").hidden = true; return; }
   root.visible = false;
   let arOK = false;
   try { arOK = !!(navigator.xr && await navigator.xr.isSessionSupported("immersive-ar")); } catch (e) {}
-  await handsP;
   $("s-spin").hidden = true;
   $("s-text").textContent = arOK ? t(TX.intro) : t(TX.noAR);
   $("s-list").hidden = false;
