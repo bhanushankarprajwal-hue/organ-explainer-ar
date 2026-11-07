@@ -343,7 +343,7 @@ body.story-open .shell { display: none; }
   .mtop .brand-name { font-size: .98rem; }
   .mtop .brand-mark { width: 30px; height: 30px; }
   .mtop .lang button { padding: 5px 10px; }
-  .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
+  .tabbar { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
     height: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px)); padding: 0 var(--gut-r) env(safe-area-inset-bottom, 0px) var(--gut-l);
     background: rgba(10, 21, 31, .96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); }
   .tabbar a { flex-direction: column; justify-content: center; gap: 3px; font-size: .72rem; }
@@ -383,3 +383,11 @@ body.story-open .shell { display: none; }
   .page { max-width: 1440px; }
   model-viewer { height: 600px; }
 }
+
+/* "new" tag and the personal feature row on home */
+.new-tag { display: inline-block; vertical-align: middle; font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; font-weight: 800;
+  padding: 3px 8px; border-radius: 6px; background: var(--warm); color: #2a1a00; margin-right: 4px; }
+.ways.personal { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.ways.personal .way { border-color: rgba(255, 196, 87, .35); }
+.ways.personal .ico { color: var(--warm); background: rgba(255, 196, 87, .1); border-color: rgba(255, 196, 87, .4); }
+@media (max-width: 899px) { .ways.personal { grid-template-columns: 1fr; } .organ-actions { grid-template-columns: 1fr 1fr; } .organ-actions .btn:first-child { grid-column: 1 / -1; } }

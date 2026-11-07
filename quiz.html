@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060d14">
+  <title>Understanding check · Organ Explainer AR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .q-top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: calc(10px + env(safe-area-inset-top, 0px)) var(--gut-r) 10px var(--gut-l);
+      background: rgba(6,13,20,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .q-top h1 { font-size: 1.1rem; margin: 0; flex: 1; }
+    .q-wrap { max-width: 760px; margin: 0 auto; padding: 22px var(--gut-r) 48px var(--gut-l); }
+    .steps3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0 20px; }
+    .steps3 div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px; }
+    .steps3 b { display: block; color: var(--brand); font-family: var(--mono); font-size: .8rem; margin-bottom: 4px; }
+    .steps3 span { color: var(--ink-2); font-size: .9rem; }
+    .form { display: grid; gap: 14px; margin-bottom: 18px; }
+    .form label { display: grid; gap: 6px; font-weight: 600; color: var(--ink-2); font-size: .92rem; }
+    .form input, .form select { background: var(--bg-2); color: var(--ink); border: 1px solid var(--line-2); border-radius: 12px; padding: 11px 13px; font: inherit; }
+    .progress { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; margin: 6px 0 18px; }
+    .progress span { display: block; height: 100%; background: linear-gradient(90deg, var(--brand), var(--brand-2)); transition: width .3s; }
+    .phase { font-family: var(--mono); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin: 0; }
+    .question { font-size: clamp(1.25rem, 3vw, 1.6rem); margin: 6px 0 18px; }
+    .opts { display: grid; gap: 10px; }
+    .opt { text-align: left; display: flex; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px 16px; font-size: 1rem; color: var(--ink); }
+    .opt:hover { border-color: var(--line-2); }
+    .opt .k { display: inline-grid; place-items: center; width: 30px; height: 30px; flex: none; border-radius: 9px; background: var(--surface-3); font-weight: 800; font-family: var(--mono); }
+    .opt.right { border-color: var(--healthy); background: rgba(79,209,139,.1); }
+    .opt.wrong { border-color: var(--sick); background: rgba(255,122,102,.1); }
+    .score-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+    .score { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px; text-align: center; }
+    .score b { display: block; font-size: 2.4rem; line-height: 1.1; }
+    .score small { color: var(--muted); }
+    .score.up b { color: var(--healthy); }
+    .review { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .review li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; font-size: .92rem; color: var(--ink-2); }
+    .review li b { color: var(--ink); }
+    .bars { display: grid; gap: 12px; margin: 14px 0 20px; }
+    .bar-row { display: grid; grid-template-columns: 90px 1fr; gap: 10px; align-items: center; font-size: .88rem; }
+    .bar { height: 26px; border-radius: 8px; background: var(--surface-2); position: relative; overflow: hidden; }
+    .bar span { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-weight: 800; font-size: .8rem; color: #04170f; border-radius: 8px; }
+    .bar.before span { background: #8aa4a7; } .bar.after span { background: var(--brand); }
+    table.res { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    table.res th, table.res td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+    table.res th { color: var(--muted); font-weight: 600; }
+    .row-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .danger { border-color: rgba(255,122,102,.5) !important; color: var(--sick) !important; }
+    @media (max-width: 600px) { .steps3, .score-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="q-top">
+    <a class="chip" id="back" href="index.html">←</a>
+    <h1 id="title"></h1>
+    <a class="chip" id="res-link" href="#results"></a>
+  </header>
+  <main class="q-wrap" id="app"></main>
+  <script src="js/data.js"></script>
+  <script type="module" src="js/quiz.js"></script>
+</body>
+</html>

@@ -139,6 +139,7 @@ function renderCondition(c) {
   renderARActions(c);
   $("story-btn").href = "#" + c.id + "-story";
   $("hand-btn").href = "handar.html?c=" + c.id;
+  $("report-btn").href = "mycase.html?c=" + c.id;
   $("c-treatment").innerHTML = c.treatment.map((s) => `<li><h3>${esc(t(s.title))}</h3><p>${esc(t(s.text))}</p></li>`).join("");
 
   const v = V(c);
@@ -296,6 +297,7 @@ function renderARActions(c) {
     act("act-healthy", "table", U("viewHealthyAR"), U("needTable")) +
     act("act-sick", "table", U("viewSickAR"), U("needTable")) +
     act("act-both", "both", U("viewBothAR"), U("needTable")) +
+    act("act-report", "both", U("pReport"), U("pReportSub"), "mycase.html?c=" + c.id) +
     act("act-hand", "hand", U("modeHand"), U("modeHandSub"), "handar.html?c=" + c.id) +
     act("act-story", "story", U("modeStory"), U("modeStorySub"), "#" + c.id + "-story") +
     act("act-body", "body", U("modeBody"), U("modeBodySub"), "body.html");

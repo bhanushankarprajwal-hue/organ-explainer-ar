@@ -8,6 +8,8 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { FilesetResolver, HandLandmarker } from "./vendor/mediapipe/vision_bundle.mjs";
+import { makeCase, caseFromURL } from "./severity.js";
+const CASE = caseFromURL();          // a patient's own report values, from My Report
 
 // ---------- text ----------
 let lang = "en";
@@ -144,8 +146,10 @@ async function getModel(st, vw) {
   holder.scale.setScalar(SIZE / Math.max(size.x, size.y, size.z));
   let mixer = null;
   if (g.animations && g.animations.length) { mixer = new THREE.AnimationMixer(m); mixer.clipAction(g.animations[0]).play(); }
+  let personal = null;
+  if (CASE && st !== "healthy" && vw === "outside") { personal = makeCase(COND.id, m); personal.apply(CASE); }
   const meshes = []; m.traverse((n) => n.isMesh && meshes.push(n));
-  return (cache[url] = { holder, inner: m, mixer, meshes, hotspots: st === "healthy" ? v.healthyHotspots : v.diseasedHotspots });
+  return (cache[url] = { holder, inner: m, mixer, personal, meshes, hotspots: st === "healthy" ? v.healthyHotspots : v.diseasedHotspots });
 }
 async function show(st, vw) {
   const mdl = await getModel(st, vw);
@@ -530,6 +534,7 @@ const tmpM = new THREE.Matrix4(), hitPos = new THREE.Vector3();
 renderer.setAnimationLoop((time, frame) => {
   const dt = Math.min(clock.getDelta(), 0.1);
   if (cur && cur.mixer) cur.mixer.update(dt);
+  if (cur && cur.personal) cur.personal.pulse(time / 1000);
   const now = performance.now();
   frameNo++;
   let image = null;
@@ -578,7 +583,7 @@ renderer.setAnimationLoop((time, frame) => {
   // hand tracking (about 17 MB) loads in the background; the organ and the Start button do not wait for it
   initHands().then(() => { renderHandChip(false); })
     .catch((e) => { console.warn("hands failed", e); hands = null; handsFailed = true; handsWork = false; setHint(); });
-  try { await show("healthy", "outside"); }
+  try { await show(CASE ? "diseased" : "healthy", "outside"); }
   catch (e) { $("s-text").textContent = "Error: " + e.message; $("s-spin").hidden = true; return; }
   root.visible = false;
   let arOK = false;

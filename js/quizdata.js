@@ -1,0 +1,41 @@
+// Quiz questions for the understanding study (before / after using the app).
+// Each: q, options (first one is NOT always right: "a" = index of the right answer).
+// Text: English + Kannada. Tamil falls back to English (needs a Tamil writer).
+const Q = (en, kn) => ({ en, kn });
+export const QUIZ = {
+  heart: [
+    { q: Q("What does a coronary artery do?", "ಕರೋನರಿ ಧಮನಿ ಏನು ಮಾಡುತ್ತದೆ?"), o: [Q("Pumps air into the lungs", "ಶ್ವಾಸಕೋಶಕ್ಕೆ ಗಾಳಿ ತುಂಬುತ್ತದೆ"), Q("Brings blood to the heart muscle", "ಹೃದಯ ಸ್ನಾಯುವಿಗೆ ರಕ್ತ ತರುತ್ತದೆ"), Q("Carries food to the stomach", "ಹೊಟ್ಟೆಗೆ ಆಹಾರ ಸಾಗಿಸುತ್ತದೆ"), Q("Makes new blood", "ಹೊಸ ರಕ್ತ ತಯಾರಿಸುತ್ತದೆ")], a: 1 },
+    { q: Q("What is plaque in an artery?", "ಧಮನಿಯಲ್ಲಿ ಪ್ಲೇಕ್ ಎಂದರೇನು?"), o: [Q("Fatty build-up inside the artery wall", "ಧಮನಿಯ ಗೋಡೆಯೊಳಗೆ ಕೊಬ್ಬಿನ ಶೇಖರಣೆ"), Q("A heart valve", "ಹೃದಯದ ಕವಾಟ"), Q("An infection of the skin", "ಚರ್ಮದ ಸೋಂಕು"), Q("A type of medicine", "ಒಂದು ಬಗೆಯ ಔಷಧಿ")], a: 0 },
+    { q: Q("What can happen if the artery gets fully blocked?", "ಧಮನಿ ಪೂರ್ತಿ ಮುಚ್ಚಿಹೋದರೆ ಏನಾಗಬಹುದು?"), o: [Q("A kidney stone", "ಮೂತ್ರಪಿಂಡದ ಕಲ್ಲು"), Q("Nothing at all", "ಏನೂ ಆಗುವುದಿಲ್ಲ"), Q("A heart attack", "ಹೃದಯಾಘಾತ"), Q("Only a small headache", "ಸ್ವಲ್ಪ ತಲೆನೋವು ಮಾತ್ರ")], a: 2 },
+    { q: Q("Which sign means: get help now?", "ಯಾವ ಲಕ್ಷಣ ಕಂಡರೆ ತಕ್ಷಣ ಸಹಾಯ ಪಡೆಯಬೇಕು?"), o: [Q("A mild cough", "ಸ್ವಲ್ಪ ಕೆಮ್ಮು"), Q("Chest pain that spreads to the arm or jaw", "ತೋಳು ಅಥವಾ ದವಡೆಗೆ ಹರಡುವ ಎದೆ ನೋವು"), Q("Sneezing", "ಸೀನುವುದು"), Q("Itchy skin", "ಚರ್ಮದ ತುರಿಕೆ")], a: 1 },
+    { q: Q("How does a stent help?", "ಸ್ಟೆಂಟ್ ಹೇಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ?"), o: [Q("It cleans the lungs", "ಶ್ವಾಸಕೋಶ ಸ್ವಚ್ಛಗೊಳಿಸುತ್ತದೆ"), Q("It replaces the heart", "ಹೃದಯವನ್ನು ಬದಲಿಸುತ್ತದೆ"), Q("It makes bones stronger", "ಮೂಳೆಗಳನ್ನು ಗಟ್ಟಿ ಮಾಡುತ್ತದೆ"), Q("It holds the artery open so blood can flow", "ರಕ್ತ ಹರಿಯಲು ಧಮನಿಯನ್ನು ತೆರೆದಿಡುತ್ತದೆ")], a: 3 },
+  ],
+  brain: [
+    { q: Q("What causes most strokes?", "ಹೆಚ್ಚಿನ ಸ್ಟ್ರೋಕ್‌ಗಳಿಗೆ ಕಾರಣ ಏನು?"), o: [Q("A clot blocks blood to part of the brain", "ಹೆಪ್ಪುಗಟ್ಟಿದ ರಕ್ತ ಮೆದುಳಿನ ಭಾಗಕ್ಕೆ ರಕ್ತ ತಡೆಯುವುದು"), Q("Too much sleep", "ಅತಿಯಾದ ನಿದ್ರೆ"), Q("A broken bone", "ಮುರಿದ ಮೂಳೆ"), Q("Drinking water", "ನೀರು ಕುಡಿಯುವುದು")], a: 0 },
+    { q: Q("Which is a sign of stroke?", "ಇವುಗಳಲ್ಲಿ ಸ್ಟ್ರೋಕ್‌ನ ಲಕ್ಷಣ ಯಾವುದು?"), o: [Q("Red eyes after crying", "ಅತ್ತ ನಂತರ ಕೆಂಪು ಕಣ್ಣು"), Q("Feeling hungry", "ಹಸಿವಾಗುವುದು"), Q("Face drooping on one side", "ಮುಖದ ಒಂದು ಬದಿ ಜೋತುಬೀಳುವುದು"), Q("Cold hands in winter", "ಚಳಿಗಾಲದಲ್ಲಿ ತಣ್ಣನೆಯ ಕೈ")], a: 2 },
+    { q: Q("What should you do if you see stroke signs?", "ಸ್ಟ್ರೋಕ್ ಲಕ್ಷಣ ಕಂಡರೆ ಏನು ಮಾಡಬೇಕು?"), o: [Q("Wait until tomorrow", "ನಾಳೆಯವರೆಗೆ ಕಾಯಿರಿ"), Q("Call emergency help at once", "ತಕ್ಷಣ ತುರ್ತು ಸಹಾಯಕ್ಕೆ ಕರೆ ಮಾಡಿ"), Q("Sleep it off", "ಮಲಗಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ"), Q("Only drink water", "ನೀರು ಮಾತ್ರ ಕುಡಿಯಿರಿ")], a: 1 },
+    { q: Q("Why is time so important in a stroke?", "ಸ್ಟ್ರೋಕ್‌ನಲ್ಲಿ ಸಮಯ ಏಕೆ ತುಂಬಾ ಮುಖ್ಯ?"), o: [Q("It is not important", "ಅದು ಮುಖ್ಯವಲ್ಲ"), Q("The clinic closes early", "ಆಸ್ಪತ್ರೆ ಬೇಗ ಮುಚ್ಚುತ್ತದೆ"), Q("Medicine gets old", "ಔಷಧಿ ಹಳೆಯದಾಗುತ್ತದೆ"), Q("Brain cells die every minute without blood", "ರಕ್ತವಿಲ್ಲದೆ ಪ್ರತಿ ನಿಮಿಷ ಮೆದುಳಿನ ಕೋಶಗಳು ಸಾಯುತ್ತವೆ")], a: 3 },
+    { q: Q("What helps recovery after a stroke?", "ಸ್ಟ್ರೋಕ್ ನಂತರ ಚೇತರಿಕೆಗೆ ಏನು ಸಹಾಯ ಮಾಡುತ್ತದೆ?"), o: [Q("Rehab therapy and medicines", "ಪುನರ್ವಸತಿ ಚಿಕಿತ್ಸೆ ಮತ್ತು ಔಷಧಿ"), Q("Staying in bed for months", "ತಿಂಗಳುಗಟ್ಟಲೆ ಹಾಸಿಗೆಯಲ್ಲಿರುವುದು"), Q("Smoking", "ಧೂಮಪಾನ"), Q("Stopping all medicines", "ಎಲ್ಲ ಔಷಧಿ ನಿಲ್ಲಿಸುವುದು")], a: 0 },
+  ],
+  lungs: [
+    { q: Q("What do the tiny air sacs in the lungs do?", "ಶ್ವಾಸಕೋಶದ ಸಣ್ಣ ಗಾಳಿ ಚೀಲಗಳು ಏನು ಮಾಡುತ್ತವೆ?"), o: [Q("Pump blood", "ರಕ್ತ ಪಂಪ್ ಮಾಡುತ್ತವೆ"), Q("Pass oxygen into the blood", "ರಕ್ತಕ್ಕೆ ಆಮ್ಲಜನಕ ಕೊಡುತ್ತವೆ"), Q("Digest food", "ಆಹಾರ ಜೀರ್ಣಿಸುತ್ತವೆ"), Q("Store urine", "ಮೂತ್ರ ಸಂಗ್ರಹಿಸುತ್ತವೆ")], a: 1 },
+    { q: Q("What does tar from cigarettes do?", "ಸಿಗರೇಟಿನ ಟಾರ್ ಏನು ಮಾಡುತ್ತದೆ?"), o: [Q("Cleans the lungs", "ಶ್ವಾಸಕೋಶ ಸ್ವಚ್ಛಗೊಳಿಸುತ್ತದೆ"), Q("Makes the lungs stronger", "ಶ್ವಾಸಕೋಶ ಬಲಪಡಿಸುತ್ತದೆ"), Q("Sticks in the lungs and damages them", "ಶ್ವಾಸಕೋಶದಲ್ಲಿ ಅಂಟಿಕೊಂಡು ಹಾನಿ ಮಾಡುತ್ತದೆ"), Q("Nothing", "ಏನೂ ಮಾಡುವುದಿಲ್ಲ")], a: 2 },
+    { q: Q("Which is a common sign of smoking damage?", "ಧೂಮಪಾನ ಹಾನಿಯ ಸಾಮಾನ್ಯ ಲಕ್ಷಣ ಯಾವುದು?"), o: [Q("A long-lasting cough and short breath", "ದೀರ್ಘಕಾಲದ ಕೆಮ್ಮು ಮತ್ತು ಉಸಿರುಗಟ್ಟುವಿಕೆ"), Q("Better sense of smell", "ಉತ್ತಮ ವಾಸನೆ ಗ್ರಹಿಕೆ"), Q("Faster running", "ವೇಗದ ಓಟ"), Q("Shiny hair", "ಹೊಳೆಯುವ ಕೂದಲು")], a: 0 },
+    { q: Q("What is the best thing a smoker can do for the lungs?", "ಧೂಮಪಾನಿ ಶ್ವಾಸಕೋಶಕ್ಕಾಗಿ ಮಾಡಬಹುದಾದ ಅತ್ಯುತ್ತಮ ಕೆಲಸ ಯಾವುದು?"), o: [Q("Smoke only at night", "ರಾತ್ರಿ ಮಾತ್ರ ಸೇದುವುದು"), Q("Switch to a lighter brand", "ಹಗುರವಾದ ಬ್ರ್ಯಾಂಡ್‌ಗೆ ಬದಲಾಯಿಸುವುದು"), Q("Drink cold water after smoking", "ಸೇದಿದ ನಂತರ ತಣ್ಣೀರು ಕುಡಿಯುವುದು"), Q("Quit smoking", "ಧೂಮಪಾನ ಬಿಡುವುದು")], a: 3 },
+    { q: Q("When does quitting smoking help?", "ಧೂಮಪಾನ ಬಿಡುವುದು ಯಾವಾಗ ಸಹಾಯ ಮಾಡುತ್ತದೆ?"), o: [Q("Only before age 20", "20 ವರ್ಷದ ಮೊದಲು ಮಾತ್ರ"), Q("At any age, and sooner is better", "ಯಾವುದೇ ವಯಸ್ಸಿನಲ್ಲಿ, ಬೇಗ ಬಿಟ್ಟರೆ ಉತ್ತಮ"), Q("Never", "ಎಂದಿಗೂ ಇಲ್ಲ"), Q("Only after age 60", "60 ವರ್ಷದ ನಂತರ ಮಾತ್ರ")], a: 1 },
+  ],
+  liver: [
+    { q: Q("What is fatty liver?", "ಕೊಬ್ಬಿನ ಯಕೃತ್ತು ಎಂದರೇನು?"), o: [Q("A stone in the liver", "ಯಕೃತ್ತಿನಲ್ಲಿ ಕಲ್ಲು"), Q("Too much fat stored in the liver", "ಯಕೃತ್ತಿನಲ್ಲಿ ಅತಿಯಾದ ಕೊಬ್ಬು ಸಂಗ್ರಹ"), Q("A broken liver", "ಒಡೆದ ಯಕೃತ್ತು"), Q("A type of blood group", "ಒಂದು ರಕ್ತದ ಗುಂಪು")], a: 1 },
+    { q: Q("What are common causes of fatty liver?", "ಕೊಬ್ಬಿನ ಯಕೃತ್ತಿನ ಸಾಮಾನ್ಯ ಕಾರಣಗಳು ಯಾವುವು?"), o: [Q("Extra weight, too much sugar and alcohol", "ಹೆಚ್ಚು ತೂಕ, ಅತಿಯಾದ ಸಕ್ಕರೆ ಮತ್ತು ಮದ್ಯ"), Q("Drinking water", "ನೀರು ಕುಡಿಯುವುದು"), Q("Walking daily", "ದಿನವೂ ನಡೆಯುವುದು"), Q("Sleeping well", "ಚೆನ್ನಾಗಿ ನಿದ್ರಿಸುವುದು")], a: 0 },
+    { q: Q("Can fatty liver get better?", "ಕೊಬ್ಬಿನ ಯಕೃತ್ತು ಸುಧಾರಿಸಬಹುದೇ?"), o: [Q("No, never", "ಇಲ್ಲ, ಎಂದಿಗೂ ಇಲ್ಲ"), Q("Only with surgery", "ಶಸ್ತ್ರಚಿಕಿತ್ಸೆಯಿಂದ ಮಾತ್ರ"), Q("Yes, with weight loss and exercise", "ಹೌದು, ತೂಕ ಇಳಿಕೆ ಮತ್ತು ವ್ಯಾಯಾಮದಿಂದ"), Q("Only by drinking alcohol", "ಮದ್ಯ ಕುಡಿದರೆ ಮಾತ್ರ")], a: 2 },
+    { q: Q("What can happen if it is ignored for many years?", "ಹಲವು ವರ್ಷ ನಿರ್ಲಕ್ಷಿಸಿದರೆ ಏನಾಗಬಹುದು?"), o: [Q("The liver gets stronger", "ಯಕೃತ್ತು ಬಲಗೊಳ್ಳುತ್ತದೆ"), Q("Nothing", "ಏನೂ ಆಗುವುದಿಲ್ಲ"), Q("Better digestion", "ಉತ್ತಮ ಜೀರ್ಣಕ್ರಿಯೆ"), Q("Scarring of the liver (cirrhosis)", "ಯಕೃತ್ತಿನ ಗಾಯದ ಗುರುತು (ಸಿರೋಸಿಸ್)")], a: 3 },
+    { q: Q("Which habit helps the liver most?", "ಯಕೃತ್ತಿಗೆ ಯಾವ ಅಭ್ಯಾಸ ಹೆಚ್ಚು ಸಹಾಯಕ?"), o: [Q("More fried food", "ಹೆಚ್ಚು ಕರಿದ ಆಹಾರ"), Q("Walking daily and less sugar", "ದಿನವೂ ನಡಿಗೆ ಮತ್ತು ಕಡಿಮೆ ಸಕ್ಕರೆ"), Q("More alcohol", "ಹೆಚ್ಚು ಮದ್ಯ"), Q("Skipping meals, then overeating", "ಊಟ ಬಿಟ್ಟು ನಂತರ ಅತಿಯಾಗಿ ತಿನ್ನುವುದು")], a: 1 },
+  ],
+  kidney: [
+    { q: Q("What do the kidneys do?", "ಮೂತ್ರಪಿಂಡಗಳು ಏನು ಮಾಡುತ್ತವೆ?"), o: [Q("Pump blood", "ರಕ್ತ ಪಂಪ್ ಮಾಡುತ್ತವೆ"), Q("Digest food", "ಆಹಾರ ಜೀರ್ಣಿಸುತ್ತವೆ"), Q("Clean the blood and make urine", "ರಕ್ತ ಶುದ್ಧಗೊಳಿಸಿ ಮೂತ್ರ ತಯಾರಿಸುತ್ತವೆ"), Q("Help us breathe", "ಉಸಿರಾಡಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ")], a: 2 },
+    { q: Q("What is a kidney stone?", "ಮೂತ್ರಪಿಂಡದ ಕಲ್ಲು ಎಂದರೇನು?"), o: [Q("A hard lump of minerals in the urine system", "ಮೂತ್ರ ವ್ಯವಸ್ಥೆಯಲ್ಲಿ ಖನಿಜಗಳ ಗಟ್ಟಿ ಉಂಡೆ"), Q("A small bone", "ಸಣ್ಣ ಮೂಳೆ"), Q("A blood clot", "ಹೆಪ್ಪುಗಟ್ಟಿದ ರಕ್ತ"), Q("A swallowed stone", "ನುಂಗಿದ ಕಲ್ಲು")], a: 0 },
+    { q: Q("What is a common sign of a kidney stone?", "ಮೂತ್ರಪಿಂಡದ ಕಲ್ಲಿನ ಸಾಮಾನ್ಯ ಲಕ್ಷಣ ಯಾವುದು?"), o: [Q("Itchy eyes", "ಕಣ್ಣು ತುರಿಕೆ"), Q("Sudden strong pain in the side or back", "ಪಕ್ಕೆ ಅಥವಾ ಬೆನ್ನಿನಲ್ಲಿ ಹಠಾತ್ ತೀವ್ರ ನೋವು"), Q("Hair loss", "ಕೂದಲು ಉದುರುವಿಕೆ"), Q("Sore throat", "ಗಂಟಲು ನೋವು")], a: 1 },
+    { q: Q("What helps most to prevent stones?", "ಕಲ್ಲು ಆಗದಂತೆ ತಡೆಯಲು ಯಾವುದು ಹೆಚ್ಚು ಸಹಾಯಕ?"), o: [Q("Drink less water", "ಕಡಿಮೆ ನೀರು ಕುಡಿಯುವುದು"), Q("Eat more salt", "ಹೆಚ್ಚು ಉಪ್ಪು ತಿನ್ನುವುದು"), Q("Drink more soft drinks", "ಹೆಚ್ಚು ತಂಪು ಪಾನೀಯ"), Q("Drink plenty of water", "ಸಾಕಷ್ಟು ನೀರು ಕುಡಿಯುವುದು")], a: 3 },
+    { q: Q("How can a large stone be treated?", "ದೊಡ್ಡ ಕಲ್ಲಿಗೆ ಹೇಗೆ ಚಿಕಿತ್ಸೆ ನೀಡಬಹುದು?"), o: [Q("It always passes by itself", "ಅದು ಯಾವಾಗಲೂ ತಾನಾಗಿ ಹೊರಬರುತ್ತದೆ"), Q("Broken with sound waves or removed with a thin tube", "ಧ್ವನಿ ತರಂಗದಿಂದ ಒಡೆಯುವುದು ಅಥವಾ ತೆಳು ಕೊಳವೆಯಿಂದ ತೆಗೆಯುವುದು"), Q("By eating sugar", "ಸಕ್ಕರೆ ತಿಂದು"), Q("The kidney is always removed", "ಮೂತ್ರಪಿಂಡವನ್ನೇ ಯಾವಾಗಲೂ ತೆಗೆಯಲಾಗುತ್ತದೆ")], a: 1 },
+  ],
+};

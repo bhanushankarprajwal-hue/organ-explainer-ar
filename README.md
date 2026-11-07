@@ -102,3 +102,14 @@ The original downloads are on the `source-models` branch (fetched by the GitHub 
 - Touch also works: drag to turn, two fingers to zoom/move, tap numbers.
 - Needs Chrome on an Android phone with ARCore. On a laptop it falls back to the webcam.
 - Debug: `&debug=1` shows what the hand tracker sees; `&flip=0` if the hand cursor moves upside down.
+
+### Personal case (the unique part)
+- **My Report** (`mycase.html?c=<organ>`): the doctor enters values from the patient's report
+  (heart blockage %, kidney stone size and place, fatty liver grade, years of smoking, stroke size).
+  The disease parts of the 3D model change to match (`js/severity.js`), with a simple
+  explanation and a mild / moderate / severe label (`js/cases.js`).
+- **What happens next**: a timeline slider (now → 10 years), "if nothing changes" vs "with treatment".
+  Illustration only, not a prediction.
+- **See my case in AR**: opens Hand AR with the personal model (`handar.html?c=…&case=…`).
+- **Understanding check** (`quiz.html`): 5 questions before and after using the app; results are
+  saved on the device, shown as averages, and can be downloaded as CSV (`quiz.html#results`).
