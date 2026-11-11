@@ -57,7 +57,7 @@ const organName = (id) => t(CONDITIONS.find((c) => c.id === id).organ);
 const condName = (id) => t(CONDITIONS.find((c) => c.id === id).name);
 
 $("title").textContent = t(L.title);
-$("res-link").textContent = "📊 " + t(L.results);
+$("res-link").textContent = "" + t(L.results);
 document.title = t(L.title) + " · Organ Explainer AR";
 
 // ---------- the flow ----------
@@ -134,7 +134,7 @@ function finish() {
     </div>
     <h3>${esc(t(L.review))}</h3>
     <ul class="review">${qs.map((q, i) => `<li><b>${i + 1}. ${esc(t(q.q))}</b><br>✓ ${esc(t(q.o[q.a]))}${run.after[i] === q.a ? "" : ` <span style="color:var(--sick)">(${esc(t(q.o[run.after[i]]))})</span>`}</li>`).join("")}</ul>
-    <div class="row-btns"><button class="btn primary" id="next">${esc(t(L.next))} →</button><a class="btn" href="#results">📊 ${esc(t(L.seeAll))}</a></div>`;
+    <div class="row-btns"><button class="btn primary" id="next">${esc(t(L.next))} →</button><a class="btn" href="#results">${esc(t(L.seeAll))}</a></div>`;
   $("next").addEventListener("click", () => { run = null; startScreen(); window.scrollTo(0, 0); });
   window.scrollTo(0, 0);
 }
@@ -168,7 +168,7 @@ function resultsScreen() {
     <div style="overflow-x:auto"><table class="res"><tr><th>${esc(t(L.code))}</th><th>${esc(t(L.topic))}</th><th>${esc(t(L.beforeS))}</th><th>${esc(t(L.afterS))}</th><th>${esc(t(L.date))}</th></tr>
       ${rows.map((r) => `<tr><td>${esc(r.code)}</td><td>${esc(organName(r.organ))}</td><td>${r.before}/${r.total}</td><td>${r.after}/${r.total}</td><td class="muted">${esc(r.date)}</td></tr>`).join("")}</table></div>
     <div class="row-btns">
-      <button class="btn primary" id="csv">⤓ ${esc(t(L.csv))}</button>
+      <button class="btn primary" id="csv">${esc(t(L.csv))}</button>
       <a class="btn" href="#">${esc(t(L.newQuiz))}</a>
       <button class="btn danger" id="clear">${esc(t(L.clear))}</button>
     </div>`;

@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script src="js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#060d14">
+  <meta name="theme-color" content="#f7f5f1">
   <title>Body AR · Organ Explainer AR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
   <script type="importmap">
     { "imports": { "three": "./js/vendor/three/three.module.min.js", "three/addons/": "./js/vendor/three/addons/" } }
   </script>
   <script src="js/data.js"></script>
   <style>
-    :root { --bg: #060d14; --ink: #e8f3f1; --muted: #8aa4a7; --brand: #2fd3c3; --brand-ink: #03201d; --sick: #ff7a66; --healthy: #4fd18b; --warm: #ffc457;
-      --panel: rgba(6, 13, 20, .86); --line: rgba(64, 214, 199, .38); color-scheme: dark; }
+    :root, [data-theme] { --panel: var(--overlay); --accent: var(--brand); }
     html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink);
-      font-family: "Noto Sans", "Noto Sans Kannada", "Noto Sans Tamil", system-ui, sans-serif; }
+      font-family: "Public Sans", "Noto Sans Kannada", "Noto Sans Tamil", system-ui, sans-serif; }
     #stage { position: fixed; inset: 0; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
     #cam, #still { position: absolute; width: 2px; height: 2px; opacity: 0; pointer-events: none; }   /* drawn by WebGL instead */
     #gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -27,11 +28,11 @@
     .tag { position: absolute; left: 0; top: 0; padding: 3px 10px; border-radius: 999px; font-size: .76rem; font-weight: 700; white-space: nowrap;
       background: var(--panel); border: 1px solid var(--line); color: var(--ink); pointer-events: auto; cursor: pointer; }
     .tag.hot { border-color: var(--warm); color: var(--warm); }
-    .lead { position: absolute; left: 0; top: 0; height: 0; border-top: 1px dashed rgba(64, 214, 199, .7); pointer-events: none; }
+    .lead { position: absolute; left: 0; top: 0; height: 0; border-top: 1px dashed var(--brand); pointer-events: none; }
     .lead::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--brand); top: -4px; }
 
     #cursor { position: absolute; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 3px solid var(--brand);
-      box-shadow: 0 0 14px var(--brand); pointer-events: none; display: none; }
+      box-shadow: 0 0 0 2px rgba(255,255,255,.85); pointer-events: none; display: none; }
     #mode { position: absolute; left: 50%; top: calc(110px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); background: var(--panel); border: 1px solid var(--warm); color: var(--warm);
       padding: 5px 14px; border-radius: 999px; font-weight: 700; font-size: .85rem; pointer-events: none; display: none; white-space: nowrap; }
     .hud { position: fixed; left: 0; right: 0; z-index: 10; pointer-events: none;
@@ -40,7 +41,7 @@
     .top { top: 0; padding-top: calc(10px + env(safe-area-inset-top, 0px)); display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
     .spacer { flex: 1; pointer-events: none; }
     .chip { display: inline-flex; align-items: center; gap: 6px; background: var(--panel); border: 1px solid var(--line); color: var(--ink); text-decoration: none;
-      border-radius: 999px; padding: 8px 13px; font: inherit; font-weight: 600; font-size: .85rem; cursor: pointer; backdrop-filter: blur(6px); }
+      border-radius: 10px; padding: 8px 13px; font: inherit; font-weight: 600; font-size: .85rem; cursor: pointer; }
     .chip.on { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
     .chip.hot, .btn.hot, .seg button.hot, .pick button.hot { outline: 3px solid var(--warm); }
     #status { pointer-events: none; }
@@ -48,22 +49,22 @@
     .seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
     .seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 700; font-size: .84rem; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
     .seg button.on { background: var(--brand); color: var(--brand-ink); }
-    .seg button.on.sick { background: var(--sick); color: #2a0700; }
+    .seg button.on.sick { background: var(--sick); color: var(--surface); }
     .bottom { bottom: 0; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 8px; justify-items: center; }
-    .panel { width: 100%; max-width: 620px; box-sizing: border-box; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 12px 15px; backdrop-filter: blur(8px); }
+    .panel { width: 100%; max-width: 620px; box-sizing: border-box; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 12px 15px; }
     .panel h2 { margin: 0 0 2px; font-size: 1.12rem; }
     .panel .cond { margin: 0 0 6px; color: var(--warm); font-weight: 600; font-size: .88rem; }
-    .panel p { margin: 0 0 8px; color: #c9dcda; font-size: .9rem; }
+    .panel p { margin: 0 0 8px; color: var(--ink-2); font-size: .9rem; }
     .panel .small { color: var(--muted); font-size: .78rem; margin: 0; }
     .parts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
-    .parts button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(64,214,199,.25); background: transparent; color: var(--ink);
+    .parts button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); background: transparent; color: var(--ink);
       border-radius: 999px; padding: 4px 10px 4px 4px; font: inherit; font-size: .8rem; cursor: pointer; }
-    .parts .n { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--healthy); color: #04170f; font-weight: 700; font-size: .7rem; }
-    .parts.sick .n { background: var(--sick); color: #2a0700; }
+    .parts .n { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--healthy); color: var(--surface); font-weight: 700; font-size: .7rem; }
+    .parts.sick .n { background: var(--sick); color: var(--surface); }
     .parts button.on { border-color: var(--warm); background: rgba(255,196,87,.12); }
     #part { border-left: 3px solid var(--warm); padding-left: 10px; }
     .row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 8px 14px;
+    .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 10px; padding: 8px 14px;
       font: inherit; font-weight: 700; font-size: .86rem; text-decoration: none; cursor: pointer; }
     .btn.primary { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
     .pick { display: flex; gap: 6px; overflow-x: auto; max-width: 100%; padding: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; scrollbar-width: none; }
@@ -73,8 +74,8 @@
     .pick button img { width: 28px; height: 28px; object-fit: contain; border-radius: 50%; background: rgba(255,255,255,.06); }
     .pick button.all { padding: 6px 14px; }
     .pick button.on { background: var(--brand); color: var(--brand-ink); }
-    #overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgba(6,13,20,.95); text-align: center; padding: 20px; }
-    #overlay .spin { width: 46px; height: 46px; border-radius: 50%; border: 4px solid rgba(64,214,199,.25); border-top-color: var(--brand); animation: spin 1s linear infinite; margin: 0 auto 14px; }
+    #overlay { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: var(--surface); text-align: center; padding: 20px; }
+    #overlay .spin { width: 46px; height: 46px; border-radius: 50%; border: 4px solid var(--line-2); border-top-color: var(--brand); animation: spin 1s linear infinite; margin: 0 auto 14px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     #overlay p { color: var(--muted); max-width: 40ch; margin: 0 auto 14px; }
     [hidden] { display: none !important; }

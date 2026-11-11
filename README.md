@@ -113,3 +113,12 @@ The original downloads are on the `source-models` branch (fetched by the GitHub 
 - **See my case in AR**: opens Hand AR with the personal model (`handar.html?c=…&case=…`).
 - **Understanding check** (`quiz.html`): 5 questions before and after using the app; results are
   saved on the device, shown as averages, and can be downloaded as CSV (`quiz.html#results`).
+
+### Look
+- Two themes: light "clinic clean" (default) and "calm dark" (moon/sun button). `js/theme.js` sets `data-theme` early on every page.
+
+### Patient-specific tools (My Report)
+- **Scan the report**: photo of a printed report → Tesseract.js OCR on the device (`js/reportscan.js`, `js/vendor/tesseract/`) → finds blockage %, stone size/place, fatty liver grade, smoking years, stroke size → doctor confirms.
+- **Doctor's notes**: tap the organ to pin short notes; saved in the case link (`pins=`), shown in 3D, AR, tour and summary.
+- **Explain my case**: step-by-step tour built from the patient's values and notes (`js/tour.js`); the camera flies to each problem part; the timeline steps show the future. Also in Hand AR (`handar.html?...&vals=&pins=`).
+- **Take-home summary** (`summary.html`): printable page with pictures of the healthy and the patient's organ, values, meaning, notes, what happens next, what to do, when to get help, and a QR code to reopen it.

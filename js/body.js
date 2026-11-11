@@ -26,18 +26,18 @@ const TX = {
   xrayOn: { en: "X-ray on", kn: "ಎಕ್ಸ್-ರೇ ಆನ್", ta: "எக்ஸ்-ரே ஆன்" },
   xrayOff: { en: "X-ray off", kn: "ಎಕ್ಸ್-ರೇ ಆಫ್", ta: "எக்ஸ்-ரே ஆஃப்" },
   all: { en: "All", kn: "ಎಲ್ಲಾ", ta: "அனைத்தும்" },
-  closer: { en: "🔍 Look closer", kn: "🔍 ಹತ್ತಿರದಿಂದ ನೋಡಿ", ta: "🔍 அருகில் பாருங்கள்" },
-  putBack: { en: "↩ Put back", kn: "↩ ಮತ್ತೆ ಇಡಿ", ta: "↩ திரும்ப வை" },
+  closer: { en: "Look closer", kn: "ಹತ್ತಿರದಿಂದ ನೋಡಿ", ta: "அருகில் பாருங்கள்" },
+  putBack: { en: "Put back", kn: "ಮತ್ತೆ ಇಡಿ", ta: "திரும்ப வை" },
   hintFound: { en: "Tap an organ, or point at it with one finger and hold. You can also pick one in the bar below.",
     kn: "ಅಂಗವನ್ನು ಒತ್ತಿ, ಅಥವಾ ಒಂದು ಬೆರಳಿನಿಂದ ತೋರಿಸಿ ಹಿಡಿಯಿರಿ. ಕೆಳಗಿನ ಪಟ್ಟಿಯಿಂದಲೂ ಆರಿಸಬಹುದು.",
     ta: "உறுப்பைத் தட்டுங்கள், அல்லது ஒரு விரலால் காட்டி நிறுத்துங்கள். கீழே உள்ள பட்டியிலும் தேர்ந்தெடுக்கலாம்." },
-  closeHint: { en: "Drag to turn, pinch to zoom. Hands: 🖐 open hand left/right = turn, ✌️ V sign up/down = zoom, ☝️ point at a number.",
-    kn: "ಎಳೆದರೆ ತಿರುಗುತ್ತದೆ, ಎರಡು ಬೆರಳಿನಿಂದ ದೊಡ್ಡದು. ಕೈ: 🖐 ತೆರೆದ ಕೈ ಎಡ/ಬಲ = ತಿರುಗಿಸಿ, ✌️ V ಮೇಲೆ/ಕೆಳಗೆ = ದೊಡ್ಡ/ಚಿಕ್ಕ, ☝️ ಸಂಖ್ಯೆ ತೋರಿಸಿ.",
-    ta: "இழுத்தால் சுழலும், இரு விரல்களால் பெரிதாக்கலாம். கை: 🖐 திறந்த கை இடம்/வலம் = சுழற்று, ✌️ V மேல்/கீழ் = பெரிது/சிறிது, ☝️ எண்ணைக் காட்டுங்கள்." },
+  closeHint: { en: "Drag to turn, pinch to zoom. Hands: open hand left/right = turn, V sign up/down = zoom, point at a number.",
+    kn: "ಎಳೆದರೆ ತಿರುಗುತ್ತದೆ, ಎರಡು ಬೆರಳಿನಿಂದ ದೊಡ್ಡದು. ಕೈ: ತೆರೆದ ಕೈ ಎಡ/ಬಲ = ತಿರುಗಿಸಿ, V ಮೇಲೆ/ಕೆಳಗೆ = ದೊಡ್ಡ/ಚಿಕ್ಕ, ಸಂಖ್ಯೆ ತೋರಿಸಿ.",
+    ta: "இழுத்தால் சுழலும், இரு விரல்களால் பெரிதாக்கலாம். கை: திறந்த கை இடம்/வலம் = சுழற்று, V மேல்/கீழ் = பெரிது/சிறிது, எண்ணைக் காட்டுங்கள்." },
   backSide: { en: "The kidneys sit at the back of the belly, so they look faint.", kn: "ಮೂತ್ರಪಿಂಡಗಳು ಹೊಟ್ಟೆಯ ಹಿಂಭಾಗದಲ್ಲಿವೆ, ಅದಕ್ಕೇ ಮಸುಕಾಗಿ ಕಾಣುತ್ತವೆ.", ta: "சிறுநீரகங்கள் வயிற்றின் பின்புறம் உள்ளன, அதனால் மங்கலாகத் தெரியும்." },
-  pointing: { en: "☝️ Pointing", kn: "☝️ ತೋರಿಸುತ್ತಿದೆ", ta: "☝️ சுட்டுகிறது" },
-  turning: { en: "🖐 Turning", kn: "🖐 ತಿರುಗುತ್ತಿದೆ", ta: "🖐 சுழல்கிறது" },
-  zooming: { en: "✌️ Zoom", kn: "✌️ ದೊಡ್ಡ/ಚಿಕ್ಕ", ta: "✌️ பெரிதாக்கல்" },
+  pointing: { en: "Pointing", kn: "ತೋರಿಸುತ್ತಿದೆ", ta: "சுட்டுகிறது" },
+  turning: { en: "Turning", kn: "ತಿರುಗುತ್ತಿದೆ", ta: "சுழல்கிறது" },
+  zooming: { en: "Zoom", kn: "ದೊಡ್ಡ/ಚಿಕ್ಕ", ta: "பெரிதாக்கல்" },
   hint: { en: "Stand 1–2 metres from the camera. Keep your shoulders and waist in view. Good light helps.",
     kn: "ಕ್ಯಾಮೆರಾದಿಂದ 1–2 ಮೀಟರ್ ದೂರ ನಿಲ್ಲಿ. ಭುಜ ಮತ್ತು ಸೊಂಟ ಕಾಣುವಂತಿರಲಿ. ಚೆನ್ನಾಗಿ ಬೆಳಕು ಇದ್ದರೆ ಒಳ್ಳೆಯದು.",
     ta: "கேமராவிலிருந்து 1–2 மீட்டர் தூரத்தில் நில்லுங்கள். தோள்களும் இடுப்பும் தெரிய வேண்டும். நல்ல வெளிச்சம் உதவும்." },
@@ -46,7 +46,7 @@ const TX = {
 $("t-back").textContent = "← " + t(U.back);
 $("st-healthy").textContent = t(U.healthy);
 $("st-sick").textContent = t(U.withCondition);
-$("flip-btn").textContent = "⟲ " + t(U.flipCam);
+$("flip-btn").textContent = "" + t(U.flipCam);
 $("t-title").textContent = t(U.bodyTitle);
 $("t-note").textContent = t(U.bodyNote);
 $("i-close").textContent = "✕ " + t(U.closeInfo);
@@ -514,8 +514,8 @@ async function setState(st) {
 $("st-healthy").addEventListener("click", () => setState("healthy"));
 $("st-sick").addEventListener("click", () => setState("diseased"));
 function renderButtons() {
-  const hb = $("hands-btn"); hb.classList.toggle("on", handsOn); hb.setAttribute("aria-pressed", handsOn); hb.textContent = "✋ " + t(handsOn ? U.handsOn : U.handsOff);
-  const xb = $("xray-btn"); xb.classList.toggle("on", xrayOn); xb.setAttribute("aria-pressed", xrayOn); xb.textContent = "☢ " + t(xrayOn ? TX.xrayOn : TX.xrayOff);
+  const hb = $("hands-btn"); hb.classList.toggle("on", handsOn); hb.setAttribute("aria-pressed", handsOn); hb.textContent = "" + t(handsOn ? U.handsOn : U.handsOff);
+  const xb = $("xray-btn"); xb.classList.toggle("on", xrayOn); xb.setAttribute("aria-pressed", xrayOn); xb.textContent = "" + t(xrayOn ? TX.xrayOn : TX.xrayOff);
 }
 $("hands-btn").addEventListener("click", () => { handsOn = !handsOn; renderButtons(); });
 $("xray-btn").addEventListener("click", () => { xrayOn = !xrayOn; renderButtons(); });

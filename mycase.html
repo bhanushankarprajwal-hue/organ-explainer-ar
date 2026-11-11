@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script src="js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#060d14">
+  <meta name="theme-color" content="#f7f5f1">
   <title>My Report · Organ Explainer AR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script type="importmap">
     { "imports": { "three": "./js/vendor/three/three.module.min.js", "three/addons/": "./js/vendor/three/addons/" } }
@@ -15,7 +16,7 @@
   <style>
     body { min-height: 100vh; }
     .case-top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-      padding: calc(10px + env(safe-area-inset-top, 0px)) var(--gut-r) 10px var(--gut-l); background: rgba(6, 13, 20, .92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+      padding: calc(10px + env(safe-area-inset-top, 0px)) var(--gut-r) 10px var(--gut-l); background: var(--surface); border-bottom: 1px solid var(--line); }
     .case-top h1 { font-size: 1.15rem; margin: 0; }
     .case-top .organ { margin: 0; }
     .case-top .grow { flex: 1; min-width: 0; }
@@ -23,26 +24,23 @@
     .case-grid { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 18px; padding: 18px var(--gut-r) 28px var(--gut-l); max-width: 1500px; margin: 0 auto; align-items: start; }
     .stage { position: sticky; top: 80px; height: calc(100vh - 110px); min-height: 420px; border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--line); background: var(--stage); }
     .stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
-    .stage .grid-floor { position: absolute; inset: auto 0 0; height: 40%; pointer-events: none;
-      background: repeating-linear-gradient(90deg, rgba(47,211,195,.08) 0 1px, transparent 1px 34px), repeating-linear-gradient(0deg, rgba(47,211,195,.08) 0 1px, transparent 1px 34px);
-      transform: perspective(400px) rotateX(60deg); transform-origin: bottom; mask-image: linear-gradient(transparent, #000); }
-    .badge { position: absolute; top: 14px; left: 14px; z-index: 2; display: flex; align-items: center; gap: 10px; background: rgba(6,13,20,.86); border: 1px solid var(--line-2);
-      border-radius: 16px; padding: 10px 14px; backdrop-filter: blur(6px); }
+    .badge { position: absolute; top: 14px; left: 14px; z-index: 2; display: flex; align-items: center; gap: 10px; background: var(--overlay); border: 1px solid var(--line-2);
+      border-radius: 16px; padding: 10px 14px; }
     .badge .big { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; }
-    .badge small { display: block; color: var(--muted); font-size: .76rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+    .badge small { display: block; color: var(--muted); font-size: .8rem; font-weight: 600; }
     .lvl { display: inline-flex; align-items: center; padding: 3px 11px; border-radius: 999px; font-size: .8rem; font-weight: 800; }
-    .lvl.none { background: rgba(79,209,139,.18); color: var(--healthy); }
-    .lvl.mild { background: rgba(255,196,87,.16); color: var(--warm); }
-    .lvl.moderate { background: rgba(255,150,80,.18); color: #ffa45c; }
-    .lvl.severe { background: rgba(255,122,102,.2); color: var(--sick); }
+    .lvl.none { background: var(--healthy-soft); color: var(--healthy); }
+    .lvl.mild { background: var(--warm-soft); color: var(--warm); }
+    .lvl.moderate { background: var(--sick-soft); color: var(--sick); }
+    .lvl.severe { background: var(--sick); color: var(--surface); }
     .stage-tools { position: absolute; top: 14px; right: 14px; z-index: 2; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
     .stage-label { position: absolute; left: 0; top: 0; z-index: 2; transform: translate(-50%, 0); pointer-events: none; padding: 4px 12px; border-radius: 999px;
-      background: rgba(6,13,20,.86); border: 1px solid var(--line); font-weight: 700; font-size: .82rem; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+      background: var(--overlay); border: 1px solid var(--line); font-weight: 700; font-size: .82rem; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
     .stage-label.h .dot { background: var(--healthy); } .stage-label.d .dot { background: var(--sick); }
     .stage-hint { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; color: var(--muted); font-size: .8rem; pointer-events: none; z-index: 2; }
     .panel-stack { display: grid; gap: 14px; }
     .panel h2 { font-size: 1.02rem; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .panel h2 .num { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 8px; background: var(--brand-soft); color: var(--brand); font-family: var(--mono); font-size: .78rem; }
+    .panel h2 .num { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); font-size: .8rem; }
     .field { display: grid; gap: 6px; margin-bottom: 14px; }
     .field:last-child { margin-bottom: 0; }
     .field label { font-weight: 600; font-size: .9rem; color: var(--ink-2); display: flex; justify-content: space-between; gap: 8px; }
@@ -51,17 +49,58 @@
     select { width: 100%; background: var(--bg-2); color: var(--ink); border: 1px solid var(--line-2); border-radius: 12px; padding: 10px 12px; font: inherit; }
     .means-text { color: var(--ink-2); margin: 10px 0 8px; }
     .note { color: var(--muted); font-size: .78rem; margin: 0; }
-    .seg2 { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; margin-bottom: 14px; }
-    .seg2 button { border: 0; background: transparent; color: var(--muted); font-weight: 700; padding: 8px 10px; border-radius: 999px; font-size: .86rem; }
-    .seg2 button.on.bad { background: var(--sick); color: #2a0700; }
-    .seg2 button.on.good { background: var(--healthy); color: #04170f; }
+    .seg2 { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: 3px; margin-bottom: 14px; }
+    .seg2 button { border: 0; background: transparent; color: var(--muted); font-weight: 600; padding: 8px 10px; border-radius: 8px; font-size: .86rem; }
+    .seg2 button.on.bad { background: var(--sick); color: var(--surface); }
+    .seg2 button.on.good { background: var(--healthy); color: var(--surface); }
     .tl-row { display: flex; align-items: center; gap: 10px; }
     .tl-row input { flex: 1; }
-    .ticks { display: flex; justify-content: space-between; color: var(--muted); font-size: .72rem; font-family: var(--mono); margin: -2px 52px 0 2px; }
+    .ticks { display: flex; justify-content: space-between; color: var(--muted); font-size: .76rem; margin: -2px 52px 0 2px; }
     .when { font-weight: 800; font-size: 1.05rem; margin: 12px 0 4px; }
     .tl-text { color: var(--ink-2); margin: 0 0 8px; min-height: 3em; }
     .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .actions .btn { white-space: normal; text-align: center; }
+    /* doctor's pins */
+    #pins { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+    .pin { position: absolute; left: 0; top: 0; pointer-events: auto; transform-origin: 0 0; }
+    .pin b { display: grid; place-items: center; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50% 50% 50% 4px; background: var(--brand); color: var(--brand-ink);
+      font-size: .78rem; border: 2px solid var(--surface); box-shadow: var(--shadow); cursor: pointer; }
+    .pin span { position: absolute; left: 16px; top: -12px; display: none; width: max-content; max-width: 220px; background: var(--surface); color: var(--ink); border: 1px solid var(--line-2);
+      border-radius: var(--r-md); padding: 6px 10px; font-size: .84rem; box-shadow: var(--shadow); }
+    .pin.open span, .pin.focus span { display: block; }
+    .pin.back { opacity: .35; }
+    .stage.pinning canvas { cursor: crosshair; }
+    #pin-edit { position: absolute; z-index: 6; width: 260px; background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r-md); padding: 10px; box-shadow: var(--shadow); }
+    #pin-edit textarea { width: 100%; min-height: 64px; resize: vertical; background: var(--bg); color: var(--ink); border: 1px solid var(--line-2); border-radius: 8px; padding: 8px; font: inherit; font-size: .9rem; }
+    #pin-edit .row { margin-top: 8px; justify-content: flex-end; }
+    .pin-mode { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); z-index: 4; background: var(--brand); color: var(--brand-ink); padding: 6px 14px; border-radius: var(--r-md); font-size: .86rem; font-weight: 600; }
+    .notes { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; }
+    .notes li { display: flex; gap: 10px; align-items: flex-start; background: var(--surface-2); border-radius: var(--r-md); padding: 8px 10px; font-size: .9rem; }
+    .notes li b { display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--brand); color: var(--brand-ink); font-size: .74rem; }
+    .notes li span { flex: 1; color: var(--ink-2); }
+    .notes li button { border: 0; background: transparent; color: var(--muted); padding: 0 4px; font-size: 1rem; }
+    .panel h2 .right { margin-left: auto; }
+    /* report scan */
+    .scan-res { margin-top: 12px; background: var(--surface-2); border-radius: var(--r-md); padding: 10px 12px; font-size: .88rem; }
+    .scan-res ul { margin: 6px 0 8px; padding-left: 18px; }
+    .scan-res .snip { color: var(--muted); font-size: .8rem; font-style: italic; }
+    .bar-prog { height: 4px; background: var(--surface-3); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+    .bar-prog span { display: block; height: 100%; width: 0; background: var(--brand); transition: width .2s; }
+    /* explain my case */
+    .cta { width: 100%; min-height: 50px; font-size: 1.02rem; }
+    #tour { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 5; max-width: 560px; margin: 0 auto; background: var(--overlay); border: 1px solid var(--line);
+      border-top: 4px solid var(--brand); border-radius: var(--r-lg); padding: 14px 16px; box-shadow: 0 8px 28px rgba(0,0,0,.15); }
+    #tour .t-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    #tour .t-step { font-size: .8rem; font-weight: 600; color: var(--muted); flex: 1; }
+    #tour h3 { margin: 0 0 6px; font-size: 1.12rem; }
+    #tour p { margin: 0 0 12px; color: var(--ink-2); white-space: pre-line; max-height: 28vh; overflow: auto; }
+    #tour .t-nav { display: flex; justify-content: space-between; gap: 10px; }
+    #tour .prog { height: 4px; border-radius: 4px; background: var(--surface-3); overflow: hidden; margin-bottom: 10px; }
+    #tour .prog span { display: block; height: 100%; background: var(--brand); transition: width .3s; }
+    #tour-ring { position: absolute; left: 0; top: 0; z-index: 3; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; border: 3px solid var(--brand);
+      pointer-events: none; animation: tring 1.6s ease-in-out infinite; }
+    @keyframes tring { 0%, 100% { transform: var(--tt) scale(1); opacity: 1; } 50% { transform: var(--tt) scale(1.25); opacity: .55; } }
+    .stage.touring .stage-tools, .stage.touring .badge { display: none; }
     @media (max-width: 899px) {
       .case-grid { grid-template-columns: 1fr; }
       .stage { position: relative; top: 0; height: 52vh; min-height: 320px; }
@@ -78,6 +117,7 @@
       <h1 id="c-title"></h1>
     </div>
     <nav class="organ-switch" id="switch" aria-label="Organs"></nav>
+    <button type="button" class="icon-btn theme-btn"></button>
     <div class="lang" role="group" aria-label="Language">
       <button data-lang="en">EN</button><button data-lang="kn">ಕ</button><button data-lang="ta">த</button>
     </div>
@@ -85,19 +125,37 @@
 
   <main class="case-grid">
     <section class="stage" id="stage" aria-label="3D view of the patient's organ">
-      <div class="grid-floor"></div>
       <div class="badge"><div><small id="b-when"></small><span class="big" id="b-val"></span></div><span class="lvl" id="b-lvl"></span></div>
       <div class="stage-tools"><button type="button" class="chip" id="cmp-btn" aria-pressed="false"></button></div>
       <span class="stage-label h" id="lab-h" hidden><span class="dot"></span><span></span></span>
       <span class="stage-label d" id="lab-d" hidden><span class="dot"></span><span></span></span>
       <p class="stage-hint" id="stage-hint"></p>
+      <div id="pins"></div>
+      <div id="tour-ring" hidden></div>
+      <p class="pin-mode" id="pin-mode" hidden></p>
+      <div id="pin-edit" hidden>
+        <textarea id="pin-text" maxlength="160"></textarea>
+        <div class="row"><button type="button" class="btn small" id="pin-cancel"></button><button type="button" class="btn small primary" id="pin-save"></button></div>
+      </div>
+      <div id="tour" hidden aria-live="polite">
+        <div class="prog"><span id="t-bar"></span></div>
+        <div class="t-top"><span class="t-step" id="t-step"></span>
+          <button type="button" class="btn small" id="t-voice" aria-pressed="false"></button>
+          <button type="button" class="btn small" id="t-close" aria-label="Close">✕</button></div>
+        <h3 id="t-title"></h3>
+        <p id="t-text"></p>
+        <div class="t-nav"><button type="button" class="btn" id="t-prev"></button><button type="button" class="btn primary" id="t-next"></button></div>
+      </div>
     </section>
 
     <aside class="panel-stack">
+      <button type="button" class="btn primary cta" id="tour-btn"></button>
       <p class="sub" id="c-sub" style="margin:0"></p>
       <section class="panel">
-        <h2><span class="num">1</span><span id="h-details"></span></h2>
+        <h2><span class="num">1</span><span id="h-details"></span><button type="button" class="btn small right" id="scan-btn"></button></h2>
+        <input type="file" id="scan-file" accept="image/*" capture="environment" hidden>
         <div id="fields"></div>
+        <div class="scan-res" id="scan-res" hidden></div>
       </section>
       <section class="panel">
         <h2><span class="num">2</span><span id="h-means"></span></h2>
@@ -120,9 +178,15 @@
         <p class="tl-text" id="tl-text"></p>
         <p class="note" id="tl-note"></p>
       </section>
+      <section class="panel">
+        <h2><span class="num">4</span><span id="h-notes"></span></h2>
+        <ul class="notes" id="notes"></ul>
+        <button type="button" class="btn small" id="pin-btn"></button>
+      </section>
       <div class="actions">
-        <a class="btn primary" id="ar-btn" href="#">⧉ <span id="ar-label"></span></a>
-        <a class="btn" id="quiz-btn" href="quiz.html">✓ <span id="quiz-label"></span></a>
+        <a class="btn primary" id="ar-btn" href="#"><span id="ar-label"></span></a>
+        <a class="btn" id="sum-btn" href="summary.html"><span id="sum-label"></span></a>
+        <a class="btn" id="quiz-btn" href="quiz.html" style="grid-column:1/-1"><span id="quiz-label"></span></a>
       </div>
       <p class="note" id="edu"></p>
     </aside>

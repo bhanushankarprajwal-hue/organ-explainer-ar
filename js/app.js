@@ -58,7 +58,7 @@ const oChip = (c, href, active) => `<a class="o-chip${active ? " active" : ""}" 
 function cardHTML(c) {
   return `
     <article class="c-card">
-      <a class="c-story" href="#${c.id}-story" title="${esc(U("startStory"))}" aria-label="${esc(U("startStory"))}">▶</a>
+      <a class="c-story" href="#${c.id}-story" title="${esc(U("startStory"))}" aria-label="${esc(U("startStory"))}"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></a>
       <a href="#${c.id}" style="color:inherit;text-decoration:none;display:flex;flex-direction:column;flex:1">
         <div class="thumb"><img src="images/thumb-${c.id}.png" alt="" loading="lazy"></div>
         <div class="c-body">
@@ -255,7 +255,7 @@ function applyMotion() {
   ["mv-healthy", "mv-diseased", "mv-compare"].forEach((id) => { const m = $(id); if (typeof m.play !== "function") return; moving ? m.play() : m.pause(); });
   const b = $("motion-btn");
   b.setAttribute("aria-pressed", moving);
-  b.innerHTML = (moving ? "⏸ " : "▶ ") + "<span>" + esc(t(moving ? UI_TEXT.pauseMotion : UI_TEXT.playMotion)) + "</span>";
+  b.innerHTML = "<span>" + esc(t(moving ? UI_TEXT.pauseMotion : UI_TEXT.playMotion)) + "</span>";
 }
 $("motion-btn").addEventListener("click", () => { moving = !moving; applyMotion(); });
 ["mv-healthy", "mv-diseased", "mv-compare"].forEach((id) => $(id).addEventListener("load", () => { if (!moving) $(id).pause(); }));
@@ -383,7 +383,7 @@ function speak(text) {
 function renderVoiceBtn() {
   const b = $("voice-btn");
   b.setAttribute("aria-pressed", voiceOn);
-  b.innerHTML = (voiceOn ? "🔊 " : "🔇 ") + "<span>" + esc(t(voiceOn ? UI_TEXT.voiceOn : UI_TEXT.voiceOff)) + "</span>";
+  b.innerHTML = "<span>" + esc(t(voiceOn ? UI_TEXT.voiceOn : UI_TEXT.voiceOff)) + "</span>";
 }
 $("voice-btn").addEventListener("click", () => {
   voiceOn = !voiceOn;
@@ -421,7 +421,7 @@ function showStoryStep(i, sayIt) {
   $("story-text").textContent = t(st.text);
   $("story-bar").style.width = ((i + 1) / n * 100) + "%";
   $("story-prev").disabled = i === 0;
-  $("story-next").innerHTML = i === n - 1 ? esc(t(UI_TEXT.finish)) + " ✓" : esc(t(UI_TEXT.next)) + " →";
+  $("story-next").innerHTML = i === n - 1 ? esc(t(UI_TEXT.finish)) : esc(t(UI_TEXT.next)) + " →";
   if (sayIt) speak(t(st.title) + ". " + t(st.text));
 }
 $("mv-story").addEventListener("load", (e) => {

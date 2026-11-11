@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="js/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f5f1">
+  <title>Take-home summary · Organ Explainer AR</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+    { "imports": { "three": "./js/vendor/three/three.module.min.js", "three/addons/": "./js/vendor/three/addons/" } }
+  </script>
+  <style>
+    .bar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: calc(10px + env(safe-area-inset-top, 0px)) var(--gut-r) 10px var(--gut-l); background: var(--surface); border-bottom: 1px solid var(--line); }
+    .bar .grow { flex: 1; font-weight: 700; }
+    .sheet { max-width: 860px; margin: 22px auto 48px; background: #fff; color: #1c2430; border: 1px solid var(--line); border-radius: 12px; padding: 36px 40px; }
+    .sheet * { --ink: #1c2430; --ink-2: #3d4654; --muted: #6b7380; --line: #e2ddd4; }
+    .s-head { display: flex; justify-content: space-between; gap: 20px; border-bottom: 2px solid #1f4e8c; padding-bottom: 14px; margin-bottom: 18px; }
+    .s-head .app { font-weight: 700; color: #1f4e8c; margin: 0; }
+    .s-head h1 { margin: 2px 0 0; font-size: 1.6rem; }
+    .s-head .meta { text-align: right; font-size: .9rem; color: #3d4654; display: grid; gap: 4px; align-content: start; }
+    .fill { display: flex; gap: 8px; align-items: baseline; }
+    .fill input { border: 0; border-bottom: 1px solid #cfc8bc; background: transparent; font: inherit; color: #1c2430; width: 180px; padding: 2px 0; }
+    .s-title { margin: 0 0 4px; font-size: 1.3rem; }
+    .s-sub { color: #6b7380; margin: 0 0 16px; }
+    .pics { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+    .pics figure { margin: 0; border: 1px solid #e2ddd4; border-radius: 10px; overflow: hidden; background: linear-gradient(180deg, #eef1f4, #e3e7ec); }
+    .pics img, .pics canvas { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+    .pics figcaption { padding: 8px 12px; font-weight: 600; font-size: .9rem; background: #fff; border-top: 1px solid #e2ddd4; display: flex; gap: 6px; align-items: center; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .sec { margin: 0 0 16px; break-inside: avoid; }
+    .sec h2 { font-size: 1.02rem; margin: 0 0 6px; color: #1f4e8c; }
+    .sec p, .sec li { color: #3d4654; font-size: .95rem; }
+    .vals { width: 100%; border-collapse: collapse; font-size: .95rem; }
+    .vals td { padding: 6px 0; border-bottom: 1px solid #eee8de; }
+    .vals td:last-child { text-align: right; font-weight: 700; color: #1c2430; }
+    .lvl { display: inline-block; padding: 2px 10px; border-radius: 6px; font-size: .82rem; font-weight: 700; margin-bottom: 6px; }
+    .lvl.mild { background: #fbf1df; color: #9a6412; } .lvl.moderate { background: #f8e7e2; color: #b4442f; } .lvl.severe { background: #b4442f; color: #fff; } .lvl.none { background: #e3f1e8; color: #2e7d4f; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .box { border: 1px solid #e2ddd4; border-radius: 10px; padding: 12px 14px; }
+    .box b { display: block; margin-bottom: 4px; }
+    .box.bad b { color: #b4442f; } .box.good b { color: #2e7d4f; }
+    .notes { margin: 0; padding-left: 20px; }
+    .todo { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+    .help { background: #fbf1df; border: 1px solid #ecd3a5; border-radius: 10px; padding: 12px 14px; }
+    .help h2 { color: #9a6412; }
+    .s-foot { display: flex; gap: 16px; align-items: center; border-top: 1px solid #e2ddd4; padding-top: 14px; margin-top: 6px; }
+    .s-foot #qr { width: 96px; height: 96px; flex: none; }
+    .s-foot #qr svg, .s-foot #qr img { width: 96px; height: 96px; }
+    .s-foot p { margin: 0 0 4px; font-size: .88rem; color: #3d4654; }
+    .s-foot .small { font-size: .78rem; color: #6b7380; word-break: break-all; }
+    @media (max-width: 700px) { .sheet { padding: 22px 18px; margin: 12px; } .pics, .two { grid-template-columns: 1fr; } .s-head { flex-direction: column; } .s-head .meta { text-align: left; } }
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { background: #fff !important; }
+      .sheet { border: 0; margin: 0; padding: 0; max-width: none; }
+      .fill input { border-bottom-color: #999; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bar no-print">
+    <a class="chip" id="back" href="mycase.html">←</a>
+    <span class="grow" id="bar-title"></span>
+    <button type="button" class="btn" id="share-btn"></button>
+    <button type="button" class="btn primary" id="print-btn"></button>
+  </div>
+
+  <article class="sheet" id="sheet">
+    <header class="s-head">
+      <div>
+        <p class="app">Organ Explainer AR</p>
+        <h1 id="s-h1"></h1>
+      </div>
+      <div class="meta">
+        <label class="fill"><span id="l-name"></span><input id="p-name" autocomplete="off"></label>
+        <label class="fill"><span id="l-doc"></span><input id="p-doc" autocomplete="off"></label>
+        <span id="s-date"></span>
+      </div>
+    </header>
+
+    <h2 class="s-title" id="s-cond"></h2>
+    <p class="s-sub" id="s-short"></p>
+
+    <div class="pics">
+      <figure><canvas id="img-h" width="600" height="600"></canvas><figcaption><span class="dot" style="background:#2e7d4f"></span><span id="cap-h"></span></figcaption></figure>
+      <figure><canvas id="img-d" width="600" height="600"></canvas><figcaption><span class="dot" style="background:#b4442f"></span><span id="cap-d"></span></figcaption></figure>
+    </div>
+
+    <section class="sec"><h2 id="h-vals"></h2><table class="vals" id="vals"></table></section>
+    <section class="sec"><h2 id="h-mean"></h2><span class="lvl" id="lvl"></span><p id="mean"></p></section>
+    <section class="sec" id="sec-notes"><h2 id="h-notes"></h2><ol class="notes" id="notes"></ol></section>
+    <section class="sec"><h2 id="h-next"></h2>
+      <div class="two"><div class="box bad"><b id="b-bad"></b><span id="t-bad"></span></div><div class="box good"><b id="b-good"></b><span id="t-good"></span></div></div>
+      <p class="muted" id="illus" style="margin-top:6px;font-size:.8rem"></p>
+    </section>
+    <section class="sec"><h2 id="h-todo"></h2><ol class="todo" id="todo"></ol></section>
+    <section class="sec help"><h2 id="h-help"></h2><p id="help" style="margin:0"></p></section>
+
+    <footer class="s-foot">
+      <div id="qr"></div>
+      <div><p id="f-scan"></p><p class="small" id="f-link"></p><p class="small" id="f-edu"></p></div>
+    </footer>
+  </article>
+
+  <script src="js/data.js"></script>
+  <script src="js/vendor/qrcode.js"></script>
+  <script type="module" src="js/summary.js"></script>
+</body>
+</html>

@@ -9,7 +9,12 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { FilesetResolver, HandLandmarker } from "./vendor/mediapipe/vision_bundle.mjs";
 import { makeCase, caseFromURL } from "./severity.js";
+import { buildTour, stepText } from "./tour.js";
+import { CASES } from "./cases.js";
 const CASE = caseFromURL();          // a patient's own report values, from My Report
+const jsonParam = (k) => { try { return JSON.parse(new URLSearchParams(location.search).get(k) || "null"); } catch (e) { return null; } };
+const VALS = CASE ? jsonParam("vals") : null;               // the report values (for "Explain my case")
+const PINS = CASE ? (jsonParam("pins") || []).filter((p) => p && Array.isArray(p.p)).slice(0, 12) : [];
 
 // ---------- text ----------
 let lang = "en";
@@ -30,12 +35,12 @@ const TX = {
   intro: { en: "Put the organ on a real table. Then control it with your hand in the air, or with touch.",
     kn: "ಅಂಗವನ್ನು ನಿಜವಾದ ಮೇಜಿನ ಮೇಲೆ ಇಡಿ. ನಂತರ ಗಾಳಿಯಲ್ಲಿ ಕೈ ಆಡಿಸಿ ಅಥವಾ ಸ್ಪರ್ಶಿಸಿ ಅದನ್ನು ನಿಯಂತ್ರಿಸಿ.",
     ta: "உறுப்பை உண்மையான மேசையில் வையுங்கள். பிறகு காற்றில் கையை அசைத்து அல்லது தொட்டு அதைக் கட்டுப்படுத்துங்கள்." },
-  g1: { en: "☝️ Point with only your index finger at a number and hold → learn that part", kn: "☝️ ತೋರುಬೆರಳು ಮಾತ್ರ ಸಂಖ್ಯೆಯ ಕಡೆಗೆ ತೋರಿಸಿ ಹಿಡಿಯಿರಿ → ಆ ಭಾಗದ ಬಗ್ಗೆ ತಿಳಿಯಿರಿ", ta: "☝️ ஆள்காட்டி விரலால் மட்டும் எண்ணைக் காட்டி நிறுத்துங்கள் → அந்தப் பகுதியைப் பற்றி அறியுங்கள்" },
-  g2: { en: "🤏 Pinch on the organ and move your hand → move it", kn: "🤏 ಅಂಗದ ಮೇಲೆ ಚಿಟಿಕೆ ಹಿಡಿದು ಕೈ ಸರಿಸಿ → ಅದನ್ನು ಸರಿಸಿ", ta: "🤏 உறுப்பின் மேல் கிள்ளிப் பிடித்து கையை நகர்த்துங்கள் → அதை நகர்த்தும்" },
-  g3: { en: "🖐 Open hand, move it left or right → turn", kn: "🖐 ಕೈ ತೆರೆದು ಎಡಕ್ಕೆ ಅಥವಾ ಬಲಕ್ಕೆ ಸರಿಸಿ → ತಿರುಗಿಸಿ", ta: "🖐 கையைத் திறந்து இடம் அல்லது வலம் நகர்த்துங்கள் → சுழற்று" },
-  g4: { en: "✌️ Two fingers (V sign), move up or down → zoom in or out", kn: "✌️ ಎರಡು ಬೆರಳು (V ಗುರುತು), ಮೇಲೆ ಅಥವಾ ಕೆಳಗೆ ಸರಿಸಿ → ದೊಡ್ಡದು ಅಥವಾ ಚಿಕ್ಕದು", ta: "✌️ இரண்டு விரல்கள் (V குறி), மேலே அல்லது கீழே நகர்த்துங்கள் → பெரிதாக்கு அல்லது சிறிதாக்கு" },
+  g1: { en: "Point with only your index finger at a number and hold → learn that part", kn: "ತೋರುಬೆರಳು ಮಾತ್ರ ಸಂಖ್ಯೆಯ ಕಡೆಗೆ ತೋರಿಸಿ ಹಿಡಿಯಿರಿ → ಆ ಭಾಗದ ಬಗ್ಗೆ ತಿಳಿಯಿರಿ", ta: "ஆள்காட்டி விரலால் மட்டும் எண்ணைக் காட்டி நிறுத்துங்கள் → அந்தப் பகுதியைப் பற்றி அறியுங்கள்" },
+  g2: { en: "Pinch on the organ and move your hand → move it", kn: "ಅಂಗದ ಮೇಲೆ ಚಿಟಿಕೆ ಹಿಡಿದು ಕೈ ಸರಿಸಿ → ಅದನ್ನು ಸರಿಸಿ", ta: "உறுப்பின் மேல் கிள்ளிப் பிடித்து கையை நகர்த்துங்கள் → அதை நகர்த்தும்" },
+  g3: { en: "Open hand, move it left or right → turn", kn: "ಕೈ ತೆರೆದು ಎಡಕ್ಕೆ ಅಥವಾ ಬಲಕ್ಕೆ ಸರಿಸಿ → ತಿರುಗಿಸಿ", ta: "கையைத் திறந்து இடம் அல்லது வலம் நகர்த்துங்கள் → சுழற்று" },
+  g4: { en: "Two fingers (V sign), move up or down → zoom in or out", kn: "ಎರಡು ಬೆರಳು (V ಗುರುತು), ಮೇಲೆ ಅಥವಾ ಕೆಳಗೆ ಸರಿಸಿ → ದೊಡ್ಡದು ಅಥವಾ ಚಿಕ್ಕದು", ta: "இரண்டு விரல்கள் (V குறி), மேலே அல்லது கீழே நகர்த்துங்கள் → பெரிதாக்கு அல்லது சிறிதாக்கு" },
   pinchHow: { en: "Keep your whole hand inside the camera view.", kn: "ನಿಮ್ಮ ಕೈ ಪೂರ್ತಿ ಕ್ಯಾಮೆರಾದಲ್ಲಿ ಕಾಣುವಂತೆ ಇಡಿ.", ta: "உங்கள் முழு கையும் கேமராவில் தெரியும்படி வையுங்கள்." },
-  pointing: { en: "☝️ Pointing", kn: "☝️ ತೋರಿಸುತ್ತಿದೆ", ta: "☝️ சுட்டுகிறது" },
+  pointing: { en: "Pointing", kn: "ತೋರಿಸುತ್ತಿದೆ", ta: "சுட்டுகிறது" },
   touchTip: { en: "Touch works too: drag to turn, two fingers to zoom or move, tap a number.", kn: "ಸ್ಪರ್ಶವೂ ಕೆಲಸ ಮಾಡುತ್ತದೆ: ಎಳೆದರೆ ತಿರುಗುತ್ತದೆ, ಎರಡು ಬೆರಳಿನಿಂದ ದೊಡ್ಡದು ಅಥವಾ ಸರಿಸುವುದು, ಸಂಖ್ಯೆ ಒತ್ತಿ.", ta: "தொடுதலும் வேலை செய்யும்: இழுத்தால் சுழலும், இரு விரல்களால் பெரிதாக்க/நகர்த்த, எண்ணைத் தட்டுங்கள்." },
   startAR: { en: "Start AR on a table", kn: "ಮೇಜಿನ ಮೇಲೆ AR ಶುರು ಮಾಡಿ", ta: "மேசையில் AR தொடங்கு" },
   startCam: { en: "Use this device's camera", kn: "ಈ ಸಾಧನದ ಕ್ಯಾಮೆರಾ ಬಳಸಿ", ta: "இந்தச் சாதனத்தின் கேமராவைப் பயன்படுத்து" },
@@ -54,14 +59,14 @@ const TX = {
   noHands: { en: "Hand control did not start on this phone (the browser did not share the camera image). Touch still works.",
     kn: "ಈ ಫೋನ್‌ನಲ್ಲಿ ಕೈ ನಿಯಂತ್ರಣ ಶುರುವಾಗಲಿಲ್ಲ (ಬ್ರೌಸರ್ ಕ್ಯಾಮೆರಾ ಚಿತ್ರ ಕೊಡಲಿಲ್ಲ). ಸ್ಪರ್ಶ ಕೆಲಸ ಮಾಡುತ್ತದೆ.",
     ta: "இந்த போனில் கை கட்டுப்பாடு தொடங்கவில்லை (உலாவி கேமரா படத்தைத் தரவில்லை). தொடுதல் வேலை செய்யும்." },
-  seen: { en: "✋ Hand found", kn: "✋ ಕೈ ಸಿಕ್ಕಿದೆ", ta: "✋ கை தெரிகிறது" },
-  none: { en: "✋ Show your hand", kn: "✋ ಕೈ ತೋರಿಸಿ", ta: "✋ கையைக் காட்டுங்கள்" },
-  loadingHands: { en: "✋ Loading hand tracking…", kn: "✋ ಕೈ ಟ್ರ್ಯಾಕಿಂಗ್ ಲೋಡ್ ಆಗುತ್ತಿದೆ…", ta: "✋ கை கண்காணிப்பு ஏற்றப்படுகிறது…" },
-  off: { en: "✋ Hands off", kn: "✋ ಕೈ ಆಫ್", ta: "✋ கை ஆஃப்" },
-  moveHere: { en: "⤓ Move", kn: "⤓ ಸರಿಸಿ", ta: "⤓ நகர்த்து" },
-  moving: { en: "🤏 Moving", kn: "ಸರಿಸುತ್ತಿದೆ", ta: "நகர்கிறது" },
-  turning: { en: "🖐 Turning", kn: "ತಿರುಗುತ್ತಿದೆ", ta: "சுழல்கிறது" },
-  zooming: { en: "✌️ Zoom", kn: "ದೊಡ್ಡ/ಚಿಕ್ಕ", ta: "பெரிதாக்கல்" },
+  seen: { en: "Hand found", kn: "ಕೈ ಸಿಕ್ಕಿದೆ", ta: "கை தெரிகிறது" },
+  none: { en: "Show your hand", kn: "ಕೈ ತೋರಿಸಿ", ta: "கையைக் காட்டுங்கள்" },
+  loadingHands: { en: "Loading hand tracking…", kn: "ಕೈ ಟ್ರ್ಯಾಕಿಂಗ್ ಲೋಡ್ ಆಗುತ್ತಿದೆ…", ta: "கை கண்காணிப்பு ஏற்றப்படுகிறது…" },
+  off: { en: "Hands off", kn: "ಕೈ ಆಫ್", ta: "கை ஆஃப்" },
+  moveHere: { en: "Move", kn: "ಸರಿಸಿ", ta: "நகர்த்து" },
+  moving: { en: "Moving", kn: "ಸರಿಸುತ್ತಿದೆ", ta: "நகர்கிறது" },
+  turning: { en: "Turning", kn: "ತಿರುಗುತ್ತಿದೆ", ta: "சுழல்கிறது" },
+  zooming: { en: "Zoom", kn: "ದೊಡ್ಡ/ಚಿಕ್ಕ", ta: "பெரிதாக்கல்" },
   arFail: { en: "Could not start AR.", kn: "AR ಶುರು ಮಾಡಲಾಗಲಿಲ್ಲ.", ta: "AR தொடங்க முடியவில்லை." },
   privacy: { en: "The camera is used only on this device. Nothing is recorded or sent.", kn: "ಕ್ಯಾಮೆರಾ ಈ ಸಾಧನದಲ್ಲೇ ಬಳಕೆಯಾಗುತ್ತದೆ. ಏನನ್ನೂ ರೆಕಾರ್ಡ್ ಮಾಡುವುದಿಲ್ಲ, ಕಳುಹಿಸುವುದಿಲ್ಲ.", ta: "கேமரா இந்தச் சாதனத்தில் மட்டுமே பயன்படும். எதுவும் பதிவு செய்யப்படுவதோ அனுப்பப்படுவதோ இல்லை." },
 };
@@ -69,8 +74,8 @@ const TX = {
 // ---------- static texts ----------
 $("s-title").textContent = t(TX.title) + " · " + t(COND.organ);
 $("s-text").textContent = t(TX.loading);
-$("s-ar").textContent = "⧉ " + t(TX.startAR);
-$("s-cam").textContent = "📷 " + t(TX.startCam);
+$("s-ar").textContent = "" + t(TX.startAR);
+$("s-cam").textContent = "" + t(TX.startCam);
 $("s-back").textContent = "← " + t(U.back);
 $("s-back").href = "index.html#" + COND.id;
 $("s-note").textContent = t(TX.privacy) + " " + t(U.disclaimer);
@@ -177,6 +182,21 @@ function buildLabels() {
     el.addEventListener("click", (e) => { e.stopPropagation(); showPart(i); });
     labels.appendChild(el);
   });
+  // the doctor's notes, on the patient's own organ
+  if (CASE && state !== "healthy" && view === "outside") PINS.forEach((pin, i) => {
+    const el = document.createElement("button");
+    el.type = "button"; el.className = "hs pinl dwell"; el.textContent = String.fromCharCode(65 + i);
+    el._p = new THREE.Vector3().fromArray(pin.p); el._n = new THREE.Vector3().fromArray(pin.n || [0, 0, 1]); el._i = -1;
+    el.setAttribute("aria-label", pin.t);
+    el.addEventListener("click", (e) => { e.stopPropagation(); showNote(i); });
+    labels.appendChild(el);
+  });
+}
+function showNote(i) {
+  $("i-title").textContent = String.fromCharCode(65 + i) + ". " + t(TOUR_TX.note);
+  $("i-sub").textContent = t(COND.organ) + " · " + t(COND.name);
+  $("i-text").textContent = PINS[i].t;
+  $("info").hidden = false; $("hint").hidden = true;
 }
 const tv = new THREE.Vector3(), tn = new THREE.Vector3(), tq = new THREE.Quaternion(), camPos = new THREE.Vector3();
 function updateLabels() {
@@ -195,7 +215,53 @@ function updateLabels() {
     el.style.display = ""; el.style.transform = `translate(${x}px, ${y}px)` + (el.classList.contains("hot") || el.classList.contains("on") ? " scale(1.3)" : "");
     el.style.opacity = tn.dot(toCam) > -0.1 ? 1 : 0.35;
   });
+  const ring = $("ring");
+  if (vis && tour && ringP) {
+    tv.copy(ringP); cur.inner.localToWorld(tv); tv.project(viewCam);
+    ring.hidden = tv.z > 1 || tv.z < -1;
+    ring.style.transform = `translate(${(tv.x + 1) / 2 * W}px, ${(1 - tv.y) / 2 * H}px)`;
+  } else ring.hidden = true;
 }
+
+// ---------- explain my case, on the table ----------
+const TOUR_TX = {
+  btn: { en: "Explain my case", kn: "ನನ್ನ ಪ್ರಕರಣ ವಿವರಿಸಿ", ta: "என் நிலையை விளக்கு" },
+  note: { en: "Doctor’s note", kn: "ವೈದ್ಯರ ಟಿಪ್ಪಣಿ", ta: "மருத்துவரின் குறிப்பு" },
+  step: { en: "Step", kn: "ಹಂತ", ta: "படி" },
+  prev: { en: "Back", kn: "ಹಿಂದೆ", ta: "பின்" }, next: { en: "Next", kn: "ಮುಂದೆ", ta: "அடுத்து" }, done: { en: "Done", kn: "ಮುಗಿಯಿತು", ta: "முடிந்தது" },
+};
+let tour = null, ringP = null;
+const SPEC = CASES[COND.id];
+function tourStep() {
+  const st = tour.steps[tour.i], n = tour.steps.length;
+  $("tp-step").textContent = t(TOUR_TX.step) + " " + (tour.i + 1) + " / " + n;
+  $("tp-title").textContent = (st.num ? String.fromCharCode(64 + st.num) + ". " : "") + t(st.title);
+  $("tp-text").textContent = stepText(st, t);
+  $("tp-prev").textContent = t(TOUR_TX.prev); $("tp-prev").disabled = tour.i === 0;
+  $("tp-next").textContent = tour.i === n - 1 ? t(TOUR_TX.done) : t(TOUR_TX.next) + " →";
+  // the organ shows the future when the step is about the future
+  const state = st.timeline ? SPEC.timeline.call(SPEC, VALS, st.timeline.treat, st.timeline.t).state : SPEC.state(VALS);
+  if (cur && cur.personal) cur.personal.apply(state);
+  let f = st.focus;
+  if (typeof f === "string") { const h = COND.views.outside.diseasedHotspots.find((x) => x.id === f); f = h ? { p: h.position.split(" ").map(parseFloat) } : null; }
+  ringP = f ? new THREE.Vector3().fromArray(f.p) : null;
+}
+function startTour() {
+  if (!VALS || state === "healthy" || view !== "outside") { show("diseased", "outside").then(() => { if (cur.personal) startTour(); }); return; }
+  tour = { steps: buildTour(COND, VALS, PINS, t), i: 0 };
+  closeInfo(); $("hint").hidden = true; $("tourp").hidden = false; $("tour-btn").hidden = true;
+  tourStep();
+}
+function endTour() {
+  tour = null; ringP = null; $("tourp").hidden = true; $("hint").hidden = false; $("tour-btn").hidden = !VALS;
+  if (cur && cur.personal) cur.personal.apply(CASE);
+}
+$("tour-btn").addEventListener("click", startTour);
+$("tp-close").addEventListener("click", endTour);
+$("tp-prev").addEventListener("click", () => { if (tour && tour.i > 0) { tour.i--; tourStep(); } });
+$("tp-next").addEventListener("click", () => { if (!tour) return; if (tour.i < tour.steps.length - 1) { tour.i++; tourStep(); } else endTour(); });
+$("tour-btn").textContent = t(TOUR_TX.btn);
+$("tour-btn").hidden = !VALS;
 function showPart(i) {
   const h = cur.hotspots[i]; if (!h) return;
   activePart = i;
@@ -213,7 +279,7 @@ function showOrgan() {
   $("info").hidden = false; $("hint").hidden = true;
   labels.querySelectorAll(".hs").forEach((el) => el.classList.remove("on"));
 }
-function closeInfo() { activePart = -1; $("info").hidden = true; $("hint").hidden = false; labels.querySelectorAll(".hs").forEach((el) => el.classList.remove("on")); }
+function closeInfo() { activePart = -1; $("info").hidden = true; $("hint").hidden = !!tour; labels.querySelectorAll(".hs").forEach((el) => el.classList.remove("on")); }
 $("i-close").addEventListener("click", closeInfo);
 
 // ---------- hit testing on screen ----------
@@ -419,7 +485,7 @@ function handStep(res, now) {
 
   if (pose !== "point") { dwell.el = null; cursor.style.background = ""; clearHot(); }
 
-  if (pose === "pinch") {                       // 🤏 move (or place it, before it is on the table)
+  if (pose === "pinch") {                       // move (or place it, before it is on the table)
     if (!act) {
       if (xrSession && !placed) { placeNow(); act = { kind: "pinch", none: true }; return; }
       act = hitsOrgan(pin.x, pin.y) ? { kind: "pinch", pos: root.position.clone(), hit: planePoint(pin.x, pin.y, root.position) } : { kind: "pinch", none: true };
@@ -428,19 +494,19 @@ function handStep(res, now) {
     else setMode("");
     return;
   }
-  if (pose === "open") {                        // 🖐 turn
+  if (pose === "open") {                        // turn
     if (!act) act = { kind: "open", x: palm.x, rot: spin.rotation.y };
     spin.rotation.y = act.rot + (palm.x - act.x) * 0.013;
     setMode(t(TX.turning)); return;
   }
-  if (pose === "vee") {                         // ✌️ zoom: up = bigger
+  if (pose === "vee") {                         // zoom: up = bigger
     if (!act) act = { kind: "vee", y: palm.y, s: userScale };
     userScale = clampS(act.s * Math.exp(-(palm.y - act.y) * 0.006));
     setMode(t(TX.zooming) + " " + Math.round(userScale * 100) + "%"); return;
   }
   if (pose !== "point") { setMode(""); return; }
 
-  // ☝️ point with the index finger only: hold on a number or a button to press it
+  // point with the index finger only: hold on a number or a button to press it
   setMode(t(TX.pointing));
   const el = dwellTarget(tip.x, tip.y);
   if (el !== dwell.el) dwell = { el, t0: now };
