@@ -39,6 +39,7 @@ const ICONS = {
   table: '<path d="M3 17h18M6 17l2-6h8l2 6M12 11V4m-3 3 3-3 3 3"/>',
   hand: '<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5V4a1.5 1.5 0 0 1 3 0v6m0-4.5a1.5 1.5 0 0 1 3 0V12m0-3.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.5a6 6 0 0 1-5-2.7L4 14.5a1.6 1.6 0 0 1 2.6-1.8L8 14"/>',
   story: '<path d="M8 5v14l11-7L8 5Z"/>',
+  vr: '<path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h15A1.5 1.5 0 0 1 21 8.5v7a1.5 1.5 0 0 1-1.5 1.5h-4l-2-2.5h-3L8.5 17h-4A1.5 1.5 0 0 1 3 15.5z"/><circle cx="8" cy="12" r="1.6"/><circle cx="16" cy="12" r="1.6"/>',
   body: '<circle cx="12" cy="4.5" r="2.2"/><path d="M7 9.5h10M12 9.5v5m0 0-3 6m3-6 3 6M9 9.5 7.5 14M15 9.5l1.5 4.5"/>',
   scan: '<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 9h8v6H8z"/>',
   both: '<path d="M3 17h18M5 17l1.5-5h4L12 17M12 17l1.5-5h4L19 17"/>',
@@ -47,6 +48,7 @@ const ico = (k) => `<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24
 const MODES = [
   { id: "table", icon: "table", title: "modeTable", sub: "modeTableSub", long: "modeTableLong", needs: "needTable", pick: (c) => "#" + c.id + "/ar" },
   { id: "hand", icon: "hand", title: "modeHand", sub: "modeHandSub", long: "modeHandLong", needs: "needHand", pick: (c) => "handar.html?c=" + c.id },
+  { id: "quest", icon: "vr", title: "modeQuest", sub: "modeQuestSub", long: "modeQuestLong", needs: "needQuest", pick: (c) => "xr.html?c=" + c.id },
   { id: "story", icon: "story", title: "modeStory", sub: "modeStorySub", long: "modeStoryLong", needs: "needAny", pick: (c) => "#" + c.id + "-story" },
   { id: "body", icon: "body", title: "modeBody", sub: "modeBodySub", long: "modeBodyLong", needs: "needCam", links: [["openBody", "body.html", true]] },
   { id: "scan", icon: "scan", title: "modeScan", sub: "modeScanSub", long: "modeScanLong", needs: "needCam", links: [["openScan", "scan.html", true], ["printCards", "cards.html"]] },
@@ -299,6 +301,7 @@ function renderARActions(c) {
     act("act-both", "both", U("viewBothAR"), U("needTable")) +
     act("act-report", "both", U("pReport"), U("pReportSub"), "mycase.html?c=" + c.id) +
     act("act-hand", "hand", U("modeHand"), U("modeHandSub"), "handar.html?c=" + c.id) +
+    act("act-quest", "vr", U("modeQuest"), U("modeQuestSub"), "xr.html?c=" + c.id) +
     act("act-story", "story", U("modeStory"), U("modeStorySub"), "#" + c.id + "-story") +
     act("act-body", "body", U("modeBody"), U("modeBodySub"), "body.html");
   $("act-healthy").addEventListener("click", () => startAR("mv-healthy"));

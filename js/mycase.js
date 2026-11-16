@@ -141,6 +141,7 @@ function update() {
   $("p-none").classList.toggle("on", !treat); $("p-treat").classList.toggle("on", treat);
   $("tl").value = tYears;
   const vals = JSON.stringify(values), pj = JSON.stringify(pins);
+  $("vr-btn").href = "xr.html?c=" + COND.id + "&vals=" + encodeURIComponent(vals) + (pins.length ? "&pins=" + encodeURIComponent(pj) : "");
   $("ar-btn").href = "handar.html?c=" + COND.id + "&case=" + encodeURIComponent(JSON.stringify(st)) + "&vals=" + encodeURIComponent(vals) + (pins.length ? "&pins=" + encodeURIComponent(pj) : "");
   const q = new URLSearchParams({ c: COND.id }); SPEC.fields.forEach((f) => q.set(f.key, values[f.key]));
   if (pins.length) q.set("pins", pj);
@@ -203,6 +204,7 @@ function texts() {
   $("tk0").textContent = t(UI.now); $("play").textContent = playing ? t(UI.pause) : t(UI.play);
   $("cmp-btn").textContent = "" + t(UI.showHealthy);
   $("ar-label").textContent = t(UI.inAR); $("quiz-label").textContent = t(UI.quiz); $("sum-label").textContent = t(MX.summary);
+  $("vr-label").textContent = t(UI_TEXT.openQuest);
   $("tour-btn").textContent = t(MX.tour); $("scan-btn").textContent = t(MX.scan); $("h-notes").textContent = t(MX.notes);
   $("pin-save").textContent = t(MX.save); $("pin-cancel").textContent = t(MX.cancel); $("pin-text").placeholder = t(MX.pinPh);
   $("pin-mode").textContent = t(MX.pinning); $("t-prev").textContent = t(MX.prev);

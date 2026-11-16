@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="js/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f5f1">
+  <title>Quest mode · Organ Explainer AR</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="images/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+    { "imports": { "three": "./js/vendor/three/three.module.min.js", "three/addons/": "./js/vendor/three/addons/" } }
+  </script>
+  <style>
+    body { min-height: 100vh; }
+    .x-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: calc(12px + env(safe-area-inset-top, 0px)) var(--gut-r) 12px var(--gut-l);
+      background: var(--surface); border-bottom: 1px solid var(--line); }
+    .x-top h1 { font-size: 1.15rem; margin: 0; flex: 1; }
+    .x-wrap { max-width: 1180px; margin: 0 auto; padding: 22px var(--gut-r) 40px var(--gut-l); display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 20px; align-items: start; }
+    .x-stage { position: relative; height: min(70vh, 620px); border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--line); background: var(--stage); }
+    .x-stage canvas { display: block; width: 100%; height: 100%; }
+    .x-side { display: grid; gap: 14px; }
+    .x-side .organ-switch { display: flex !important; flex-wrap: wrap; overflow: visible; margin: 0; }
+    .enter { width: 100%; min-height: 56px; font-size: 1.1rem; }
+    .how { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-2); font-size: .94rem; }
+    .status { font-size: .9rem; color: var(--muted); margin: 0; }
+    .status.bad { color: var(--sick); }
+    .case-chip { display: inline-block; background: var(--brand-soft); color: var(--brand); border-radius: var(--r-sm); padding: 4px 10px; font-weight: 600; font-size: .86rem; }
+    @media (max-width: 899px) { .x-wrap { grid-template-columns: 1fr; } .x-stage { height: 46vh; } }
+  </style>
+</head>
+<body>
+  <header class="x-top">
+    <a class="chip" id="back" href="index.html">←</a>
+    <h1 id="title">Quest mode</h1>
+    <button type="button" class="icon-btn theme-btn"></button>
+  </header>
+  <main class="x-wrap">
+    <section class="x-stage" id="stage" aria-label="3D preview"></section>
+    <aside class="x-side">
+      <div class="panel">
+        <p class="organ" id="cond"></p>
+        <h2 id="h-org" style="margin-bottom:10px"></h2>
+        <span class="case-chip" id="case-chip" hidden></span>
+        <nav class="organ-switch" id="switch" aria-label="Organs" style="margin-top:12px"></nav>
+      </div>
+      <button type="button" class="btn primary enter" id="enter" disabled></button>
+      <p class="status" id="status"></p>
+      <div class="panel">
+        <h2 id="h-how"></h2>
+        <ol class="how" id="how"></ol>
+      </div>
+      <p class="note muted" id="edu"></p>
+    </aside>
+  </main>
+  <script src="js/data.js"></script>
+  <script type="module" src="js/xr.js"></script>
+</body>
+</html>

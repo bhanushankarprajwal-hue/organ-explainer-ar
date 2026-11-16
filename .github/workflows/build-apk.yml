@@ -1,0 +1,30 @@
+name: Build Quest APK
+on:
+  push:
+    branches: [main]
+    paths: ["android/**", ".github/workflows/build-apk.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "17" }
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: "8.9" }
+      - name: Build
+        working-directory: android
+        run: gradle assembleDebug --no-daemon
+      - name: Rename
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk OrganExplainer-Quest.apk
+      - uses: actions/upload-artifact@v4
+        with: { name: OrganExplainer-Quest, path: OrganExplainer-Quest.apk }
+      - name: Publish to the "quest-apk" release
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh release view quest-apk >/dev/null 2>&1 || gh release create quest-apk --title "Quest APK" --notes "Install on Meta Quest with SideQuest or Meta Quest Developer Hub. The app opens Quest mode in the Meta Quest browser. For education only, not diagnosis."
+          gh release upload quest-apk OrganExplainer-Quest.apk --clobber
