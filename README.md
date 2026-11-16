@@ -122,3 +122,9 @@ The original downloads are on the `source-models` branch (fetched by the GitHub 
 - **Doctor's notes**: tap the organ to pin short notes; saved in the case link (`pins=`), shown in 3D, AR, tour and summary.
 - **Explain my case**: step-by-step tour built from the patient's values and notes (`js/tour.js`); the camera flies to each problem part; the timeline steps show the future. Also in Hand AR (`handar.html?...&vals=&pins=`).
 - **Take-home summary** (`summary.html`): printable page with pictures of the healthy and the patient's organ, values, meaning, notes, what happens next, what to do, when to get help, and a QR code to reopen it.
+
+## Meta Quest (VR / mixed reality)
+
+- `xr.html` is Quest mode: WebXR immersive-ar (passthrough) or immersive-vr, hands and controllers, floating panel, guided tour of the patient's case.
+- `android/` is a tiny launcher app. GitHub Actions (`build-apk.yml`) builds it and puts `OrganExplainer-Quest.apk` in the **quest-apk** release.
+- Install and use: see [docs/QUEST.md](docs/QUEST.md).
