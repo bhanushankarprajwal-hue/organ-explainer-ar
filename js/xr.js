@@ -50,15 +50,18 @@ const X = {
   mrOk: T3("Mixed reality: you will see your room with the organs in it.", "ಮಿಶ್ರ ವಾಸ್ತವ: ನಿಮ್ಮ ಕೋಣೆಯಲ್ಲೇ ಅಂಗಗಳು ಕಾಣುತ್ತವೆ.", "கலப்பு யதார்த்தம்: உங்கள் அறையிலேயே உறுப்புகள் தெரியும்."),
   how: T3("How to use", "ಬಳಸುವುದು ಹೇಗೆ", "எப்படிப் பயன்படுத்துவது"),
   how1: T3("Point at a number and press the trigger (or pinch your fingers) to learn about that part.", "ಸಂಖ್ಯೆಯ ಕಡೆ ತೋರಿಸಿ ಟ್ರಿಗರ್ ಒತ್ತಿ (ಅಥವಾ ಬೆರಳುಗಳನ್ನು ಚಿಟಿಕೆ ಮಾಡಿ).", "எண்ணை நோக்கிக் காட்டி டிரிகரை அழுத்துங்கள் (அல்லது விரல்களைக் கிள்ளுங்கள்)."),
-  how2: T3("Point at an organ and hold the trigger or grip (or pinch) to pick it up and turn it.", "ಅಂಗದ ಕಡೆ ತೋರಿಸಿ ಟ್ರಿಗರ್ ಅಥವಾ ಗ್ರಿಪ್ ಹಿಡಿಯಿರಿ (ಅಥವಾ ಚಿಟಿಕೆ) — ಎತ್ತಿ ತಿರುಗಿಸಿ.", "உறுப்பை நோக்கிக் காட்டி டிரிகர் அல்லது கிரிப்பைப் பிடியுங்கள் (அல்லது கிள்ளுங்கள்) — தூக்கிச் சுழற்றுங்கள்."),
-  how3: T3("Hold one organ with both hands and pull apart to make it bigger. The thumbstick also turns and zooms.", "ಒಂದು ಅಂಗವನ್ನು ಎರಡೂ ಕೈಯಲ್ಲಿ ಹಿಡಿದು ದೂರ ಎಳೆದರೆ ದೊಡ್ಡದಾಗುತ್ತದೆ. ಥಂಬ್‌ಸ್ಟಿಕ್ ಕೂಡ ತಿರುಗಿಸುತ್ತದೆ, ದೊಡ್ಡದು ಮಾಡುತ್ತದೆ.", "ஒரு உறுப்பை இரு கைகளாலும் பிடித்து விரித்தால் பெரிதாகும். தம்ப்ஸ்டிக்கும் சுழற்றி பெரிதாக்கும்."),
-  how4: T3("Use the floating panel: Outside / Inside, Explain my case, Reset and Exit.", "ತೇಲುವ ಫಲಕ ಬಳಸಿ: ಹೊರಗೆ / ಒಳಗೆ, ನನ್ನ ಪ್ರಕರಣ ವಿವರಿಸಿ, ಮರುಹೊಂದಿಸಿ, ನಿರ್ಗಮಿಸಿ.", "மிதக்கும் பலகையைப் பயன்படுத்துங்கள்: வெளியே / உள்ளே, என் நிலையை விளக்கு, மீட்டமை, வெளியேறு."),
+  how2: T3("Pinch and hold on an organ (or press the trigger / grip). Move your hand to move it, turn your wrist to turn it. Open your fingers to let go.", "ಅಂಗದ ಮೇಲೆ ಚಿಟಿಕೆ ಮಾಡಿ ಹಿಡಿಯಿರಿ (ಅಥವಾ ಟ್ರಿಗರ್ / ಗ್ರಿಪ್). ಕೈ ಸರಿಸಿದರೆ ಅಂಗ ಸರಿಯುತ್ತದೆ, ಮಣಿಕಟ್ಟು ತಿರುಗಿಸಿದರೆ ತಿರುಗುತ್ತದೆ. ಬೆರಳು ತೆರೆದರೆ ಬಿಡುತ್ತದೆ.", "உறுப்பின் மேல் கிள்ளிப் பிடியுங்கள் (அல்லது டிரிகர் / கிரிப்). கையை நகர்த்தினால் உறுப்பு நகரும், மணிக்கட்டைத் திருப்பினால் சுழலும். விரல்களைத் திறந்தால் விடும்."),
+  how3: T3("While one hand holds it, pinch with the other hand too. Pull your hands apart to make it bigger, bring them together to make it smaller. The thumbstick also turns and zooms.", "ಒಂದು ಕೈಯಲ್ಲಿ ಹಿಡಿದಿರುವಾಗ ಇನ್ನೊಂದು ಕೈಯಲ್ಲೂ ಚಿಟಿಕೆ ಮಾಡಿ. ಕೈಗಳನ್ನು ದೂರ ಮಾಡಿದರೆ ದೊಡ್ಡದು, ಹತ್ತಿರ ತಂದರೆ ಚಿಕ್ಕದು. ಥಂಬ್‌ಸ್ಟಿಕ್ ಕೂಡ ತಿರುಗಿಸುತ್ತದೆ, ದೊಡ್ಡದು ಮಾಡುತ್ತದೆ.", "ஒரு கையால் பிடித்திருக்கும்போது மற்ற கையாலும் கிள்ளுங்கள். கைகளை விலக்கினால் பெரிதாகும், அருகே கொண்டுவந்தால் சிறிதாகும். தம்ப்ஸ்டிக்கும் சுழற்றி பெரிதாக்கும்."),
+  how4: T3("The floating panel also has Smaller, Bigger and Turn buttons, plus Outside / Inside, Explain my case, Reset and Exit.", "ತೇಲುವ ಫಲಕದಲ್ಲಿ ಚಿಕ್ಕದು, ದೊಡ್ಡದು, ತಿರುಗಿಸಿ ಬಟನ್‌ಗಳೂ ಇವೆ. ಜೊತೆಗೆ ಹೊರಗೆ / ಒಳಗೆ, ನನ್ನ ಪ್ರಕರಣ ವಿವರಿಸಿ, ಮರುಹೊಂದಿಸಿ, ನಿರ್ಗಮಿಸಿ.", "மிதக்கும் பலகையில் சிறியது, பெரியது, சுழற்று பொத்தான்களும் உள்ளன. மேலும் வெளியே / உள்ளே, என் நிலையை விளக்கு, மீட்டமை, வெளியேறு."),
   outside: T3("Outside", "ಹೊರಗೆ", "வெளியே"), inside: T3("Inside", "ಒಳಗೆ", "உள்ளே"),
   tour: T3("Explain my case", "ನನ್ನ ಪ್ರಕರಣ ವಿವರಿಸಿ", "என் நிலையை விளக்கு"),
   reset: T3("Reset", "ಮರುಹೊಂದಿಸಿ", "மீட்டமை"), exit: T3("Exit", "ನಿರ್ಗಮಿಸಿ", "வெளியேறு"),
   back: T3("Back", "ಹಿಂದೆ", "பின்"), next: T3("Next", "ಮುಂದೆ", "அடுத்து"), done: T3("Done", "ಮುಗಿಯಿತು", "முடிந்தது"),
   hint: T3("Point at a number and press the trigger, or pinch, to learn about that part. Grab an organ to pick it up and look closely.", "ಸಂಖ್ಯೆಯ ಕಡೆ ತೋರಿಸಿ ಟ್ರಿಗರ್ ಒತ್ತಿ ಅಥವಾ ಚಿಟಿಕೆ ಮಾಡಿ. ಹತ್ತಿರದಿಂದ ನೋಡಲು ಅಂಗವನ್ನು ಹಿಡಿದು ಎತ್ತಿ.", "எண்ணை நோக்கிக் காட்டி டிரிகரை அழுத்துங்கள் அல்லது கிள்ளுங்கள். அருகில் பார்க்க உறுப்பைப் பிடித்துத் தூக்குங்கள்."),
   welcome: T3("Left: a healthy organ. Right: the patient’s organ.", "ಎಡಕ್ಕೆ: ಆರೋಗ್ಯಕರ ಅಂಗ. ಬಲಕ್ಕೆ: ರೋಗಿಯ ಅಂಗ.", "இடது: ஆரோக்கியமான உறுப்பு. வலது: நோயாளியின் உறுப்பு."),
+  smaller: T3("Smaller", "ಚಿಕ್ಕದು", "சிறியது"), bigger: T3("Bigger", "ದೊಡ್ಡದು", "பெரியது"),
+  turnL: T3("Turn", "ತಿರುಗಿಸಿ", "சுழற்று"), turnR: T3("Turn", "ತಿರುಗಿಸಿ", "சுழற்று"),
+  sizeFor: T3("Size and turn buttons work on", "ಗಾತ್ರ ಮತ್ತು ತಿರುಗಿಸುವ ಬಟನ್‌ಗಳು ಇದಕ್ಕೆ", "அளவு மற்றும் சுழற்று பொத்தான்கள் இதற்கு"),
   step: T3("Step", "ಹಂತ", "படி"),
   fromReport: T3("Patient’s own report", "ರೋಗಿಯ ಸ್ವಂತ ವರದಿ", "நோயாளியின் சொந்த அறிக்கை"),
   example: T3("Example values (open from My Report for a real patient)", "ಉದಾಹರಣೆ ಮೌಲ್ಯಗಳು (ನಿಜವಾದ ರೋಗಿಗೆ ನನ್ನ ವರದಿಯಿಂದ ತೆರೆಯಿರಿ)", "எடுத்துக்காட்டு மதிப்புகள் (உண்மையான நோயாளிக்கு என் அறிக்கையிலிருந்து திறக்கவும்)"),
@@ -139,13 +142,14 @@ function badgeTexture(text, bg) {
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; return tex;
 }
 function labelSprite(text, color) {
-  const c = document.createElement("canvas"); c.width = 512; c.height = 96; const x = c.getContext("2d");
-  x.font = `700 44px ${FONT}`; const w = Math.min(500, x.measureText(text).width + 64);
-  x.fillStyle = "#ffffff"; roundRect(x, (512 - w) / 2, 8, w, 80, 18); x.fill();
-  x.fillStyle = color; x.beginPath(); x.arc((512 - w) / 2 + 30, 48, 10, 0, Math.PI * 2); x.fill();
-  x.fillStyle = "#1c2430"; x.textAlign = "left"; x.textBaseline = "middle"; x.fillText(text, (512 - w) / 2 + 48, 50);
+  const W = 768;
+  const c = document.createElement("canvas"); c.width = W; c.height = 96; const x = c.getContext("2d");
+  x.font = `700 44px ${FONT}`; const w = Math.min(W - 12, x.measureText(text).width + 64);
+  x.fillStyle = "#ffffff"; roundRect(x, (W - w) / 2, 8, w, 80, 18); x.fill();
+  x.fillStyle = color; x.beginPath(); x.arc((W - w) / 2 + 30, 48, 10, 0, Math.PI * 2); x.fill();
+  x.fillStyle = "#1c2430"; x.textAlign = "left"; x.textBaseline = "middle"; x.fillText(text, (W - w) / 2 + 48, 50, w - 60);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
-  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, depthTest: false })); s.scale.set(0.24, 0.045, 1); s.renderOrder = 5;
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, depthTest: false })); s.scale.set(0.36, 0.045, 1); s.renderOrder = 5;
   return s;
 }
 function roundRect(x, a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
@@ -169,6 +173,7 @@ const slots = {                       // each organ stands in a slot you can gra
   d: { group: new THREE.Group(), home: new THREE.Vector3(0.2, 0, 0.02), color: "#b4442f" },
 };
 Object.values(slots).forEach((s) => { s.group.position.copy(s.home); world.add(s.group); });
+let lastKey = "d";
 let view = "outside", personal = null, hotSprites = [], pinSprites = [];
 const mixers = new Set();
 const cache = {};
@@ -234,11 +239,11 @@ function buildMarkers() {
 
 // ---------- the floating panel ----------
 const panel = (() => {
-  const W = 1024, H = 640;
+  const W = 1024, H = 720;
   const c = document.createElement("canvas"); c.width = W; c.height = H; const x = c.getContext("2d");
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
-  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.64, 0.4), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
-  mesh.position.set(0, 0.5, -0.3); mesh.rotation.x = -0.12; mesh.userData.kind = "panel";
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.64, 0.45), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
+  mesh.position.set(0, 0.52, -0.3); mesh.rotation.x = -0.12; mesh.userData.kind = "panel";
   world.add(mesh);
   let buttons = [], hover = null;
   const content = { title: "", text: "", tour: null };
@@ -263,12 +268,18 @@ const panel = (() => {
     // content
     x.fillStyle = "#1c2430"; x.font = `700 36px ${FONT}`; x.fillText(content.title, 44, 280);
     x.fillStyle = "#3d4654"; x.font = `400 31px ${FONT}`;
-    const lines = wrap(x, content.text, W - 88).slice(0, content.tour ? 6 : 8);
+    const lines = wrap(x, content.text, W - 88).slice(0, 6);
     lines.forEach((l, i) => x.fillText(l, 44, 330 + i * 42));
     if (content.tour) {
       x.fillStyle = "#6b7380"; x.font = `600 26px ${FONT}`; x.fillText(content.tour, 44, 240);
       btn("prev", t(X.back), 44, H - 104, 200, 72, false);
       btn("next", content.last ? t(X.done) : t(X.next) + " →", W - 44 - 260, H - 104, 260, 72, false, true);
+    } else {
+      x.fillStyle = "#6b7380"; x.font = `600 24px ${FONT}`;
+      x.fillText(t(X.sizeFor) + ": " + (lastKey === "h" ? t(UI.healthy) : (fromReport ? t(UI.yours) : t(COND.name))), 44, H - 116);
+      const bw = (W - 88 - 36) / 4;
+      [["smaller", "−  " + t(X.smaller)], ["bigger", "+  " + t(X.bigger)], ["turnL", "⟲  " + t(X.turnL)], ["turnR", "⟳  " + t(X.turnR)]]
+        .forEach(([id, label], i) => btn(id, label, 44 + i * (bw + 12), H - 100, bw, 68, false));
     }
     buttons.forEach((b) => {
       const hot = hover === b.id;
@@ -325,13 +336,14 @@ function press(hit) {
     else if (b.id === "tour") tour ? endTour() : startTour();
     else if (b.id === "reset") resetLayout();
     else if (b.id === "exit") { const s = renderer.xr.getSession(); if (s) s.end(); }
+    else if (["bigger", "smaller", "turnL", "turnR"].includes(b.id)) nudge(b.id);
     else if (b.id === "prev" && tour && tour.i > 0) { tour.i--; tourStep(); }
     else if (b.id === "next" && tour) { if (tour.i < tour.steps.length - 1) { tour.i++; tourStep(); } else endTour(); }
     return true;
   }
   if (o.userData.kind === "hs") {
     if (tour) endTour();
-    const s = slots[o.userData.key], h = s.hotspots[o.userData.i];
+    const s = slots[o.userData.key], h = s.hotspots[o.userData.i]; lastKey = o.userData.key;
     panel.show((o.userData.i + 1) + ". " + t(h.title) + "  ·  " + (o.userData.key === "h" ? t(UI.healthy) : t(COND.name)), t(h.text));
     return true;
   }
@@ -340,7 +352,7 @@ function press(hit) {
 }
 function slotOf(obj) { for (const [key, s] of Object.entries(slots)) { let p = obj; while (p) { if (p === s.group) return key; p = p.parent; } } return null; }
 function resetLayout() {
-  Object.values(slots).forEach((s) => { world.attach(s.group); s.group.position.copy(s.home); s.group.rotation.set(0, 0, 0); s.group.scale.setScalar(1); });
+  Object.values(slots).forEach((s) => { s.group.position.copy(s.home); s.group.rotation.set(0, 0, 0); s.group.scale.setScalar(1); });
   grabs.clear(); twoHand = null;
 }
 
@@ -361,7 +373,11 @@ function firstHit() {
 }
 
 // ---------- controllers and hands ----------
-const grabs = new Map();      // controller -> slot key it holds
+// Grab = pinch (hands) or trigger / grip (controllers) on an organ, or right next to it.
+// While you hold it, the organ copies how your hand moves and turns (it turns around its own middle).
+// A second pinch / trigger while one hand holds an organ: pull hands apart = bigger, together = smaller,
+// and move the hands around each other to turn it.
+const grabs = new Map();      // controller -> { key, p0, q0, gp0, gq0 }
 let twoHand = null;
 const ctrls = [0, 1].map((i) => {
   const c = renderer.xr.getController(i);
@@ -370,11 +386,12 @@ const ctrls = [0, 1].map((i) => {
   line.scale.z = 1.5; c.add(line);
   const dot = new THREE.Mesh(new THREE.SphereGeometry(0.006, 12, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
   dot.visible = false; scene.add(dot);
-  c.userData = { line, dot, hit: null };
+  c.userData = { line, dot, hit: null, i };
   c.addEventListener("connected", (e) => { c.userData.source = e.data; c.userData.isHand = !!e.data.hand; line.visible = e.data.targetRayMode === "tracked-pointer"; });
-  c.addEventListener("disconnected", () => { c.userData.source = null; release(c); });
+  c.addEventListener("disconnected", () => { c.userData.source = null; c.userData.isHand = false; release(c); });
   c.addEventListener("selectstart", () => down(c));
-  c.addEventListener("selectend", () => release(c));
+  // hand tracking can "let go" for one frame while you still pinch, so hands are let go by finger distance instead
+  c.addEventListener("selectend", () => { if (!c.userData.isHand) release(c); });
   c.addEventListener("squeezestart", () => down(c, true));
   c.addEventListener("squeezeend", () => release(c));
   scene.add(c);
@@ -383,9 +400,9 @@ const ctrls = [0, 1].map((i) => {
   body.rotation.x = Math.PI / 2.4; grip.add(body);
   grip.addEventListener("connected", (e) => { body.visible = !e.data.hand; });
   scene.add(grip);
-  // hands: small dots on each finger joint
   const hand = renderer.xr.getHand(i); hand.userData.dots = new Set(); scene.add(hand);
-  return { c, hand };
+  c.userData.grip = grip; c.userData.hand = hand;
+  return { c, hand, grip };
 });
 const jointGeo = new THREE.SphereGeometry(0.006, 8, 6), jointMat = new THREE.MeshStandardMaterial({ color: 0xf2efe9, roughness: 0.6 });
 function updateHands() {
@@ -396,31 +413,106 @@ function updateHands() {
     }
   });
 }
+// where the hand "holds": the pinch point and wrist turn (hands), or the controller grip
+const _v = new THREE.Vector3(), _v2 = new THREE.Vector3(), _q = new THREE.Quaternion(), _wq = new THREE.Quaternion();
+function joint(c, name) { const j = c.userData.hand && c.userData.hand.joints[name]; return j && j.visible !== false ? j : null; }
+function pinchGap(c) {
+  const a = joint(c, "thumb-tip"), b = joint(c, "index-finger-tip");
+  if (!a || !b) return null;
+  return a.getWorldPosition(_v).distanceTo(b.getWorldPosition(_v2));
+}
+function holdPose(c, pos, quat) {
+  let src = c.userData.grip;
+  if (c.userData.isHand) {
+    const a = joint(c, "thumb-tip"), b = joint(c, "index-finger-tip"), w = joint(c, "wrist");
+    if (a && b) { a.getWorldPosition(pos); b.getWorldPosition(_v2); pos.add(_v2).multiplyScalar(0.5); }
+    else c.getWorldPosition(pos);
+    (w || c).getWorldQuaternion(quat);
+  } else { src.getWorldPosition(pos); src.getWorldQuaternion(quat); }
+  // into the table's own space
+  world.worldToLocal(pos);
+  world.getWorldQuaternion(_wq); quat.premultiply(_wq.invert());
+}
+function centerOf(key, out) {      // middle of an organ, in table space
+  const g = slots[key].group;
+  return out.set(0, (slots[key].model ? slots[key].model.height : 0.2) * 0.5 * g.scale.x, 0).applyQuaternion(g.quaternion).add(g.position);
+}
+function startGrab(c, key) {
+  const g = slots[key].group, st = { key, p0: new THREE.Vector3(), q0: new THREE.Quaternion(), c0: new THREE.Vector3(), gq0: g.quaternion.clone() };
+  holdPose(c, st.p0, st.q0); centerOf(key, st.c0);
+  grabs.set(c, st); lastKey = key;
+}
 function down(c, squeeze) {
+  if (grabs.has(c)) return;
   ray.setFromXRController(c);
   const hit = firstHit();
   if (!squeeze && press(hit)) return;
-  const key = hit ? slotOf(hit.object) : null;
-  if (!key) return;
-  const s = slots[key];
-  const other = [...grabs.entries()].find(([oc, k]) => k === key && oc !== c);
-  if (other) { twoHand = { key, a: other[0], b: c, d0: dist(other[0], c), s0: s.group.scale.x }; grabs.set(c, key); return; }
-  c.attach(s.group); grabs.set(c, key);
+  // a second hand while another hand holds an organ: size and turn with both hands
+  const other = [...grabs.entries()].find(([oc]) => oc !== c);
+  if (other && !twoHand) {
+    const key = other[1].key, g = slots[key].group;
+    twoHand = { key, a: other[0], b: c, d0: Math.max(0.03, handsGap(other[0], c)), s0: g.scale.x, ang0: handsAngle(other[0], c), gq0: g.quaternion.clone() };
+    grabs.set(c, { key, two: true }); return;
+  }
+  let key = hit ? slotOf(hit.object) : null;
+  if (!key) {                       // nothing under the ray: grab the organ the hand is right next to
+    const hp = new THREE.Vector3(); holdPose(c, hp, _q);
+    let best = 0.2;
+    for (const k of Object.keys(slots)) { const d = centerOf(k, _v).distanceTo(hp); if (d < best) { best = d; key = k; } }
+  }
+  if (key) startGrab(c, key);
 }
 function release(c) {
-  const key = grabs.get(c); if (!key) return;
+  const st = grabs.get(c); if (!st) return;
   grabs.delete(c);
-  if (twoHand && (twoHand.a === c || twoHand.b === c)) {   // the other hand keeps holding
+  if (twoHand && (twoHand.a === c || twoHand.b === c)) {
     const keep = twoHand.a === c ? twoHand.b : twoHand.a; twoHand = null;
-    keep.attach(slots[key].group); return;
+    if (grabs.has(keep)) startGrab(keep, st.key);      // the other hand keeps holding, from here
   }
-  world.attach(slots[key].group);
 }
-const pa = new THREE.Vector3(), pb = new THREE.Vector3();
-function dist(a, b) { a.getWorldPosition(pa); b.getWorldPosition(pb); return pa.distanceTo(pb); }
+const pa = new THREE.Vector3(), pb = new THREE.Vector3(), qa = new THREE.Quaternion();
+function handsGap(a, b) { holdPose(a, pa, qa); holdPose(b, pb, qa); return pa.distanceTo(pb); }
+function handsAngle(a, b) { holdPose(a, pa, qa); holdPose(b, pb, qa); return Math.atan2(pb.x - pa.x, pb.z - pa.z); }
+const ROT_GAIN = 1.6;               // a small wrist turn gives a bigger organ turn
+const _axis = new THREE.Vector3(), _dq = new THREE.Quaternion(), _c = new THREE.Vector3(), _off = new THREE.Vector3();
+function placeAroundCenter(key, center, quat) {
+  const g = slots[key].group; g.quaternion.copy(quat);
+  _off.set(0, (slots[key].model ? slots[key].model.height : 0.2) * 0.5 * g.scale.x, 0).applyQuaternion(quat);
+  g.position.copy(center).sub(_off);
+}
+function updateGrabs() {
+  // let go of a hand grab when the fingers open (or the hand is lost)
+  for (const [c] of [...grabs]) if (c.userData.isHand) { const gap = pinchGap(c); if (gap === null || gap > 0.045) release(c); }
+  if (twoHand) {
+    const { key, a, b } = twoHand, g = slots[key].group;
+    centerOf(key, _c);
+    g.scale.setScalar(THREE.MathUtils.clamp(twoHand.s0 * handsGap(a, b) / twoHand.d0, 0.4, 4));
+    _dq.setFromAxisAngle(_axis.set(0, 1, 0), handsAngle(a, b) - twoHand.ang0);
+    placeAroundCenter(key, _c, _q.copy(twoHand.gq0).premultiply(_dq));
+    return;
+  }
+  for (const [c, st] of grabs) {
+    if (st.two) continue;
+    holdPose(c, _v, _q);
+    _dq.copy(_q).multiply(qa.copy(st.q0).invert());
+    if (_dq.w < 0) { _dq.x *= -1; _dq.y *= -1; _dq.z *= -1; _dq.w *= -1; }
+    const ang = 2 * Math.acos(THREE.MathUtils.clamp(_dq.w, -1, 1));
+    if (ang > 1e-4) { _axis.set(_dq.x, _dq.y, _dq.z).normalize(); _dq.setFromAxisAngle(_axis, ang * ROT_GAIN); }
+    _c.copy(st.c0).add(_v.sub(st.p0));
+    placeAroundCenter(st.key, _c, _q.copy(st.gq0).premultiply(_dq));
+  }
+}
+// buttons on the panel, for when gestures are hard: bigger, smaller, turn
+function nudge(id) {
+  const key = lastKey, g = slots[key].group; centerOf(key, _c);
+  if (id === "bigger" || id === "smaller") g.scale.setScalar(THREE.MathUtils.clamp(g.scale.x * (id === "bigger" ? 1.25 : 0.8), 0.4, 4));
+  else _q.copy(g.quaternion).premultiply(_dq.setFromAxisAngle(_axis.set(0, 1, 0), id === "turnL" ? Math.PI / 6 : -Math.PI / 6)), g.quaternion.copy(_q);
+  placeAroundCenter(key, _c, g.quaternion);
+}
 
 function updatePointers(dt) {
   if (!renderer.xr.isPresenting) return;
+  updateGrabs();
   let hoverPanel = null;
   ctrls.forEach(({ c }) => {
     const u = c.userData; if (!u.source) { u.dot.visible = false; return; }
@@ -433,17 +525,19 @@ function updatePointers(dt) {
     // thumbstick: left/right turns, up/down zooms the organ you point at or hold
     const gp = u.source.gamepad;
     if (gp && gp.axes && gp.axes.length >= 4) {
-      const key = grabs.get(c) || (hit && slotOf(hit.object));
+      const st = grabs.get(c), key = (st && st.key) || (hit && slotOf(hit.object));
       const ax = gp.axes[2], ay = gp.axes[3];
-      if (key) {
-        const g = slots[key].group;
-        if (Math.abs(ax) > 0.2) g.rotateY(-ax * dt * 2.2);
+      if (key && (Math.abs(ax) > 0.2 || Math.abs(ay) > 0.2)) {
+        const g = slots[key].group; centerOf(key, _c);
         if (Math.abs(ay) > 0.2) g.scale.setScalar(THREE.MathUtils.clamp(g.scale.x * (1 - ay * dt * 1.2), 0.4, 4));
+        _q.copy(g.quaternion); if (Math.abs(ax) > 0.2) _q.premultiply(_dq.setFromAxisAngle(_axis.set(0, 1, 0), -ax * dt * 2.2));
+        placeAroundCenter(key, _c, _q);
+        if (st && !st.two) startGrab(c, key);
+        lastKey = key;
       }
     }
   });
   panel.setHover(hoverPanel);
-  if (twoHand) slots[twoHand.key].group.scale.setScalar(THREE.MathUtils.clamp(twoHand.s0 * dist(twoHand.a, twoHand.b) / twoHand.d0, 0.4, 4));
 }
 
 // ---------- mouse in the laptop preview ----------
@@ -526,4 +620,4 @@ renderer.setAnimationLoop(() => {
 // ---------- start ----------
 resize();
 showView("outside").then(setupButtons).catch((e) => { console.error(e); $("status").textContent = e.message; });
-window.__xr = { slots, panel, press, startTour, showView, get tour() { return tour; } };
+window.__xr = { slots, panel, press, startTour, showView, get tour() { return tour; }, grabCount: () => grabs.size, twoHand: () => !!twoHand };
